@@ -1,6 +1,3 @@
 #include <iostream>
 using namespace std;
-
-int test() {
-    cout << "Test" << endl;
-}
+#include "../include/utils.hpp"
