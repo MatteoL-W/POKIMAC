@@ -1,38 +1,16 @@
 #include <SDL2/SDL.h>
-
 #include <stdio.h>
+#include "../include/main.hpp"
 
 int main(int argc, char *argv[])
 {
-    /* Initialisation simple */
-    if (SDL_Init(SDL_INIT_VIDEO) != 0 )
-    {
-        fprintf(stdout,"Échec de l'initialisation de la SDL (%s)\n",SDL_GetError());
-        return -1;
-    }
+    SDL_Init(SDL_INIT_VIDEO);
 
-    {
-        /* Création de la fenêtre */
-        SDL_Window* pWindow = NULL;
-        pWindow = SDL_CreateWindow("Ma première application SDL2",SDL_WINDOWPOS_UNDEFINED,
-                                                                  SDL_WINDOWPOS_UNDEFINED,
-                                                                  640,
-                                                                  480,
-                                                                  SDL_WINDOW_SHOWN);
+    SDL_Window *window = SDL_CreateWindow("Pokimac", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
 
-        if( pWindow )
-        {
-            SDL_Delay(3000); /* Attendre trois secondes, que l'utilisateur voit la fenêtre */
-
-            SDL_DestroyWindow(pWindow);
-        }
-        else
-        {
-            fprintf(stderr,"Erreur de création de la fenêtre: %s\n",SDL_GetError());
-        }
-    }
-
-    SDL_Quit();
-
-    return 0;
+    SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+    SDL_RenderClear(renderer);
+    SDL_RenderPresent(renderer);
+    SDL_Delay(3000);
 }
