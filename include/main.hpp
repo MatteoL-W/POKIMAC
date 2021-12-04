@@ -1,7 +1,6 @@
-#ifndef FLAG_M
-#define FLAG_M
+#ifndef FLAG_MAIN
+#define FLAG_MAIN
 
-const int WINDOW_WIDTH = 800;
-const int WINDOW_HEIGHT = 600;
+bool isGameRunning = false;
 
 #endif
