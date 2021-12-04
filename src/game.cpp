@@ -1,4 +1,11 @@
+#include <SDL2/SDL.h>
+#include <iostream>
+#include <string>
 #include "../include/game.hpp"
+
+const std::string GAME_NAME = "POKIMAC";
+const int WINDOW_WIDTH = 800;
+const int WINDOW_HEIGHT = 600;
 
 void initGame(SDL_Window* window, SDL_Renderer* renderer, bool *isGameRunning) {
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
@@ -14,13 +21,13 @@ void initGame(SDL_Window* window, SDL_Renderer* renderer, bool *isGameRunning) {
     }
 }
 
-void handleEvents() {
+void handleEvents(bool *isGameRunning) {
     SDL_Event event;
     SDL_PollEvent(&event);
 
     switch (event.type) {
         case SDL_QUIT:
-            //isGameRunning = false;
+            *isGameRunning = false;
             break;
 
         default:
@@ -29,7 +36,6 @@ void handleEvents() {
 }
 
 void updateGame() {
-
 }
 
 void renderGame(SDL_Renderer *renderer) {

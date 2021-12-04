@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     initGame(window, renderer, &isGameRunning);
 
     while (isGameRunning) {
-        handleEvents();
+        handleEvents(&isGameRunning);
         updateGame();
         renderGame(renderer);
     }
