@@ -7,7 +7,7 @@
 
 CC=g++
 CFLAGS=-Wall
-SDLFLAGS=-lmingw32 -lSDL2main -lSDL2
+SDLFLAGS=-lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 IFOLDER=include
 SFOLDER=src
 
@@ -65,3 +65,5 @@ init:
 	mkdir bin;
 
 # _____________________________________________________
+
+#TODO: mettre SDL dans le lib/

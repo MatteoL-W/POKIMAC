@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <iostream>
 #include <string>
 #include "../include/game.hpp"
@@ -6,6 +7,10 @@
 const std::string GAME_NAME = "POKIMAC";
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
+int cnt = 0;
+
+SDL_Texture* playerTexture;
+SDL_Rect dstRect;
 
 /**
  * @brief Init SDL_Window, render the first frame and update isGameRunning.
@@ -19,12 +24,13 @@ void initGame(SDL_Window* window, SDL_Renderer* renderer, bool *isGameRunning) {
         // remplacer SDL_WINDOW_SHOWN par fullscreen si on veut fullscreen
         window = SDL_CreateWindow(GAME_NAME.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
         renderer = SDL_CreateRenderer(window, -1, 0);
-
         *isGameRunning = true;
 
-        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+        playerTexture = IMG_LoadTexture(renderer, "assets/ethan_sprite.png");
+
         renderGame(renderer);
     }
+
 }
 
 /**
@@ -47,6 +53,10 @@ void handleEvents(bool *isGameRunning) {
 }
 
 void updateGame() {
+    cnt++;
+    dstRect.w = 128;
+    dstRect.h = 128;
+    // dstRect.x = cnt / 100;
 }
 
 /**
@@ -56,7 +66,7 @@ void updateGame() {
  */
 void renderGame(SDL_Renderer *renderer) {
     SDL_RenderClear(renderer);
-    //ici on met ce qui change je crois
+    SDL_RenderCopy(renderer, playerTexture, NULL, NULL);
     SDL_RenderPresent(renderer);
 }
 
