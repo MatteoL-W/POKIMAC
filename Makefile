@@ -57,4 +57,11 @@ graphics.o: $(SFOLDER)/graphics.cpp $(IFOLDER)/graphics.hpp
 clean:
 	$(RM) build$(SEP)*.o
 
+st:
+	./bin/render.exe
+
+init:
+	mkdir build;
+	mkdir bin;
+
 # _____________________________________________________

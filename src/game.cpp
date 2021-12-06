@@ -7,6 +7,13 @@ const std::string GAME_NAME = "POKIMAC";
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
 
+/**
+ * @brief Init SDL_Window, render the first frame and update isGameRunning.
+ * 
+ * @param window 
+ * @param renderer 
+ * @param isGameRunning 
+ */
 void initGame(SDL_Window* window, SDL_Renderer* renderer, bool *isGameRunning) {
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
         // remplacer SDL_WINDOW_SHOWN par fullscreen si on veut fullscreen
@@ -17,10 +24,14 @@ void initGame(SDL_Window* window, SDL_Renderer* renderer, bool *isGameRunning) {
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
         renderGame(renderer);
-        SDL_Delay(3000);
     }
 }
 
+/**
+ * @brief Handle SDL Events
+ * 
+ * @param isGameRunning 
+ */
 void handleEvents(bool *isGameRunning) {
     SDL_Event event;
     SDL_PollEvent(&event);
@@ -38,15 +49,25 @@ void handleEvents(bool *isGameRunning) {
 void updateGame() {
 }
 
+/**
+ * @brief Render the game
+ * 
+ * @param renderer 
+ */
 void renderGame(SDL_Renderer *renderer) {
     SDL_RenderClear(renderer);
     //ici on met ce qui change je crois
     SDL_RenderPresent(renderer);
 }
 
+/**
+ * @brief Close the window
+ * 
+ * @param window 
+ * @param renderer 
+ */
 void cleanGame(SDL_Window *window, SDL_Renderer *renderer) {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
-    std::cout << "Game cleaned" << std::endl;
 }
