@@ -19,7 +19,7 @@ SDL_Rect dstRect;
  * @param renderer 
  * @param isGameRunning 
  */
-void initGame(SDL_Window* window, SDL_Renderer* renderer, bool *isGameRunning) {
+void initGame(SDL_Window* window, SDL_Renderer*& renderer, bool *isGameRunning) {
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
         // remplacer SDL_WINDOW_SHOWN par fullscreen si on veut fullscreen
         window = SDL_CreateWindow(GAME_NAME.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
@@ -56,7 +56,7 @@ void updateGame() {
     cnt++;
     dstRect.w = 128;
     dstRect.h = 128;
-    // dstRect.x = cnt / 100;
+    dstRect.x = cnt / 100;
 }
 
 /**
@@ -66,7 +66,7 @@ void updateGame() {
  */
 void renderGame(SDL_Renderer *renderer) {
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, playerTexture, NULL, NULL);
+    SDL_RenderCopy(renderer, playerTexture, NULL, &dstRect);
     SDL_RenderPresent(renderer);
 }
 
