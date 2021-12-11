@@ -4,11 +4,7 @@
 #include <string>
 #include "../include/game.hpp"
 
-const std::string GAME_NAME = "POKIMAC";
-const int WINDOW_WIDTH = 800;
-const int WINDOW_HEIGHT = 600;
 int cnt = 0;
-
 SDL_Texture* playerTexture;
 SDL_Rect dstRect;
 
@@ -17,17 +13,15 @@ SDL_Rect dstRect;
  * 
  * @param window 
  * @param renderer 
- * @param isGameRunning 
  */
-void initGame(SDL_Window* window, SDL_Renderer*& renderer, bool *isGameRunning) {
+void initGame(SDL_Window* window, SDL_Renderer*& renderer) {
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
         // remplacer SDL_WINDOW_SHOWN par fullscreen si on veut fullscreen
         window = SDL_CreateWindow(GAME_NAME.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
         renderer = SDL_CreateRenderer(window, -1, 0);
-        *isGameRunning = true;
+        isGameRunning = true;
 
         playerTexture = IMG_LoadTexture(renderer, "assets/ethan_sprite.png");
-
         renderGame(renderer);
     }
 
@@ -36,15 +30,14 @@ void initGame(SDL_Window* window, SDL_Renderer*& renderer, bool *isGameRunning) 
 /**
  * @brief Handle SDL Events
  * 
- * @param isGameRunning 
  */
-void handleEvents(bool *isGameRunning) {
+void handleEvents() {
     SDL_Event event;
     SDL_PollEvent(&event);
 
     switch (event.type) {
         case SDL_QUIT:
-            *isGameRunning = false;
+            isGameRunning = false;
             break;
 
         default:
@@ -52,6 +45,10 @@ void handleEvents(bool *isGameRunning) {
     }
 }
 
+/**
+ * @brief Update the game every frame
+ * 
+ */
 void updateGame() {
     cnt++;
     dstRect.w = 128;

@@ -1,16 +1,13 @@
 #include <SDL2/SDL.h>
-#include <stdio.h>
 #include "../include/main.hpp"
 #include "../include/game.hpp"
 
 int main(int argc, char *argv[])
 {
-    SDL_Window *window = nullptr;
-    SDL_Renderer *renderer = nullptr;
-    initGame(window, renderer, &isGameRunning);
+    initGame(window, renderer);
 
     while (isGameRunning) {
-        handleEvents(&isGameRunning);
+        handleEvents();
         updateGame();
         renderGame(renderer);
     }
