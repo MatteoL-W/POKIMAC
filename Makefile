@@ -29,10 +29,8 @@ endif
 # Make
 
 #TODO: remplacez les build par $^
-#%.o : %.cpp
-#	   g++ -c $< 
-render: main.o Game.o
-	$(CC) -o bin/$@ build/main.o build/Game.o $(SDLFLAGS)
+render: main.o Game.o GameObject.o
+	$(CC) -o bin/$@ build/main.o build/Game.o build/GameObject.o $(SDLFLAGS)
 
 %.o: $(SFOLDER)/%.cpp $(IFOLDER)/%.hpp
 	$(CC) -o build/$@ -c $< $(CXXFLAGS)
@@ -55,5 +53,3 @@ init:
 	mkdir bin;
 
 # _____________________________________________________
-
-#TODO: mettre SDL dans le lib/

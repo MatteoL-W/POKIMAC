@@ -3,9 +3,10 @@
 #include <iostream>
 #include <string>
 #include "../include/Game.hpp"
+#include "../include/GameObject.hpp"
 
-SDL_Texture* playerTexture;
-SDL_Rect dstPlayerTexture;
+GameObject* player = nullptr;
+GameObject* enemy = nullptr;
 
 Game::Game() {}
 Game::~Game() {}
@@ -16,7 +17,8 @@ void Game::init(const std::string title) {
         renderer = SDL_CreateRenderer(window, -1, 0);
         isRunning = true;
 
-        playerTexture = IMG_LoadTexture(renderer, "assets/ethan_sprite.png");
+        player = new GameObject("assets/ethan_sprite.png", renderer, 0, 0);
+        enemy = new GameObject("assets/ethan_sprite.png", renderer, 64, 64);
         Game::render();
     }
 }
@@ -36,16 +38,14 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
-    updateCounter++;
-    dstPlayerTexture.w = 128;
-    dstPlayerTexture.h = 128;
-    dstPlayerTexture.x = updateCounter;
-    std::cout << updateCounter << " " << std::endl;
+    player->update();
+    enemy->update();
 }
 
 void Game::render() {
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, playerTexture, NULL, &dstPlayerTexture);
+    player->render();
+    enemy->render();
     SDL_RenderPresent(renderer);
 }
 
