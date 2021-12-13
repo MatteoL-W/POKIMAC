@@ -53,7 +53,8 @@ void updateGame() {
     cnt++;
     dstRect.w = 128;
     dstRect.h = 128;
-    dstRect.x = cnt / 100;
+    dstRect.x = cnt;
+    std::cout << cnt << " " << std::endl;
 }
 
 /**
