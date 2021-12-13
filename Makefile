@@ -31,8 +31,8 @@ endif
 #TODO: remplacez les build par $^
 #%.o : %.cpp
 #	   g++ -c $< 
-render: main.o game.o maths.o utils.o graphics.o
-	$(CC) -o bin/$@ build/main.o build/game.o build/maths.o build/utils.o build/graphics.o $(SDLFLAGS)
+render: main.o Game.o maths.o utils.o graphics.o
+	$(CC) -o bin/$@ build/main.o build/Game.o build/maths.o build/utils.o build/graphics.o $(SDLFLAGS)
 
 %.o: $(SFOLDER)/%.cpp $(IFOLDER)/%.hpp
 	$(CC) -o build/$@ -c $< $(CXXFLAGS)

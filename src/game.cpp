@@ -2,42 +2,32 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include <string>
-#include "../include/game.hpp"
+#include "../include/Game.hpp"
 
-int cnt = 0;
 SDL_Texture* playerTexture;
-SDL_Rect dstRect;
+SDL_Rect dstPlayerTexture;
 
-/**
- * @brief Init SDL_Window, render the first frame and update isGameRunning.
- * 
- * @param window 
- * @param renderer 
- */
-void initGame(SDL_Window* window, SDL_Renderer*& renderer) {
+Game::Game() {}
+Game::~Game() {}
+
+void Game::init(const std::string title) {
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
-        // remplacer SDL_WINDOW_SHOWN par fullscreen si on veut fullscreen
-        window = SDL_CreateWindow(GAME_NAME.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+        window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
         renderer = SDL_CreateRenderer(window, -1, 0);
-        isGameRunning = true;
+        isRunning = true;
 
         playerTexture = IMG_LoadTexture(renderer, "assets/ethan_sprite.png");
-        renderGame(renderer);
+        Game::render();
     }
-
 }
 
-/**
- * @brief Handle SDL Events
- * 
- */
-void handleEvents() {
+void Game::handleEvents() {
     SDL_Event event;
     SDL_PollEvent(&event);
 
     switch (event.type) {
         case SDL_QUIT:
-            isGameRunning = false;
+            isRunning = false;
             break;
 
         default:
@@ -45,36 +35,21 @@ void handleEvents() {
     }
 }
 
-/**
- * @brief Update the game every frame
- * 
- */
-void updateGame() {
-    cnt++;
-    dstRect.w = 128;
-    dstRect.h = 128;
-    dstRect.x = cnt;
-    std::cout << cnt << " " << std::endl;
+void Game::update() {
+    updateCounter++;
+    dstPlayerTexture.w = 128;
+    dstPlayerTexture.h = 128;
+    dstPlayerTexture.x = updateCounter;
+    std::cout << updateCounter << " " << std::endl;
 }
 
-/**
- * @brief Render the game
- * 
- * @param renderer 
- */
-void renderGame(SDL_Renderer *renderer) {
+void Game::render() {
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, playerTexture, NULL, &dstRect);
+    SDL_RenderCopy(renderer, playerTexture, NULL, &dstPlayerTexture);
     SDL_RenderPresent(renderer);
 }
 
-/**
- * @brief Close the window
- * 
- * @param window 
- * @param renderer 
- */
-void cleanGame(SDL_Window *window, SDL_Renderer *renderer) {
+void Game::clean() {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();

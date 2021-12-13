@@ -2,17 +2,30 @@
 #define FLAG_GAME
 #include <iostream>
 
-void initGame(SDL_Window* window, SDL_Renderer*& renderer);
-void handleEvents();
-void updateGame();
-void renderGame(SDL_Renderer *renderer);
-void cleanGame(SDL_Window *window, SDL_Renderer *renderer);
+class Game {
+    public:
+        Game();
+        ~Game();
 
-extern bool isGameRunning;
+        void init(const std::string title);
 
-const std::string GAME_NAME = "POKIMAC";
-const int WINDOW_WIDTH = 800;
-const int WINDOW_HEIGHT = 600;
+        void handleEvents();
+        void update();
+        void render();
+        void clean();
+
+        bool running() { return isRunning; };
+
+    private:
+        const int WINDOW_WIDTH = 800;
+        const int WINDOW_HEIGHT = 600;
+
+        bool isRunning = false;
+        int updateCounter = 0;
+        
+        SDL_Window* window;
+        SDL_Renderer* renderer;
+};
 
 
 

@@ -2,16 +2,20 @@
 #include "../include/main.hpp"
 #include "../include/game.hpp"
 
+Game *game = nullptr;
+
 int main(int argc, char *argv[])
 {
-    initGame(window, renderer);
+    game = new Game();
 
-    while (isGameRunning) {
+    game->init("POKIMAC");
+
+    while (game->running()) {
         frameStart = SDL_GetTicks();
 
-        handleEvents();
-        updateGame();
-        renderGame(renderer);
+        game->handleEvents();
+        game->update();
+        game->render();
 
         // LIMITING THE FRAMERATE
         frameTime = SDL_GetTicks() - frameStart;
