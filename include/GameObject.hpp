@@ -1,23 +1,26 @@
 #ifndef FLAG_GAME
 #define FLAG_GAME
+
 #include <iostream>
 #include "Game.hpp"
 
 class GameObject {
 
-    public:
-        GameObject(const std::string textureSheet, int x, int y);
-        ~GameObject();
+public:
+    GameObject(const std::string textureSheet, int x, int y);
 
-        void update();
-        void render();
+    ~GameObject();
 
-    private:
-        int xPosition;
-        int yPosition;
+    void update();
 
-        SDL_Texture* objectTexture;
-        SDL_Rect srcRect, dstRect;
+    void render();
+
+private:
+    int xPosition;
+    int yPosition;
+
+    SDL_Texture *objectTexture;
+    SDL_Rect srcRect, dstRect;
 };
 
 #endif

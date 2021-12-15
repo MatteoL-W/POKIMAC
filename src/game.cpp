@@ -6,17 +6,19 @@
 #include "../include/GameObject.hpp"
 #include "../include/Map.hpp"
 
-GameObject* player = nullptr;
-GameObject* enemy = nullptr;
-Map* map = nullptr;
-SDL_Renderer* Game::renderer = nullptr;
+GameObject *player = nullptr;
+GameObject *enemy = nullptr;
+Map *map = nullptr;
+SDL_Renderer *Game::renderer = nullptr;
 
 Game::Game() {}
+
 Game::~Game() {}
 
 void Game::init(const std::string title) {
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
-        window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+        window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH,
+                                  WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
         renderer = SDL_CreateRenderer(window, -1, 0);
         isRunning = true;
 
