@@ -4,9 +4,11 @@
 #include <string>
 #include "../include/Game.hpp"
 #include "../include/GameObject.hpp"
+#include "../include/Map.hpp"
 
 GameObject* player = nullptr;
 GameObject* enemy = nullptr;
+Map* map = nullptr;
 SDL_Renderer* Game::renderer = nullptr;
 
 Game::Game() {}
@@ -20,6 +22,9 @@ void Game::init(const std::string title) {
 
         player = new GameObject("assets/ethan_sprite.png", 0, 0);
         enemy = new GameObject("assets/ethan_sprite.png", 64, 64);
+        map = new Map();
+
+        //TODO:peut remove le render
         Game::render();
     }
 }
@@ -45,6 +50,7 @@ void Game::update() {
 
 void Game::render() {
     SDL_RenderClear(renderer);
+    map->drawMap();
     player->render();
     enemy->render();
     SDL_RenderPresent(renderer);

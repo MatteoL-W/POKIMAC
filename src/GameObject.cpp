@@ -23,8 +23,8 @@ void GameObject::update() {
     srcRect.x = 0;
     srcRect.y = 0;
 
-    dstRect.h = srcRect.h * 2;
-    dstRect.w = srcRect.w * 2;
+    dstRect.h = 32;
+    dstRect.w = 32;
     dstRect.x = xPosition;
     dstRect.y = yPosition;
 }
