@@ -6,8 +6,8 @@
 class GameObject {
 
     public:
-        GameObject(const string textureSheet, SDL_Renderer* rendererParameter, int x, int y);
-        ~GameObject()
+        GameObject(const std::string textureSheet, int x, int y);
+        ~GameObject();
 
         void update();
         void render();
@@ -16,7 +16,6 @@ class GameObject {
         int xPosition;
         int yPosition;
 
-        SDL_Renderer* renderer;
         SDL_Texture* objectTexture;
         SDL_Rect srcRect, dstRect;
 };

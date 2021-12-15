@@ -4,9 +4,8 @@
 #include "../include/Game.hpp"
 #include "../include/GameObject.hpp"
 
-GameObject::GameObject(const std::string textureSheet, SDL_Renderer* rendererParameter, int x, int y) {
-    renderer = rendererParameter;
-    objectTexture = IMG_LoadTexture(renderer, textureSheet.c_str());
+GameObject::GameObject(const std::string textureSheet, int x, int y) {
+    objectTexture = IMG_LoadTexture(Game::renderer, textureSheet.c_str());
 
     xPosition = x;
     yPosition = y;
@@ -31,5 +30,5 @@ void GameObject::update() {
 }
 
 void GameObject::render() {
-    SDL_RenderCopy(renderer, objectTexture, &srcRect, &dstRect);
+    SDL_RenderCopy(Game::renderer, objectTexture, &srcRect, &dstRect);
 }

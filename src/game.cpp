@@ -7,6 +7,7 @@
 
 GameObject* player = nullptr;
 GameObject* enemy = nullptr;
+SDL_Renderer* Game::renderer = nullptr;
 
 Game::Game() {}
 Game::~Game() {}
@@ -17,8 +18,8 @@ void Game::init(const std::string title) {
         renderer = SDL_CreateRenderer(window, -1, 0);
         isRunning = true;
 
-        player = new GameObject("assets/ethan_sprite.png", renderer, 0, 0);
-        enemy = new GameObject("assets/ethan_sprite.png", renderer, 64, 64);
+        player = new GameObject("assets/ethan_sprite.png", 0, 0);
+        enemy = new GameObject("assets/ethan_sprite.png", 64, 64);
         Game::render();
     }
 }

@@ -16,6 +16,8 @@ class Game {
 
         bool running() { return isRunning; };
 
+        static SDL_Renderer* renderer;
+
     private:
         const int WINDOW_WIDTH = 800;
         const int WINDOW_HEIGHT = 600;
@@ -24,13 +26,13 @@ class Game {
         int updateCounter = 0;
 
         SDL_Window* window;
-        SDL_Renderer* renderer;
 };
 
 /*TODO: pouvoir retirer ça sans provoquer de bugs! (dans le makefile, lié game.cpp à gameobject.hpp aussi)*/
 class GameObject {
+
     public:
-        GameObject(const std::string textureSheet, SDL_Renderer* rendererParameter, int x, int y);
+        GameObject(const std::string textureSheet, int x, int y);
         ~GameObject();
 
         void update();
@@ -40,10 +42,8 @@ class GameObject {
         int xPosition;
         int yPosition;
 
-        SDL_Renderer* renderer;
         SDL_Texture* objectTexture;
         SDL_Rect srcRect, dstRect;
-
 };
 
 #endif
