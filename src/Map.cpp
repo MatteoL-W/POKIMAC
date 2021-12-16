@@ -27,6 +27,9 @@ int first_level[Map::MAP_HEIGHT][Map::MAP_WIDTH]{
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
+/**
+ * @brief Constructor of the Map object
+ */
 Map::Map() {
     tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset_map_texture.png");
 
@@ -43,27 +46,34 @@ Map::~Map() {
 
 }
 
+/**
+ * @Brief Copy the external map into our map system
+ * @param arr
+ */
 void Map::loadMap(int arr[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     SDL_memmove(map, arr, sizeof(map));
 }
 
+/**
+ * @brief Draw the map (every frame)
+ */
 void Map::drawMap() {
-    int type = 0;
+    int cellType = 0;
 
     for (int row = 0; row < Map::MAP_HEIGHT; row++) {
         for (int column = 0; column < Map::MAP_WIDTH; column++) {
-            type = map[row][column];
+            cellType = map[row][column];
             dest.x = column * 32;
             dest.y = row * 32;
 
-            switch (type) {
-                case 0:
+            switch (cellType) {
+                case MAP_WATER:
                     src.x = 64;
                     break;
-                case 1:
+                case MAP_GRASS:
                     src.x = 32;
                     break;
-                case 2:
+                case MAP_DIRT:
                     src.x = 0;
                     break;
                 default:

@@ -1,5 +1,8 @@
-#ifndef FLAG_MAP
-#define FLAG_MAP
+#pragma once
+
+const int MAP_WATER = 0;
+const int MAP_GRASS = 1;
+const int MAP_DIRT = 2;
 
 class Map {
 public:
@@ -19,5 +22,3 @@ private:
     SDL_Texture *tilesetMapTexture;
     int map[MAP_HEIGHT][MAP_WIDTH];
 };
-
-#endif

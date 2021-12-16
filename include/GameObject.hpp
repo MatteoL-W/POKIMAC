@@ -1,5 +1,4 @@
-#ifndef FLAG_GAME
-#define FLAG_GAME
+#pragma once
 
 #include <iostream>
 #include "Game.hpp"
@@ -22,5 +21,3 @@ private:
     SDL_Texture *objectTexture;
     SDL_Rect srcRect, dstRect;
 };
-
-#endif

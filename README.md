@@ -5,12 +5,10 @@ Developped by [Emily-Rose Stritch](https://github.com/emilyrosest) and [Mattéo 
 ## Installation
 
 Library needed:
-
 - SDL2
 - SDL2_Image
 
 ## How to play ?
-
 Just have fun !
 
 ## Thanks

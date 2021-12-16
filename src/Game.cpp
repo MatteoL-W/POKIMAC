@@ -15,6 +15,10 @@ Game::Game() {}
 
 Game::~Game() {}
 
+/**
+ * @brief Initialize the game (assign the window, renderer, define the game as running
+ * @param title
+ */
 void Game::init(const std::string title) {
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
         window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH,
@@ -25,12 +29,12 @@ void Game::init(const std::string title) {
         player = new GameObject("assets/ethan_sprite.png", 0, 0);
         enemy = new GameObject("assets/ethan_sprite.png", 64, 64);
         map = new Map();
-
-        //TODO:peut remove le render
-        Game::render();
     }
 }
 
+/**
+ * @brief Handle SDL Events
+ */
 void Game::handleEvents() {
     SDL_Event event;
     SDL_PollEvent(&event);
@@ -45,11 +49,17 @@ void Game::handleEvents() {
     }
 }
 
+/**
+ * @brief Update objects in the game
+ */
 void Game::update() {
     player->update();
     enemy->update();
 }
 
+/**
+ * @brief Render the game (map and objects)
+ */
 void Game::render() {
     SDL_RenderClear(renderer);
     map->drawMap();
@@ -58,6 +68,9 @@ void Game::render() {
     SDL_RenderPresent(renderer);
 }
 
+/**
+ * @brief Quit the game properly
+ */
 void Game::clean() {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
