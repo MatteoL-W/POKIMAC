@@ -100,29 +100,36 @@ void Map::drawMap() {
  * @param direction
  */
 void Map::updatePlayer(int direction) {
+    int xOperator = 0;
+    int yOperator = 0;
+
     switch (direction) {
         case MOVE_DOWN:
-            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = first_level[MAP_PLAYER_Y][MAP_PLAYER_X];
-            ++MAP_PLAYER_Y;
-            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
+            yOperator = 1;
             break;
 
         case MOVE_UP:
-            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = first_level[MAP_PLAYER_Y][MAP_PLAYER_X];
-            --MAP_PLAYER_Y;
-            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
+            yOperator = -1;
             break;
 
         case MOVE_RIGHT:
-            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = first_level[MAP_PLAYER_Y][MAP_PLAYER_X];
-            ++MAP_PLAYER_X;
-            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
+            xOperator = 1;
             break;
 
         case MOVE_LEFT:
-            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = first_level[MAP_PLAYER_Y][MAP_PLAYER_X];
-            --MAP_PLAYER_X;
-            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
+            xOperator = -1;
             break;
+
+        default:
+            break;
+    }
+
+    int futurePlayerCellTexture = mapArray[MAP_PLAYER_Y + yOperator][MAP_PLAYER_X + xOperator];
+
+    if (futurePlayerCellTexture >= 1 && futurePlayerCellTexture <= 10) {
+        mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = first_level[MAP_PLAYER_Y][MAP_PLAYER_X];
+        MAP_PLAYER_Y = MAP_PLAYER_Y + yOperator;
+        MAP_PLAYER_X = MAP_PLAYER_X + xOperator;
+        mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
     }
 }

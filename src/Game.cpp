@@ -39,16 +39,16 @@ void Game::handleEvents() {
 
     if (event.type == SDL_KEYDOWN) {
         switch(event.key.keysym.sym) {
-            case SDLK_z:
+            case SDLK_z: case SDLK_UP:
                 map->updatePlayer(MOVE_UP);
                 break;
-            case SDLK_q:
+            case SDLK_q: case SDLK_LEFT:
                 map->updatePlayer(MOVE_LEFT);
                 break;
-            case SDLK_d:
+            case SDLK_d: case SDLK_RIGHT:
                 map->updatePlayer(MOVE_RIGHT);
                 break;
-            case SDLK_s:
+            case SDLK_s: case SDLK_DOWN:
                 map->updatePlayer(MOVE_DOWN);
                 break;
             default:
@@ -61,7 +61,6 @@ void Game::handleEvents() {
  * @brief Update objects in the game
  */
 void Game::update() {
-    //map->updatePlayer(MOVE_RIGHT);
 }
 
 /**
