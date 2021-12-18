@@ -3,11 +3,8 @@
 #include <iostream>
 #include <string>
 #include "../include/Game.hpp"
-#include "../include/GameObject.hpp"
 #include "../include/Map.hpp"
 
-GameObject *player = nullptr;
-GameObject *enemy = nullptr;
 Map *map = nullptr;
 SDL_Renderer *Game::renderer = nullptr;
 
@@ -26,8 +23,6 @@ void Game::init(const std::string title) {
         renderer = SDL_CreateRenderer(window, -1, 0);
         isRunning = true;
 
-        player = new GameObject("assets/ethan_sprite.png", 128, 128);
-        enemy = new GameObject("assets/ethan_sprite.png", 64, 64);
         map = new Map();
     }
 }
@@ -53,8 +48,7 @@ void Game::handleEvents() {
  * @brief Update objects in the game
  */
 void Game::update() {
-    player->update();
-    enemy->update();
+
 }
 
 /**
@@ -63,8 +57,6 @@ void Game::update() {
 void Game::render() {
     SDL_RenderClear(renderer);
     map->drawMap();
-    player->render();
-    enemy->render();
     SDL_RenderPresent(renderer);
 }
 

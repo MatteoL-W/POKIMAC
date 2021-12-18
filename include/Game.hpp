@@ -27,7 +27,6 @@ private:
     const int WINDOW_HEIGHT = 600;
 
     bool isRunning = false;
-    int updateCounter = 0;
 
     SDL_Window *window;
 };

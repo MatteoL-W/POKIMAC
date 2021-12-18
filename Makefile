@@ -29,8 +29,8 @@ endif
 # Make
 
 #TODO: remplacez les build par $^
-render: main.o Game.o GameObject.o Map.o
-	$(CC) -o bin/$@ build/main.o build/Game.o build/GameObject.o build/Map.o $(SDLFLAGS)
+render: main.o Game.o Map.o
+	$(CC) -o bin/$@ build/main.o build/Game.o build/Map.o $(SDLFLAGS)
 
 %.o: $(SFOLDER)/%.cpp $(IFOLDER)/%.hpp
 	$(CC) -o build/$@ -c $< $(CXXFLAGS)

@@ -1,13 +1,11 @@
 #include <SDL2/SDL.h>
 #include "../include/main.hpp"
 #include "../include/Game.hpp"
-#include "../include/GameObject.hpp"
 
 Game *game = nullptr;
 
 int main(int argc, char *argv[]) {
     game = new Game();
-
     game->init("POKIMAC");
 
     while (game->running()) {
