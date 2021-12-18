@@ -11,7 +11,7 @@ public:
 
     ~Map();
 
-    void loadMap(int arr[MAP_HEIGHT][MAP_WIDTH]);
+    void loadMap(int array[MAP_HEIGHT][MAP_WIDTH]);
 
     void drawMap();
 
@@ -19,5 +19,5 @@ private:
     SDL_Rect src, dest, srcPlayer, destPlayer;
     SDL_Texture* tilesetMapTexture;
     SDL_Texture* playerMapTexture;
-    int map[MAP_HEIGHT][MAP_WIDTH];
+    int mapArray[MAP_HEIGHT][MAP_WIDTH];
 };

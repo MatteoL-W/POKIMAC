@@ -41,6 +41,9 @@ Map::Map() {
     src.h = dest.h = 32;
 
     dest.x = dest.y = 0;
+
+    srcPlayer.h = srcPlayer.w = 64;
+    destPlayer.h = destPlayer.w = 32;
 }
 
 Map::~Map() {
@@ -52,9 +55,9 @@ Map::~Map() {
  * @param array
  */
 void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
-    SDL_memmove(map, array, sizeof(map));
+    SDL_memmove(mapArray, array, sizeof(mapArray));
 
-    map[0][10] = MAP_PLAYER;
+    mapArray[0][10] = MAP_PLAYER;
 }
 
 /**
@@ -85,9 +88,7 @@ void Map::drawMap() {
 
             SDL_RenderCopy(Game::renderer, tilesetMapTexture, &src, &dest);
 
-            if (map[row][column] == MAP_PLAYER) {
-                srcPlayer.h = srcPlayer.w = 64;
-                destPlayer.h = destPlayer.w = 32;
+            if (mapArray[row][column] == MAP_PLAYER) {
                 SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destPlayer);
             }
         }
