@@ -57,11 +57,11 @@ Map::~Map() {
 void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     SDL_memmove(mapArray, array, sizeof(mapArray));
 
-    mapArray[0][10] = MAP_PLAYER;
+    mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
 }
 
 /**
- * @brief Draw the map (every frame)
+ * @brief Draw the map
  */
 void Map::drawMap() {
     int cellType = 0;
@@ -92,5 +92,37 @@ void Map::drawMap() {
                 SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destPlayer);
             }
         }
+    }
+}
+
+/**
+ * @brief Player move down, up, right or left
+ * @param direction
+ */
+void Map::updatePlayer(int direction) {
+    switch (direction) {
+        case MOVE_DOWN:
+            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = first_level[MAP_PLAYER_Y][MAP_PLAYER_X];
+            ++MAP_PLAYER_Y;
+            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
+            break;
+
+        case MOVE_UP:
+            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = first_level[MAP_PLAYER_Y][MAP_PLAYER_X];
+            --MAP_PLAYER_Y;
+            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
+            break;
+
+        case MOVE_RIGHT:
+            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = first_level[MAP_PLAYER_Y][MAP_PLAYER_X];
+            ++MAP_PLAYER_X;
+            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
+            break;
+
+        case MOVE_LEFT:
+            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = first_level[MAP_PLAYER_Y][MAP_PLAYER_X];
+            --MAP_PLAYER_X;
+            mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
+            break;
     }
 }

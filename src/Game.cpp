@@ -31,16 +31,29 @@ void Game::init(const std::string title) {
  * @brief Handle SDL Events
  */
 void Game::handleEvents() {
-    SDL_Event event;
     SDL_PollEvent(&event);
 
-    switch (event.type) {
-        case SDL_QUIT:
-            isRunning = false;
-            break;
+    if (event.type == SDL_QUIT) {
+        isRunning = false;
+    }
 
-        default:
-            break;
+    if (event.type == SDL_KEYDOWN) {
+        switch(event.key.keysym.sym) {
+            case SDLK_z:
+                map->updatePlayer(MOVE_UP);
+                break;
+            case SDLK_q:
+                map->updatePlayer(MOVE_LEFT);
+                break;
+            case SDLK_d:
+                map->updatePlayer(MOVE_RIGHT);
+                break;
+            case SDLK_s:
+                map->updatePlayer(MOVE_DOWN);
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -48,7 +61,7 @@ void Game::handleEvents() {
  * @brief Update objects in the game
  */
 void Game::update() {
-
+    //map->updatePlayer(MOVE_RIGHT);
 }
 
 /**

@@ -18,3 +18,10 @@ const int MAP_PLAYER = 10;
 // _____________________________________________________
 // Decors [40 - ??]
 
+
+// _____________________________________________________
+// DIRECTION [100 - 103]
+const int MOVE_RIGHT = 100;
+const int MOVE_LEFT = 101;
+const int MOVE_DOWN = 102;
+const int MOVE_UP = 103;
