@@ -8,12 +8,12 @@ int first_level[Map::MAP_HEIGHT][Map::MAP_WIDTH]{
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -39,7 +39,6 @@ Map::Map() {
     src.x = src.y = 0;
     src.w = dest.w = 32;
     src.h = dest.h = 32;
-
     dest.x = dest.y = 0;
 
     srcPlayer.h = srcPlayer.w = 64;
@@ -99,24 +98,28 @@ void Map::drawMap() {
  * @brief Player move down, up, right or left
  * @param direction
  */
-void Map::updatePlayer(int direction) {
+void Map::updatePlayerPosition(int direction) {
     int xOperator = 0;
     int yOperator = 0;
 
     switch (direction) {
         case MOVE_DOWN:
+            srcPlayer.y = 64 * 0;
             yOperator = 1;
             break;
 
         case MOVE_UP:
+            srcPlayer.y = 64 * 3;
             yOperator = -1;
             break;
 
         case MOVE_RIGHT:
+            srcPlayer.y = 64 * 2;
             xOperator = 1;
             break;
 
         case MOVE_LEFT:
+            srcPlayer.y = 64 * 1;
             xOperator = -1;
             break;
 
@@ -132,4 +135,14 @@ void Map::updatePlayer(int direction) {
         MAP_PLAYER_X = MAP_PLAYER_X + xOperator;
         mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
     }
+}
+
+void Map::updatePlayerSprite() {
+    int speed = 100;
+    int frames = 4;
+    srcPlayer.x = srcPlayer.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
+}
+
+void Map::updatePlayerSpriteToDefault() {
+    srcPlayer.x = 0;
 }

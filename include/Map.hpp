@@ -1,7 +1,6 @@
 #pragma once
 
 #include "MapTileFlag.hpp"
-#include <iostream>
 
 class Map {
 public:
@@ -18,7 +17,11 @@ public:
 
     void drawMap();
 
-    void updatePlayer(int direction);
+    void updatePlayerPosition(int direction);
+
+    void updatePlayerSprite();
+
+    void updatePlayerSpriteToDefault();
 
 private:
     SDL_Rect src, dest, srcPlayer, destPlayer;
