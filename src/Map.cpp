@@ -32,6 +32,7 @@ int first_level[Map::MAP_HEIGHT][Map::MAP_WIDTH]{
  */
 Map::Map() {
     tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset_map_texture.png");
+    playerMapTexture = IMG_LoadTexture(Game::renderer, "assets/ethan_sprite.png");
 
     loadMap(first_level);
 
@@ -48,10 +49,12 @@ Map::~Map() {
 
 /**
  * @Brief Copy the external map into our map system
- * @param arr
+ * @param array
  */
-void Map::loadMap(int arr[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
-    SDL_memmove(map, arr, sizeof(map));
+void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
+    SDL_memmove(map, array, sizeof(map));
+
+    map[0][10] = MAP_PLAYER;
 }
 
 /**
@@ -62,9 +65,9 @@ void Map::drawMap() {
 
     for (int row = 0; row < Map::MAP_HEIGHT; row++) {
         for (int column = 0; column < Map::MAP_WIDTH; column++) {
-            cellType = map[row][column];
-            dest.x = column * 32;
-            dest.y = row * 32;
+            cellType = first_level[row][column];
+            dest.x = destPlayer.x = column * 32;
+            dest.y = destPlayer.y = row * 32;
 
             switch (cellType) {
                 case MAP_WATER:
@@ -81,6 +84,12 @@ void Map::drawMap() {
             }
 
             SDL_RenderCopy(Game::renderer, tilesetMapTexture, &src, &dest);
+
+            if (map[row][column] == MAP_PLAYER) {
+                srcPlayer.h = srcPlayer.w = 64;
+                destPlayer.h = destPlayer.w = 32;
+                SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destPlayer);
+            }
         }
     }
 }

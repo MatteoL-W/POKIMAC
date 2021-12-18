@@ -26,7 +26,7 @@ void Game::init(const std::string title) {
         renderer = SDL_CreateRenderer(window, -1, 0);
         isRunning = true;
 
-        player = new GameObject("assets/ethan_sprite.png", 0, 0);
+        player = new GameObject("assets/ethan_sprite.png", 128, 128);
         enemy = new GameObject("assets/ethan_sprite.png", 64, 64);
         map = new Map();
     }

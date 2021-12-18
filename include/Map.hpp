@@ -1,8 +1,6 @@
 #pragma once
 
-const int MAP_WATER = 0;
-const int MAP_GRASS = 1;
-const int MAP_DIRT = 2;
+#include "MapTileFlag.hpp"
 
 class Map {
 public:
@@ -18,7 +16,8 @@ public:
     void drawMap();
 
 private:
-    SDL_Rect src, dest;
-    SDL_Texture *tilesetMapTexture;
+    SDL_Rect src, dest, srcPlayer, destPlayer;
+    SDL_Texture* tilesetMapTexture;
+    SDL_Texture* playerMapTexture;
     int map[MAP_HEIGHT][MAP_WIDTH];
 };
