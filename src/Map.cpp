@@ -33,13 +33,17 @@ int first_level[Map::MAP_HEIGHT][Map::MAP_WIDTH]{
 Map::Map() {
     tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset_map_texture.png");
     playerMapTexture = IMG_LoadTexture(Game::renderer, "assets/ethan_sprite.png");
+    pokemonMapTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
 
     loadMap(first_level);
 
-    src.x = src.y = 0;
-    src.w = dest.w = 32;
-    src.h = dest.h = 32;
-    dest.x = dest.y = 0;
+    srcTexture.x = srcTexture.y = 0;
+    srcTexture.w = destTexture.w = 32;
+    srcTexture.h = destTexture.h = 32;
+    destTexture.x = destTexture.y = 0;
+
+    srcPokemon = srcTexture;
+    destPokemon = destTexture;
 
     srcPlayer.h = srcPlayer.w = 64;
     destPlayer.h = destPlayer.w = 32;
@@ -57,6 +61,7 @@ void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     SDL_memmove(mapArray, array, sizeof(mapArray));
 
     mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
+    mapArray[MAP_PLAYER_Y+2][MAP_PLAYER_X] = MAP_POKEMON_CARAPUCE;
 }
 
 /**
@@ -68,27 +73,31 @@ void Map::drawMap() {
     for (int row = 0; row < Map::MAP_HEIGHT; row++) {
         for (int column = 0; column < Map::MAP_WIDTH; column++) {
             cellType = first_level[row][column];
-            dest.x = destPlayer.x = column * 32;
-            dest.y = destPlayer.y = row * 32;
+            destTexture.x = destPlayer.x = destPokemon.x = column * 32;
+            destTexture.y = destPlayer.y = destPokemon.y = row * 32;
 
             switch (cellType) {
                 case MAP_WATER:
-                    src.x = 64;
+                    srcTexture.x = 64;
                     break;
                 case MAP_GRASS:
-                    src.x = 32;
+                    srcTexture.x = 32;
                     break;
                 case MAP_DIRT:
-                    src.x = 0;
+                    srcTexture.x = 0;
                     break;
                 default:
                     break;
             }
 
-            SDL_RenderCopy(Game::renderer, tilesetMapTexture, &src, &dest);
+            SDL_RenderCopy(Game::renderer, tilesetMapTexture, &srcTexture, &destTexture);
 
             if (mapArray[row][column] == MAP_PLAYER) {
                 SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destPlayer);
+            }
+
+            if (mapArray[row][column] >= 20 && mapArray[row][column] <= 40) {
+                SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &destPokemon);
             }
         }
     }

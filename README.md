@@ -13,3 +13,4 @@ Just have fun !
 
 ## Thanks
 - **Carl Brich** from https://www.youtube.com/c/CarlBirch
+- https://www.spriters-resource.com/

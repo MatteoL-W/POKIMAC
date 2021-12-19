@@ -24,8 +24,9 @@ public:
     void updatePlayerSpriteToDefault();
 
 private:
-    SDL_Rect src, dest, srcPlayer, destPlayer;
+    SDL_Rect srcTexture, destTexture, srcPlayer, destPlayer, srcPokemon, destPokemon;
     SDL_Texture* tilesetMapTexture;
     SDL_Texture* playerMapTexture;
+    SDL_Texture* pokemonMapTexture;
     int mapArray[MAP_HEIGHT][MAP_WIDTH];
 };

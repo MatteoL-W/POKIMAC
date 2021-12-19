@@ -66,7 +66,6 @@ void Game::handleEvents() {
  * @brief Update objects in the game
  */
 void Game::update() {
-
 }
 
 /**
