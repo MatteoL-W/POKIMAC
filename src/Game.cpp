@@ -5,7 +5,7 @@
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
 
-Map *map = nullptr;
+Map* map = nullptr;
 SDL_Renderer *Game::renderer = nullptr;
 
 Game::Game() {}

@@ -2,6 +2,9 @@
 #include "SDL2/SDL_image.h"
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
+#include "../include/Pokemon.hpp"
+
+Pokemon* pokemon = nullptr;
 
 //TODO:dégager ça dans un fichier externe
 int first_level[Map::MAP_HEIGHT][Map::MAP_WIDTH]{
@@ -60,6 +63,7 @@ Map::~Map() {
 void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     SDL_memmove(mapArray, array, sizeof(mapArray));
 
+    pokemon = new Pokemon;
     mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
     mapArray[MAP_PLAYER_Y+2][MAP_PLAYER_X] = MAP_POKEMON_CARAPUCE;
 }

@@ -2,17 +2,21 @@
 
 #include <iostream>
 
+const int MAX_POKEMON = 1;
+
 class Pokemon {
 public:
-    Pokemon();
+    Pokemon(int pokemonId = rand() % MAX_POKEMON);
 
     ~Pokemon();
 
+    std::string getName() { return name; };
 private:
-    int SPRITE_X, SPRITE_Y;
     std::string name;
     int health_point;
-    int type[2];
     int attack;
     int defense;
+    int sprite_x;
+    int sprite_y;
+    int type[2];
 };
