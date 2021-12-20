@@ -5,7 +5,7 @@
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
 
-Map* map = nullptr;
+Map *map = nullptr;
 SDL_Renderer *Game::renderer = nullptr;
 
 Game::Game() {}
@@ -39,17 +39,21 @@ void Game::handleEvents() {
 
     if (event.type == SDL_KEYDOWN) {
         map->updatePlayerSprite();
-        switch(event.key.keysym.sym) {
-            case SDLK_z: case SDLK_UP:
+        switch (event.key.keysym.sym) {
+            case SDLK_z:
+            case SDLK_UP:
                 map->updatePlayerPosition(MOVE_UP);
                 break;
-            case SDLK_q: case SDLK_LEFT:
+            case SDLK_q:
+            case SDLK_LEFT:
                 map->updatePlayerPosition(MOVE_LEFT);
                 break;
-            case SDLK_d: case SDLK_RIGHT:
+            case SDLK_d:
+            case SDLK_RIGHT:
                 map->updatePlayerPosition(MOVE_RIGHT);
                 break;
-            case SDLK_s: case SDLK_DOWN:
+            case SDLK_s:
+            case SDLK_DOWN:
                 map->updatePlayerPosition(MOVE_DOWN);
                 break;
             default:

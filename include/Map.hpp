@@ -1,13 +1,14 @@
 #pragma once
 
 #include "MapTileFlag.hpp"
+#include "Pokemon.hpp"
 
 class Map {
 public:
-    static const int MAP_HEIGHT = 20;
     static const int MAP_WIDTH = 25;
-    int MAP_PLAYER_Y = 3;
+    static const int MAP_HEIGHT = 20;
     int MAP_PLAYER_X = 8;
+    int MAP_PLAYER_Y = 3;
 
     Map();
 
@@ -23,10 +24,13 @@ public:
 
     void updatePlayerSpriteToDefault();
 
+    void placePokemon(Pokemon* pokemon, int x, int y);
+
 private:
-    SDL_Rect srcTexture, destTexture, srcPlayer, destPlayer, srcPokemon, destPokemon;
-    SDL_Texture* tilesetMapTexture;
-    SDL_Texture* playerMapTexture;
-    SDL_Texture* pokemonMapTexture;
+    SDL_Rect srcTexture, srcPlayer, srcPokemon;
+    SDL_Rect destTexture;
+    SDL_Texture *tilesetMapTexture;
+    SDL_Texture *playerMapTexture;
+    SDL_Texture *pokemonMapTexture;
     int mapArray[MAP_HEIGHT][MAP_WIDTH];
 };

@@ -14,7 +14,7 @@ const int MAP_PLAYER = 10;
 
 // _____________________________________________________
 // Pokemon [20 - 40]
-const int MAP_POKEMON_CARAPUCE = 40;
+// Dynamic value
 
 // _____________________________________________________
 // Decors [40 - ??]

@@ -4,7 +4,8 @@
 #include "../include/Map.hpp"
 #include "../include/Pokemon.hpp"
 
-Pokemon* pokemon = nullptr;
+Pokemon *bulbizarre = nullptr;
+int pokemonCounter = 20;
 
 //TODO:dégager ça dans un fichier externe
 int first_level[Map::MAP_HEIGHT][Map::MAP_WIDTH]{
@@ -43,13 +44,10 @@ Map::Map() {
     srcTexture.x = srcTexture.y = 0;
     srcTexture.w = destTexture.w = 32;
     srcTexture.h = destTexture.h = 32;
-    destTexture.x = destTexture.y = 0;
-
-    srcPokemon = srcTexture;
-    destPokemon = destTexture;
-
     srcPlayer.h = srcPlayer.w = 64;
-    destPlayer.h = destPlayer.w = 32;
+    srcPokemon = srcTexture;
+
+    destTexture.x = destTexture.y = 0;
 }
 
 Map::~Map() {
@@ -63,9 +61,10 @@ Map::~Map() {
 void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     SDL_memmove(mapArray, array, sizeof(mapArray));
 
-    pokemon = new Pokemon;
     mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
-    mapArray[MAP_PLAYER_Y+2][MAP_PLAYER_X] = MAP_POKEMON_CARAPUCE;
+
+    bulbizarre = new Pokemon();
+    placePokemon(bulbizarre, MAP_PLAYER_X, MAP_PLAYER_Y + 2);
 }
 
 /**
@@ -77,8 +76,8 @@ void Map::drawMap() {
     for (int row = 0; row < Map::MAP_HEIGHT; row++) {
         for (int column = 0; column < Map::MAP_WIDTH; column++) {
             cellType = first_level[row][column];
-            destTexture.x = destPlayer.x = destPokemon.x = column * 32;
-            destTexture.y = destPlayer.y = destPokemon.y = row * 32;
+            destTexture.x = column * 32;
+            destTexture.y = row * 32;
 
             switch (cellType) {
                 case MAP_WATER:
@@ -97,11 +96,13 @@ void Map::drawMap() {
             SDL_RenderCopy(Game::renderer, tilesetMapTexture, &srcTexture, &destTexture);
 
             if (mapArray[row][column] == MAP_PLAYER) {
-                SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destPlayer);
+                SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destTexture);
             }
 
-            if (mapArray[row][column] >= 20 && mapArray[row][column] <= 40) {
-                SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &destPokemon);
+            if (row == bulbizarre->getRow() && column == bulbizarre->getColumn()) {
+                srcPokemon.x = bulbizarre->getXSpriteCoordinate();
+                srcPokemon.y = bulbizarre->getYSpriteCoordinate();
+                SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &destTexture);
             }
         }
     }
@@ -150,12 +151,28 @@ void Map::updatePlayerPosition(int direction) {
     }
 }
 
+/**
+ * @brief Animate the player sprite
+ */
 void Map::updatePlayerSprite() {
     int speed = 100;
     int frames = 4;
     srcPlayer.x = srcPlayer.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
 }
 
+/**
+ * @brief Place the player sprite to the original position
+ */
 void Map::updatePlayerSpriteToDefault() {
     srcPlayer.x = 0;
+}
+
+/**
+ * @brief Place a pokemon object on the map
+ * @param pokemon, x, y
+ */
+void Map::placePokemon(Pokemon* pokemon, int x, int y) {
+    mapArray[y][x] = pokemonCounter;
+    pokemon->setCoordinates(x, y);
+    pokemonCounter++;
 }
