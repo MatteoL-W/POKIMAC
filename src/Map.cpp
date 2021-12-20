@@ -4,7 +4,8 @@
 #include "../include/Map.hpp"
 #include "../include/Pokemon.hpp"
 
-Pokemon *bulbizarre = nullptr;
+Pokemon* bulbizarre = nullptr;
+Pokemon* carapuce = nullptr;
 int pokemonCounter = 20;
 
 //TODO:dégager ça dans un fichier externe
@@ -63,8 +64,13 @@ void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
 
     mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
 
-    bulbizarre = new Pokemon();
+    bulbizarre = new Pokemon(0);
     placePokemon(bulbizarre, MAP_PLAYER_X, MAP_PLAYER_Y + 2);
+    carapuce = new Pokemon(true, 1);
+    placePokemon(carapuce, MAP_PLAYER_X - 2, MAP_PLAYER_Y + 2);
+
+    pokemon[0] = *bulbizarre;
+    pokemon[1] = *carapuce;
 }
 
 /**
@@ -99,10 +105,12 @@ void Map::drawMap() {
                 SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destTexture);
             }
 
-            if (row == bulbizarre->getRow() && column == bulbizarre->getColumn()) {
-                srcPokemon.x = bulbizarre->getXSpriteCoordinate();
-                srcPokemon.y = bulbizarre->getYSpriteCoordinate();
-                SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &destTexture);
+            for (int i = 0; i < (pokemonCounter-20); i++) {
+                if (row == pokemon[i].getRow() && column == pokemon[i].getColumn()) {
+                    srcPokemon.x = pokemon[i].getXSpriteCoordinate();
+                    srcPokemon.y = pokemon[i].getYSpriteCoordinate();
+                    SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &destTexture);
+                }
             }
         }
     }
@@ -141,6 +149,8 @@ void Map::updatePlayerPosition(int direction) {
             break;
     }
 
+    // On remet l'ancien emplacement du joueur à l'emplacement de la carte originale
+    // On vérifie que le nouvel endroit où le joueur va marcher est bien une "walkable texture [1-10] dans MapTileFlag.hpp"
     int futurePlayerCellTexture = mapArray[MAP_PLAYER_Y + yOperator][MAP_PLAYER_X + xOperator];
 
     if (futurePlayerCellTexture >= 1 && futurePlayerCellTexture <= 10) {

@@ -37,6 +37,8 @@ void Game::handleEvents() {
         isRunning = false;
     }
 
+    // Si une touche est enfoncée, on vérifie si elle correspond à une touche assignée au mouvement (flèches et ZQSD)
+    // On enclenche le déplacement si c'est le cas
     if (event.type == SDL_KEYDOWN) {
         map->updatePlayerSprite();
         switch (event.key.keysym.sym) {

@@ -1,1 +1,2 @@
 Bulbizarre 45 49 49 384 0 1 2
+Carapuce 45 49 49 0 0 1 2

@@ -27,6 +27,7 @@ public:
     void placePokemon(Pokemon* pokemon, int x, int y);
 
 private:
+    Pokemon pokemon[2];
     SDL_Rect srcTexture, srcPlayer, srcPokemon;
     SDL_Rect destTexture;
     SDL_Texture *tilesetMapTexture;

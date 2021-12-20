@@ -3,12 +3,18 @@
 #include "../include/Map.hpp"
 #include "../include/Pokemon.hpp"
 #include <fstream>
+#include <iostream>
 
 /**
- * @brief Initialize a new pokemon
- * @param pokemonId
+ * @brief Initialize a new pokemon set from the txt database
+ * @param isWild, pokemonId
  */
-Pokemon::Pokemon(bool isWild, int pokemonId) {
+Pokemon::Pokemon(int id, bool isWild) {
+    // On récupère le contenu du fichier database/pokemon.txt, on le choisi en fonction du paramètre pokemonId
+    // S'il n'est pas renseigné, il est assigné aléatoire (voir Pokemon.hpp)
+    // On boucle sur chaque ligne jusqu'à arriver au pokemonId
+    // Le pokemon assigné à cette ligne est ainsi créée dans le nouvel objet pokemon initié
+    //TODO: essayer de ne pas faire boucler mais de choper directement la ligne
     std::ifstream pokemon_db("database/pokemon.txt");
 
     if (pokemon_db) {
@@ -17,7 +23,7 @@ Pokemon::Pokemon(bool isWild, int pokemonId) {
         std::string pokename;
 
         while (pokemon_db >> pokename >> hp >> att >> def >> x_spr >> y_spr >> type1 >> type2) {
-            if (lines == pokemonId) {
+            if (lines == id) {
                 name = pokename;
                 health_point = hp;
                 attack = att;
@@ -38,6 +44,11 @@ Pokemon::Pokemon(bool isWild, int pokemonId) {
 Pokemon::~Pokemon() {
 }
 
+/**
+ * @brief Assign the pokemon to a point on the map
+ * @param x
+ * @param y
+ */
 void Pokemon::setCoordinates(int x, int y) {
     column = x;
     row = y;
