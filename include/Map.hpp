@@ -24,7 +24,7 @@ public:
 
     void updatePlayerSpriteToDefault();
 
-    void placePokemon(Pokemon* pokemon, int x, int y);
+    void placePokemon(Pokemon *pokemon, int x, int y);
 
 private:
     Pokemon pokemon[2];

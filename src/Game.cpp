@@ -25,7 +25,7 @@ void Game::init(const std::string title) {
         window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH,
                                   WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
         renderer = SDL_CreateRenderer(window, -1, 0);
-        isRunning = true;
+        Game::isRunning = true;
 
         map = new Map();
     }
@@ -38,7 +38,7 @@ void Game::handleEvents() {
     SDL_PollEvent(&event);
 
     if (event.type == SDL_QUIT) {
-        isRunning = false;
+        Game::isRunning = false;
     }
 
     // Si une touche est enfoncée, on vérifie si elle correspond à une touche assignée au mouvement (flèches et ZQSD)
@@ -76,7 +76,8 @@ void Game::handleEvents() {
  * @brief Update objects in the game
  */
 void Game::update() {
-
+    text->create("Font testing", RedColor, "Press");
+    text->changeText("Testtttt");
 }
 
 /**
@@ -84,10 +85,10 @@ void Game::update() {
  */
 void Game::render() {
     SDL_RenderClear(renderer);
+
     map->drawMap();
-    text->create("Font testing", RedColor, "Press");
-    text->changeText("Testtttt");
     text->draw();
+
     SDL_RenderPresent(renderer);
 }
 

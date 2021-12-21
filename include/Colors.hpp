@@ -5,5 +5,5 @@
 // *****************************************************
 // SDL Colors
 
-const SDL_Color WhiteColor = {255,255,255};
-const SDL_Color RedColor = {255,0,0};
+const SDL_Color WhiteColor = {255, 255, 255};
+const SDL_Color RedColor = {255, 0, 0};
