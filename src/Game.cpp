@@ -4,8 +4,11 @@
 #include <string>
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
+#include "../include/Text.hpp"
+#include "../include/Colors.hpp"
 
 Map *map = nullptr;
+Text *text = new Text();
 SDL_Renderer *Game::renderer = nullptr;
 
 Game::Game() {}
@@ -18,6 +21,7 @@ Game::~Game() {}
  */
 void Game::init(const std::string title) {
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
+        TTF_Init();
         window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH,
                                   WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
         renderer = SDL_CreateRenderer(window, -1, 0);
@@ -72,6 +76,7 @@ void Game::handleEvents() {
  * @brief Update objects in the game
  */
 void Game::update() {
+
 }
 
 /**
@@ -80,6 +85,7 @@ void Game::update() {
 void Game::render() {
     SDL_RenderClear(renderer);
     map->drawMap();
+    text->create("Font testing ", RedColor, "Press");
     SDL_RenderPresent(renderer);
 }
 

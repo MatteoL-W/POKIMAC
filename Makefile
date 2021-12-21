@@ -7,7 +7,7 @@
 
 CC=g++
 CXXFLAGS=-Wall
-SDLFLAGS=-lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+SDLFLAGS=-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
 IFOLDER=include
 SFOLDER=src
 
@@ -29,8 +29,8 @@ endif
 # Make
 
 #TODO: remplacez les build par $^
-render: main.o Game.o Map.o Pokemon.o
-	$(CC) -o bin/$@ build/main.o build/Game.o build/Map.o build/Pokemon.o $(SDLFLAGS)
+render: main.o Game.o Map.o Pokemon.o Text.o
+	$(CC) -o bin/$@ build/main.o build/Game.o build/Map.o build/Pokemon.o build/Text.o $(SDLFLAGS)
 
 %.o: $(SFOLDER)/%.cpp $(IFOLDER)/%.hpp
 	$(CC) -o build/$@ -c $< $(CXXFLAGS)
