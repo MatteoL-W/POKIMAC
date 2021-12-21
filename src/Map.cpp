@@ -4,8 +4,8 @@
 #include "../include/Map.hpp"
 #include "../include/Pokemon.hpp"
 
-Pokemon* bulbizarre = nullptr;
-Pokemon* carapuce = nullptr;
+Pokemon *bulbizarre = nullptr;
+Pokemon *carapuce = nullptr;
 int pokemonCounter = 20;
 
 //TODO:dégager ça dans un fichier externe
@@ -40,8 +40,6 @@ Map::Map() {
     playerMapTexture = IMG_LoadTexture(Game::renderer, "assets/ethan_sprite.png");
     pokemonMapTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
 
-    loadMap(first_level);
-
     srcTexture.x = srcTexture.y = 0;
     srcTexture.w = destTexture.w = 32;
     srcTexture.h = destTexture.h = 32;
@@ -49,6 +47,8 @@ Map::Map() {
     srcPokemon = srcTexture;
 
     destTexture.x = destTexture.y = 0;
+
+    Map::loadMap(first_level);
 }
 
 Map::~Map() {
@@ -60,17 +60,24 @@ Map::~Map() {
  * @param array
  */
 void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
+    // Copy of mapArray from first_level
     SDL_memmove(mapArray, array, sizeof(mapArray));
 
+    // define the player emplacement
     mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
+
+    // declare Pokemons
 
     bulbizarre = new Pokemon(0);
     placePokemon(bulbizarre, MAP_PLAYER_X, MAP_PLAYER_Y + 2);
+
     carapuce = new Pokemon(true, 1);
     placePokemon(carapuce, MAP_PLAYER_X - 2, MAP_PLAYER_Y + 2);
 
     pokemon[0] = *bulbizarre;
     pokemon[1] = *carapuce;
+
+    //________________________________________________________________________
 }
 
 /**
@@ -85,6 +92,7 @@ void Map::drawMap() {
             destTexture.x = column * 32;
             destTexture.y = row * 32;
 
+            // If the cell is a texture
             switch (cellType) {
                 case MAP_WATER:
                     srcTexture.x = 64;
@@ -101,11 +109,15 @@ void Map::drawMap() {
 
             SDL_RenderCopy(Game::renderer, tilesetMapTexture, &srcTexture, &destTexture);
 
+            // If the cell is also the player emplacement
             if (mapArray[row][column] == MAP_PLAYER) {
                 SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destTexture);
             }
 
-            for (int i = 0; i < (pokemonCounter-20); i++) {
+            // If the cell is also a pokemon emplacement
+            // pokemonCounter-20 because the pokemonCounter start at 20 (to be according to MapTileFlag)
+            // Maybe find a way to avoid the loop ?
+            for (int i = 0; i < (pokemonCounter - 20); i++) {
                 if (row == pokemon[i].getRow() && column == pokemon[i].getColumn()) {
                     srcPokemon.x = pokemon[i].getXSpriteCoordinate();
                     srcPokemon.y = pokemon[i].getYSpriteCoordinate();
@@ -181,7 +193,7 @@ void Map::updatePlayerSpriteToDefault() {
  * @brief Place a pokemon object on the map
  * @param pokemon, x, y
  */
-void Map::placePokemon(Pokemon* pokemon, int x, int y) {
+void Map::placePokemon(Pokemon *pokemon, int x, int y) {
     mapArray[y][x] = pokemonCounter;
     pokemon->setCoordinates(x, y);
     pokemonCounter++;

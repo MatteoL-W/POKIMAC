@@ -8,6 +8,7 @@ Library needed:
 
 - SDL2
 - SDL2_Image
+- SDL2_TTF
 
 ## How to play ?
 

@@ -7,7 +7,8 @@
 
 /**
  * @brief Initialize a new pokemon set from the txt database
- * @param isWild, pokemonId
+ * @param isWild
+ * @param pokemonId
  */
 Pokemon::Pokemon(int id, bool isWild) {
     // On récupère le contenu du fichier database/pokemon.txt, on le choisi en fonction du paramètre pokemonId
