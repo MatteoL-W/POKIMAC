@@ -85,7 +85,9 @@ void Game::update() {
 void Game::render() {
     SDL_RenderClear(renderer);
     map->drawMap();
-    text->create("Font testing ", RedColor, "Press");
+    text->create("Font testing", RedColor, "Press");
+    text->changeText("Testtttt");
+    text->draw();
     SDL_RenderPresent(renderer);
 }
 
