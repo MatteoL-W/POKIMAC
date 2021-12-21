@@ -77,7 +77,7 @@ void Game::handleEvents() {
  */
 void Game::update() {
     text->create("Font testing", RedColor, "Press");
-    text->changeText("Testtttt");
+    text->changeText("Testttttttttttttttttttttttttttttttttttttttttt");
 }
 
 /**

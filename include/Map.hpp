@@ -7,6 +7,8 @@ class Map {
 public:
     static const int MAP_WIDTH = 25;
     static const int MAP_HEIGHT = 20;
+    static const int MAP_CELL_WIDTH = 32*5;
+    static const int MAP_CELL_HEIGHT = 32*4;
     int MAP_PLAYER_X = 8;
     int MAP_PLAYER_Y = 3;
 
