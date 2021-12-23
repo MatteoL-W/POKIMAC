@@ -45,7 +45,7 @@ void Game::handleEvents() {
     // On enclenche le déplacement si c'est le cas
     if (event.type == SDL_KEYDOWN) {
         map->updatePlayerSprite();
-        switch (event.key.keysym.sym) {
+        switch (event.key.keysym.sym) { // Quelle touche est appuyée ?
             case SDLK_z:
             case SDLK_UP:
                 map->updatePlayerPosition(MOVE_UP);

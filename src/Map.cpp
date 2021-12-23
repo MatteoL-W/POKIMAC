@@ -10,26 +10,31 @@ int pokemonCounter = 20;
 
 //TODO:dégager ça dans un fichier externe
 int first_level[Map::MAP_HEIGHT][Map::MAP_WIDTH]{
-        {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {1, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {1, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {1, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
 
 /**
@@ -68,11 +73,10 @@ void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
 
     // declare Pokemons
-
     bulbizarre = new Pokemon(0);
     placePokemon(bulbizarre, MAP_PLAYER_X, MAP_PLAYER_Y + 2);
 
-    carapuce = new Pokemon(true, 1);
+    carapuce = new Pokemon(1);
     placePokemon(carapuce, MAP_PLAYER_X - 2, MAP_PLAYER_Y + 2);
 
     pokemon[0] = *bulbizarre;
@@ -87,52 +91,59 @@ void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
 void Map::drawMap() {
     int cellType = 0;
 
-    for (int row = MAP_PLAYER_Y - 2; row <= MAP_PLAYER_Y + 2; row++) {
-        for (int column = MAP_PLAYER_X - 2; column <= MAP_PLAYER_X + 2; column++) {
-            //TODO: Vérifier que le cadre ne va pas hors map
+    // X viewport with padding
+    int startingViewportX = (MAP_PLAYER_X - 2 < 0) ? 0 : MAP_PLAYER_X - 2;
+    int endingViewportX = (MAP_PLAYER_X + 2 >= Map::MAP_WIDTH - 1) ? Map::MAP_WIDTH - 1 : MAP_PLAYER_X + 2;
+    int leftPadding = (MAP_PLAYER_X + 2 > Map::MAP_WIDTH - 1) ? (MAP_PLAYER_X + 2 - (Map::MAP_WIDTH - 1)): 0;
+    int rightPadding = (MAP_PLAYER_X - 2 < 0) ? abs(MAP_PLAYER_X - 2) : 0;
 
-            // We only draw 2 cells around the player.
-            if ((row >= MAP_PLAYER_Y - 2 && row <= MAP_PLAYER_Y + 2) &&
-                (column >= MAP_PLAYER_X - 2 && column <= MAP_PLAYER_X + 2)) {
+    // Y viewport with padding
+    int startingViewportY = (MAP_PLAYER_Y - 2 < 0) ? 0 : MAP_PLAYER_Y - 2;
+    int endingViewportY = (MAP_PLAYER_Y + 2 >= Map::MAP_HEIGHT - 1) ? Map::MAP_HEIGHT - 1 : MAP_PLAYER_Y + 2;
+    int bottomPadding = (MAP_PLAYER_Y + 2 > Map::MAP_HEIGHT - 1) ? (MAP_PLAYER_Y + 2 - (Map::MAP_HEIGHT - 1)): 0;
+    int topPadding = (MAP_PLAYER_Y - 2 < 0) ? abs(MAP_PLAYER_Y - 2) : 0;
 
-                cellType = first_level[row][column];
-                // The 1st rendered cell start at 0 on the top left screen
-                destTexture.x = (column - (MAP_PLAYER_X - 2)) * MAP_CELL_WIDTH;
-                destTexture.y = (row - (MAP_PLAYER_Y - 2)) * MAP_CELL_HEIGHT;
+    for (int row = startingViewportY - bottomPadding; row <= endingViewportY + topPadding; row++) {
+        for (int column = startingViewportX - leftPadding; column <= endingViewportX + rightPadding; column++) {
+            cellType = first_level[row][column];
 
-                // If the cell is a texture
-                switch (cellType) {
-                    case MAP_WATER:
-                        srcTexture.x = 64;
-                        break;
-                    case MAP_GRASS:
-                        srcTexture.x = 32;
-                        break;
-                    case MAP_DIRT:
-                        srcTexture.x = 0;
-                        break;
-                    default:
-                        break;
-                }
+            // The 1st rendered cell start at 0 on the top left screen
+            destTexture.x = (column - startingViewportX + leftPadding) * MAP_CELL_WIDTH;
+            destTexture.y = (row - startingViewportY + bottomPadding) * MAP_CELL_HEIGHT;
 
-                SDL_RenderCopy(Game::renderer, tilesetMapTexture, &srcTexture, &destTexture);
+            // If the cell is a texture
+            switch (cellType) {
+                case MAP_WATER:
+                    srcTexture.x = 64;
+                    break;
+                case MAP_GRASS:
+                    srcTexture.x = 32;
+                    break;
+                case MAP_DIRT:
+                    srcTexture.x = 0;
+                    break;
+                default:
+                    break;
+            }
 
-                // If the cell is also the player emplacement
-                if (mapArray[row][column] == MAP_PLAYER) {
-                    SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destTexture);
-                }
+            SDL_RenderCopy(Game::renderer, tilesetMapTexture, &srcTexture, &destTexture);
 
-                // If the cell is also a pokemon emplacement
-                // pokemonCounter-20 because the pokemonCounter start at 20 (to be according to MapTileFlag)
-                // TODO: Maybe find a way to avoid the loop ?
-                for (int i = 0; i < (pokemonCounter - 20); i++) {
-                    if (row == pokemon[i].getRow() && column == pokemon[i].getColumn()) {
-                        srcPokemon.x = pokemon[i].getXSpriteCoordinate();
-                        srcPokemon.y = pokemon[i].getYSpriteCoordinate();
-                        SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &destTexture);
-                    }
+            // If the cell is also the player emplacement
+            if (mapArray[row][column] == MAP_PLAYER) {
+                SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destTexture);
+            }
+
+            // If the cell is also a pokemon emplacement
+            // pokemonCounter-20 because the pokemonCounter start at 20 (to be according to MapTileFlag)
+            // TODO: Maybe find a way to avoid the loop ?
+            for (int i = 0; i < (pokemonCounter - 20); i++) {
+                if (row == pokemon[i].getRow() && column == pokemon[i].getColumn()) {
+                    srcPokemon.x = pokemon[i].getXSpriteCoordinate();
+                    srcPokemon.y = pokemon[i].getYSpriteCoordinate();
+                    SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &destTexture);
                 }
             }
+
         }
     }
 }
