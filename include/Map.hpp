@@ -7,19 +7,21 @@ class Map {
 public:
     static const int MAP_WIDTH = 25;
     static const int MAP_HEIGHT = 25;
-    static const int MAP_CELL_WIDTH = 32*5;
-    static const int MAP_CELL_HEIGHT = 32*5;
+    int MAP_CELL_WIDTH = 32;
+    int MAP_CELL_HEIGHT = 32;
 
     int MAP_PLAYER_X = 8;
     int MAP_PLAYER_Y = 3;
 
-    Map();
+    Map(bool isCameraCentered);
 
     ~Map();
 
     void loadMap(int array[MAP_HEIGHT][MAP_WIDTH]);
 
     void drawMap();
+
+    void toggleCamera();
 
     void updatePlayerPosition(int direction);
 
@@ -37,4 +39,5 @@ private:
     SDL_Texture *playerMapTexture;
     SDL_Texture *pokemonMapTexture;
     int mapArray[MAP_HEIGHT][MAP_WIDTH];
+    bool centeredCamera;
 };

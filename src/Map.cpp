@@ -40,7 +40,7 @@ int first_level[Map::MAP_HEIGHT][Map::MAP_WIDTH]{
 /**
  * @brief Constructor of the Map object
  */
-Map::Map() {
+Map::Map(bool isCameraCentered) {
     tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset_map_texture.png");
     playerMapTexture = IMG_LoadTexture(Game::renderer, "assets/ethan_sprite.png");
     pokemonMapTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
@@ -50,9 +50,16 @@ Map::Map() {
     srcPlayer.h = srcPlayer.w = 64;
     srcPokemon = srcTexture;
 
+    if (isCameraCentered) {
+        MAP_CELL_WIDTH = 32*5;
+        MAP_CELL_HEIGHT = 32*5;
+    }
+
     destTexture.w = MAP_CELL_WIDTH;
     destTexture.h = MAP_CELL_HEIGHT;
     destTexture.x = destTexture.y = 0;
+
+    centeredCamera = isCameraCentered;
 
     Map::loadMap(first_level);
 }
@@ -90,26 +97,36 @@ void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
  */
 void Map::drawMap() {
     int cellType = 0;
+    int startingY = 0, startingX = 0;
+    int endingY = Map::MAP_HEIGHT;
+    int endingX = Map::MAP_WIDTH;
 
-    // X viewport with padding
-    int startingViewportX = (MAP_PLAYER_X - 2 < 0) ? 0 : MAP_PLAYER_X - 2;
-    int endingViewportX = (MAP_PLAYER_X + 2 >= Map::MAP_WIDTH - 1) ? Map::MAP_WIDTH - 1 : MAP_PLAYER_X + 2;
-    int leftPadding = (MAP_PLAYER_X + 2 > Map::MAP_WIDTH - 1) ? (MAP_PLAYER_X + 2 - (Map::MAP_WIDTH - 1)): 0;
-    int rightPadding = (MAP_PLAYER_X - 2 < 0) ? abs(MAP_PLAYER_X - 2) : 0;
 
-    // Y viewport with padding
-    int startingViewportY = (MAP_PLAYER_Y - 2 < 0) ? 0 : MAP_PLAYER_Y - 2;
-    int endingViewportY = (MAP_PLAYER_Y + 2 >= Map::MAP_HEIGHT - 1) ? Map::MAP_HEIGHT - 1 : MAP_PLAYER_Y + 2;
-    int bottomPadding = (MAP_PLAYER_Y + 2 > Map::MAP_HEIGHT - 1) ? (MAP_PLAYER_Y + 2 - (Map::MAP_HEIGHT - 1)): 0;
-    int topPadding = (MAP_PLAYER_Y - 2 < 0) ? abs(MAP_PLAYER_Y - 2) : 0;
+    if (centeredCamera) {
+        // X viewport with padding
+        int startingViewportX = (MAP_PLAYER_X - 2 < 0) ? 0 : MAP_PLAYER_X - 2;
+        int endingViewportX = (MAP_PLAYER_X + 2 >= Map::MAP_WIDTH - 1) ? Map::MAP_WIDTH - 1 : MAP_PLAYER_X + 2;
+        int leftPadding = (MAP_PLAYER_X + 2 > Map::MAP_WIDTH - 1) ? (MAP_PLAYER_X + 2 - (Map::MAP_WIDTH - 1)): 0;
+        int rightPadding = (MAP_PLAYER_X - 2 < 0) ? abs(MAP_PLAYER_X - 2) : 0;
+        startingX = startingViewportX - leftPadding;
+        endingX = endingViewportX + rightPadding;
 
-    for (int row = startingViewportY - bottomPadding; row <= endingViewportY + topPadding; row++) {
-        for (int column = startingViewportX - leftPadding; column <= endingViewportX + rightPadding; column++) {
+        // Y viewport with padding
+        int startingViewportY = (MAP_PLAYER_Y - 2 < 0) ? 0 : MAP_PLAYER_Y - 2;
+        int endingViewportY = (MAP_PLAYER_Y + 2 >= Map::MAP_HEIGHT - 1) ? Map::MAP_HEIGHT - 1 : MAP_PLAYER_Y + 2;
+        int bottomPadding = (MAP_PLAYER_Y + 2 > Map::MAP_HEIGHT - 1) ? (MAP_PLAYER_Y + 2 - (Map::MAP_HEIGHT - 1)): 0;
+        int topPadding = (MAP_PLAYER_Y - 2 < 0) ? abs(MAP_PLAYER_Y - 2) : 0;
+        startingY = startingViewportY - bottomPadding;
+        endingY = endingViewportY + topPadding;
+    }
+
+    for (int row = startingY; row <= endingY; row++) {
+        for (int column = startingX; column <= endingX; column++) {
             cellType = first_level[row][column];
 
-            // The 1st rendered cell start at 0 on the top left screen
-            destTexture.x = (column - startingViewportX + leftPadding) * MAP_CELL_WIDTH;
-            destTexture.y = (row - startingViewportY + bottomPadding) * MAP_CELL_HEIGHT;
+            // The 1st rendered cell start at 0 on the top left screen (except if a padding is added)
+            destTexture.x = (-startingX + column) * MAP_CELL_WIDTH;
+            destTexture.y = (-startingY + row) * MAP_CELL_HEIGHT;
 
             // If the cell is a texture
             switch (cellType) {
@@ -146,6 +163,23 @@ void Map::drawMap() {
 
         }
     }
+}
+
+/**
+ * @brief Toggle the camera between debug and centered
+ */
+void Map::toggleCamera() {
+    if (centeredCamera) {
+        centeredCamera = false;
+        MAP_CELL_WIDTH = 32;
+        MAP_CELL_HEIGHT = 32;
+    } else {
+        centeredCamera = true;
+        MAP_CELL_WIDTH = 32*5;
+        MAP_CELL_HEIGHT = 32*5;
+    }
+    destTexture.w = MAP_CELL_WIDTH;
+    destTexture.h = MAP_CELL_HEIGHT;
 }
 
 /**

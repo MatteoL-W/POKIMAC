@@ -25,9 +25,10 @@ void Game::init(const std::string title) {
         window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH,
                                   WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
         renderer = SDL_CreateRenderer(window, -1, 0);
-        Game::isRunning = true;
 
-        map = new Map();
+        isRunning = true;
+
+        map = new Map(false);
     }
 }
 
@@ -62,6 +63,8 @@ void Game::handleEvents() {
             case SDLK_DOWN:
                 map->updatePlayerPosition(MOVE_DOWN);
                 break;
+            case SDLK_m:
+                map->toggleCamera();
             default:
                 break;
         }
