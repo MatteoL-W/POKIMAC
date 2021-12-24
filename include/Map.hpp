@@ -3,6 +3,9 @@
 #include "MapTileFlag.hpp"
 #include "Pokemon.hpp"
 
+int getStartingPos(int playerPosition, int mapWidth, int centeredScale);
+int getEndingPos(int playerPosition, int mapWidth, int centeredScale);
+
 class Map {
 public:
     static const int MAP_WIDTH = 25;

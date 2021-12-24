@@ -2,40 +2,12 @@
 #include "SDL2/SDL_image.h"
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
+#include "../include/MapsArray.hpp"
 #include "../include/Pokemon.hpp"
 
 Pokemon *bulbizarre = nullptr;
 Pokemon *carapuce = nullptr;
 int pokemonCounter = 20;
-
-//TODO:dégager ça dans un fichier externe
-int first_level[Map::MAP_HEIGHT][Map::MAP_WIDTH]{
-        {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {1, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {1, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {1, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-        {2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-};
 
 /**
  * @brief Constructor of the Map object
@@ -84,7 +56,7 @@ void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     placePokemon(bulbizarre, MAP_PLAYER_X, MAP_PLAYER_Y + 2);
 
     carapuce = new Pokemon(1);
-    placePokemon(carapuce, MAP_PLAYER_X - 2, MAP_PLAYER_Y + 2);
+    placePokemon(carapuce, MAP_PLAYER_X - 3, MAP_PLAYER_Y + 1);
 
     pokemon[0] = *bulbizarre;
     pokemon[1] = *carapuce;
@@ -96,28 +68,18 @@ void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
  * @brief Draw the map
  */
 void Map::drawMap() {
-    int cellType = 0;
-    int startingY = 0, startingX = 0;
+    int cellType = 0, startingY = 0, startingX = 0;
     int endingY = Map::MAP_HEIGHT;
     int endingX = Map::MAP_WIDTH;
 
-
     if (centeredCamera) {
         // X viewport with padding
-        int startingViewportX = (MAP_PLAYER_X - 2 < 0) ? 0 : MAP_PLAYER_X - 2;
-        int endingViewportX = (MAP_PLAYER_X + 2 >= Map::MAP_WIDTH - 1) ? Map::MAP_WIDTH - 1 : MAP_PLAYER_X + 2;
-        int leftPadding = (MAP_PLAYER_X + 2 > Map::MAP_WIDTH - 1) ? (MAP_PLAYER_X + 2 - (Map::MAP_WIDTH - 1)): 0;
-        int rightPadding = (MAP_PLAYER_X - 2 < 0) ? abs(MAP_PLAYER_X - 2) : 0;
-        startingX = startingViewportX - leftPadding;
-        endingX = endingViewportX + rightPadding;
+        startingX = getStartingPos(MAP_PLAYER_X, Map::MAP_WIDTH, 2);
+        endingX = getEndingPos(MAP_PLAYER_X, Map::MAP_WIDTH, 2);
 
         // Y viewport with padding
-        int startingViewportY = (MAP_PLAYER_Y - 2 < 0) ? 0 : MAP_PLAYER_Y - 2;
-        int endingViewportY = (MAP_PLAYER_Y + 2 >= Map::MAP_HEIGHT - 1) ? Map::MAP_HEIGHT - 1 : MAP_PLAYER_Y + 2;
-        int bottomPadding = (MAP_PLAYER_Y + 2 > Map::MAP_HEIGHT - 1) ? (MAP_PLAYER_Y + 2 - (Map::MAP_HEIGHT - 1)): 0;
-        int topPadding = (MAP_PLAYER_Y - 2 < 0) ? abs(MAP_PLAYER_Y - 2) : 0;
-        startingY = startingViewportY - bottomPadding;
-        endingY = endingViewportY + topPadding;
+        startingY = getStartingPos(MAP_PLAYER_Y, Map::MAP_HEIGHT, 2);
+        endingY = getEndingPos(MAP_PLAYER_Y, Map::MAP_HEIGHT, 2);
     }
 
     for (int row = startingY; row <= endingY; row++) {
@@ -251,4 +213,16 @@ void Map::placePokemon(Pokemon *pokemon, int x, int y) {
     mapArray[y][x] = pokemonCounter;
     pokemon->setCoordinates(x, y);
     pokemonCounter++;
+}
+
+int getStartingPos(int playerPosition, int mapWidth, int centeredScale) {
+    int startingViewport = (playerPosition - centeredScale < 0) ? 0 : playerPosition - centeredScale;
+    int padding = (playerPosition + centeredScale > mapWidth - 1) ? (playerPosition + centeredScale - (mapWidth - 1)): 0;
+    return startingViewport - padding;
+}
+
+int getEndingPos(int playerPosition, int mapWidth, int centeredScale) {
+    int endingViewport = (playerPosition + 2 >= mapWidth - 1) ? mapWidth - 1 : playerPosition + 2;
+    int padding = (playerPosition - 2 < 0) ? abs(mapWidth - 2) : 0;
+    return endingViewport + padding;
 }

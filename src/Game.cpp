@@ -28,7 +28,7 @@ void Game::init(const std::string title) {
 
         isRunning = true;
 
-        map = new Map(false);
+        map = new Map(true);
     }
 }
 
