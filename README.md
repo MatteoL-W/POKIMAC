@@ -16,8 +16,7 @@ Just have fun !
 
 ## Commands
 
-You can move with Z,S,Q,D or with arrows.
-You can swap the camera with M.
+You can move with Z,S,Q,D or with arrows. You can swap the camera with M.
 
 ## Thanks
 
