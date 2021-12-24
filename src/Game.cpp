@@ -89,7 +89,7 @@ void Game::update() {
 void Game::render() {
     SDL_RenderClear(renderer);
 
-    map->drawMap();
+    map->draw();
     text->draw();
 
     SDL_RenderPresent(renderer);

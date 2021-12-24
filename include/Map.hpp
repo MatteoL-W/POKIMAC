@@ -22,7 +22,11 @@ public:
 
     void loadMap(int array[MAP_HEIGHT][MAP_WIDTH]);
 
+    void draw();
+
     void drawMap();
+
+    void drawExtras();
 
     void toggleCamera();
 
@@ -38,9 +42,13 @@ private:
     Pokemon pokemon[2];
     SDL_Rect srcTexture, srcPlayer, srcPokemon;
     SDL_Rect destTexture;
+
     SDL_Texture *tilesetMapTexture;
     SDL_Texture *playerMapTexture;
     SDL_Texture *pokemonMapTexture;
+
     int mapArray[MAP_HEIGHT][MAP_WIDTH];
+
     bool centeredCamera;
+    int startingX, startingY, endingX, endingY;
 };

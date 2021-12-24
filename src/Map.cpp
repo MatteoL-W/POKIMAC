@@ -64,13 +64,10 @@ void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     //________________________________________________________________________
 }
 
-/**
- * @brief Draw the map
- */
-void Map::drawMap() {
-    int cellType = 0, startingY = 0, startingX = 0;
-    int endingY = Map::MAP_HEIGHT;
-    int endingX = Map::MAP_WIDTH;
+void Map::draw() {
+    startingY = 0, startingX = 0;
+    endingY = Map::MAP_HEIGHT;
+    endingX = Map::MAP_WIDTH;
 
     if (centeredCamera) {
         // X viewport with padding
@@ -82,6 +79,15 @@ void Map::drawMap() {
         endingY = getEndingPos(MAP_PLAYER_Y, Map::MAP_HEIGHT, 2);
     }
 
+    drawMap();
+    drawExtras();
+}
+
+/**
+ * @brief Draw the map
+ */
+void Map::drawMap() {
+    int cellType = 0;
     for (int row = startingY; row <= endingY; row++) {
         for (int column = startingX; column <= endingX; column++) {
             cellType = first_level[row][column];
@@ -111,24 +117,30 @@ void Map::drawMap() {
             if (mapArray[row][column] == MAP_PLAYER) {
                 SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destTexture);
             }
-
-            // If the cell is also a pokemon emplacement
-            // pokemonCounter-20 because the pokemonCounter start at 20 (to be according to MapTileFlag)
-            for (int i = 0; i < (pokemonCounter - 20); i++) {
-                if (row == pokemon[i].getRow() && column == pokemon[i].getColumn()) {
-                    if ((row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
-                        (row + 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
-                        (column - 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y) ||
-                        (column + 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y)) {
-                        std::cout << "interactions";
-                    }
-
-                    srcPokemon.x = pokemon[i].getXSpriteCoordinate();
-                    srcPokemon.y = pokemon[i].getYSpriteCoordinate();
-                    SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &destTexture);
-                }
-            }
         }
+    }
+}
+
+void Map::drawExtras() {
+    // Drawing all the pokemons
+    // pokemonCounter-20 because the pokemonCounter start at 20 (to be according to MapTileFlag)
+    for (int i = 0; i < (pokemonCounter - 20); i++) {
+        int row = pokemon[i].getRow();
+        int column = pokemon[i].getColumn();
+
+        destTexture.x = (-startingX + column) * MAP_CELL_WIDTH;
+        destTexture.y = (-startingY + row) * MAP_CELL_HEIGHT;
+
+        if ((row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
+            (row + 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
+            (column - 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y) ||
+            (column + 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y)) {
+            // interactions
+        }
+
+        srcPokemon.x = pokemon[i].getXSpriteCoordinate();
+        srcPokemon.y = pokemon[i].getYSpriteCoordinate();
+        SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &destTexture);
     }
 }
 
