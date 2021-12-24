@@ -4,6 +4,7 @@
 #include "Pokemon.hpp"
 
 int getStartingPos(int playerPosition, int mapWidth, int centeredScale);
+
 int getEndingPos(int playerPosition, int mapWidth, int centeredScale);
 
 class Map {

@@ -123,8 +123,8 @@ void Map::drawMap() {
 
 void Map::drawExtras() {
     // Drawing all the pokemons
-    // pokemonCounter-20 because the pokemonCounter start at 20 (to be according to MapTileFlag)
-    for (int i = 0; i < (pokemonCounter - 20); i++) {
+    // pokemonCounter-20 because the pokemonCounter start at 20 (according to MapTileFlag.hpp)
+    for (int i = 0; i < pokemonCounter - 20; i++) {
         int row = pokemon[i].getRow();
         int column = pokemon[i].getColumn();
 
