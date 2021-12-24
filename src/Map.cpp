@@ -23,8 +23,8 @@ Map::Map(bool isCameraCentered) {
     srcPokemon = srcTexture;
 
     if (isCameraCentered) {
-        MAP_CELL_WIDTH = 32*5;
-        MAP_CELL_HEIGHT = 32*5;
+        MAP_CELL_WIDTH = 32 * 5;
+        MAP_CELL_HEIGHT = 32 * 5;
     }
 
     destTexture.w = MAP_CELL_WIDTH;
@@ -56,7 +56,7 @@ void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     placePokemon(bulbizarre, MAP_PLAYER_X, MAP_PLAYER_Y + 2);
 
     carapuce = new Pokemon(1);
-    placePokemon(carapuce, MAP_PLAYER_X - 3, MAP_PLAYER_Y + 1);
+    placePokemon(carapuce, MAP_PLAYER_X + 3, MAP_PLAYER_Y + 1);
 
     pokemon[0] = *bulbizarre;
     pokemon[1] = *carapuce;
@@ -114,15 +114,20 @@ void Map::drawMap() {
 
             // If the cell is also a pokemon emplacement
             // pokemonCounter-20 because the pokemonCounter start at 20 (to be according to MapTileFlag)
-            // TODO: Maybe find a way to avoid the loop ?
             for (int i = 0; i < (pokemonCounter - 20); i++) {
                 if (row == pokemon[i].getRow() && column == pokemon[i].getColumn()) {
+                    if ((row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
+                        (row + 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
+                        (column - 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y) ||
+                        (column + 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y)) {
+                        std::cout << "interactions";
+                    }
+
                     srcPokemon.x = pokemon[i].getXSpriteCoordinate();
                     srcPokemon.y = pokemon[i].getYSpriteCoordinate();
                     SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &destTexture);
                 }
             }
-
         }
     }
 }
@@ -137,8 +142,8 @@ void Map::toggleCamera() {
         MAP_CELL_HEIGHT = 32;
     } else {
         centeredCamera = true;
-        MAP_CELL_WIDTH = 32*5;
-        MAP_CELL_HEIGHT = 32*5;
+        MAP_CELL_WIDTH = 32 * 5;
+        MAP_CELL_HEIGHT = 32 * 5;
     }
     destTexture.w = MAP_CELL_WIDTH;
     destTexture.h = MAP_CELL_HEIGHT;
@@ -217,7 +222,8 @@ void Map::placePokemon(Pokemon *pokemon, int x, int y) {
 
 int getStartingPos(int playerPosition, int mapWidth, int centeredScale) {
     int startingViewport = (playerPosition - centeredScale < 0) ? 0 : playerPosition - centeredScale;
-    int padding = (playerPosition + centeredScale > mapWidth - 1) ? (playerPosition + centeredScale - (mapWidth - 1)): 0;
+    int padding = (playerPosition + centeredScale > mapWidth - 1) ? (playerPosition + centeredScale - (mapWidth - 1))
+                                                                  : 0;
     return startingViewport - padding;
 }
 
