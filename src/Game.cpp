@@ -25,9 +25,10 @@ void Game::init(const std::string title) {
         window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH,
                                   WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
         renderer = SDL_CreateRenderer(window, -1, 0);
-        Game::isRunning = true;
 
-        map = new Map();
+        isRunning = true;
+
+        map = new Map(true);
     }
 }
 
@@ -45,7 +46,7 @@ void Game::handleEvents() {
     // On enclenche le déplacement si c'est le cas
     if (event.type == SDL_KEYDOWN) {
         map->updatePlayerSprite();
-        switch (event.key.keysym.sym) {
+        switch (event.key.keysym.sym) { // Quelle touche est appuyée ?
             case SDLK_z:
             case SDLK_UP:
                 map->updatePlayerPosition(MOVE_UP);
@@ -62,6 +63,8 @@ void Game::handleEvents() {
             case SDLK_DOWN:
                 map->updatePlayerPosition(MOVE_DOWN);
                 break;
+            case SDLK_m:
+                map->toggleCamera();
             default:
                 break;
         }
@@ -86,7 +89,7 @@ void Game::update() {
 void Game::render() {
     SDL_RenderClear(renderer);
 
-    map->drawMap();
+    map->draw();
     text->draw();
 
     SDL_RenderPresent(renderer);

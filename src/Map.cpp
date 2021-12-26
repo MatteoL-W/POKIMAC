@@ -2,64 +2,45 @@
 #include "SDL2/SDL_image.h"
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
+#include "../include/MapsArray.hpp"
 #include "../include/Pokemon.hpp"
-
-
-//ER : j'ai divisé en 4 une texture du tileset1
 
 
 Pokemon *bulbizarre = nullptr;
 Pokemon *carapuce = nullptr;
 int pokemonCounter = 20;
 
-//TODO:dégager ça dans un fichier externe
-int first_level[Map::MAP_HEIGHT][Map::MAP_WIDTH]{
-        {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 40, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //ER : je l'ai placée sur la map
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 42, 43, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-};
 
 /**
  * @brief Constructor of the Map object
  */
-Map::Map() {
+Map::Map(bool isCameraCentered) {
     tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset_map_texture.png");
     playerMapTexture = IMG_LoadTexture(Game::renderer, "assets/ethan_sprite.png");
     pokemonMapTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
+    HealthCenterMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset1.png");
 
-    //ER
-    HealthCenterMapTexture = IMG_LoadTexture(Game:: renderer, "assets/tileset1.png");
-    srcHealthCenter.x = srcHealthCenter.y = 0;
-    srcHealthCenter.w = srcHealthCenter.h = 40;
-    destHealthCenter = destTexture;
-    // \ER
 
     srcTexture.x = srcTexture.y = 0;
     srcTexture.w = srcTexture.h = 32;
     srcPlayer.h = srcPlayer.w = 64;
     srcPokemon = srcTexture;
+    srcHealthCenter.x = 0;
+    srcHealthCenter.y = 240;
+    srcHealthCenter.w = srcHealthCenter.h = 80;
 
+    if (isCameraCentered) {
+        MAP_CELL_WIDTH = 32 * 5;
+        MAP_CELL_HEIGHT = 32 * 5;
+    }
 
     destTexture.w = MAP_CELL_WIDTH;
     destTexture.h = MAP_CELL_HEIGHT;
     destTexture.x = destTexture.y = 0;
+    
+    destHealthCenter.w = MAP_CELL_WIDTH * 2;
+    destHealthCenter.h = MAP_CELL_HEIGHT * 2;
+    destHealthCenter.x = destHealthCenter.y = 0;
 
     Map::loadMap(first_level);
 }
@@ -80,44 +61,52 @@ void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
 
     // declare Pokemons
-
     bulbizarre = new Pokemon(0);
     placePokemon(bulbizarre, MAP_PLAYER_X, MAP_PLAYER_Y + 2);
 
-    carapuce = new Pokemon(true, 1);
-    placePokemon(carapuce, MAP_PLAYER_X - 2, MAP_PLAYER_Y + 2);
+    carapuce = new Pokemon(1);
+    placePokemon(carapuce, MAP_PLAYER_X + 3, MAP_PLAYER_Y + 1);
 
     pokemon[0] = *bulbizarre;
     pokemon[1] = *carapuce;
-
-
-    //ER
-    // define the health center emplacement
-
 
 
 
     //________________________________________________________________________
 }
 
+void Map::draw() {
+    startingY = 0, startingX = 0;
+    endingY = Map::MAP_HEIGHT;
+    endingX = Map::MAP_WIDTH;
+
+    if (centeredCamera) {
+        // X viewport with padding
+        startingX = getStartingPos(MAP_PLAYER_X, Map::MAP_WIDTH, 2);
+        endingX = getEndingPos(MAP_PLAYER_X, Map::MAP_WIDTH, 2);
+
+        // Y viewport with padding
+        startingY = getStartingPos(MAP_PLAYER_Y, Map::MAP_HEIGHT, 2);
+        endingY = getEndingPos(MAP_PLAYER_Y, Map::MAP_HEIGHT, 2);
+    }
+
+    drawMap();
+    drawExtras();
+}
+
+
 /**
  * @brief Draw the map
  */
 void Map::drawMap() {
     int cellType = 0;
+    for (int row = startingY; row <= endingY; row++) {
+        for (int column = startingX; column <= endingX; column++) {
+            cellType = first_level[row][column];
 
-    for (int row = MAP_PLAYER_Y - 2; row <= MAP_PLAYER_Y + 2; row++) {
-        for (int column = MAP_PLAYER_X - 2; column <= MAP_PLAYER_X + 2; column++) {
-            //TODO: Vérifier que le cadre ne va pas hors map
-
-            // We only draw 2 cells around the player.
-            if ((row >= MAP_PLAYER_Y - 2 && row <= MAP_PLAYER_Y + 2) &&
-                (column >= MAP_PLAYER_X - 2 && column <= MAP_PLAYER_X + 2)) {
-
-                cellType = first_level[row][column];
-                // The 1st rendered cell start at 0 on the top left screen
-                destTexture.x = (column - (MAP_PLAYER_X - 2)) * MAP_CELL_WIDTH;
-                destTexture.y = (row - (MAP_PLAYER_Y - 2)) * MAP_CELL_HEIGHT;
+            // The 1st rendered cell start at 0 on the top left screen (except if a padding is added)
+            destTexture.x = (-startingX + column) * MAP_CELL_WIDTH;
+            destTexture.y = (-startingY + row) * MAP_CELL_HEIGHT;
 
                 // If the cell is a texture
                 switch (cellType) {
@@ -130,104 +119,73 @@ void Map::drawMap() {
                     case MAP_DIRT:
                         srcTexture.x = 0;
                         break;
-
-                    //ER: essai de mettre le health center ici
-                    /*
-                    case MAP_HEALTH_CENTER_TOPLEFT:
-                        srcHealthCenter.x = 0;
-                        srcHealthCenter.y = 240;
-                        break;
-                    case MAP_HEALTH_CENTER_TOPRIGHT:
-                        srcHealthCenter.x = 41;
-                        srcHealthCenter.y = 240;
-                        break;
-                    case MAP_HEALTH_CENTER_BOTTOMLEFT:
-                        srcHealthCenter.x = 0;
-                        srcHealthCenter.y = 281;
-                        break;
-                    case MAP_HEALTH_CENTER_BOTTOMRIGHT:
-                        srcHealthCenter.x = 41;
-                        srcHealthCenter.y = 281;
-                        break; 
-                    */
-
                     default:
                         break;
                 }
-                //SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &destHealthCenter);
+
                 SDL_RenderCopy(Game::renderer, tilesetMapTexture, &srcTexture, &destTexture);
 
-                //ER : essai 
-                // If the cell is the health center
-                /*
-                if (mapArray[row][column] == MAP_HEALTH_CENTER_TOPLEFT || mapArray[row][column] == MAP_HEALTH_CENTER_TOPRIGHT || mapArray[row][column] == MAP_HEALTH_CENTER_BOTTOMLEFT || mapArray[row][column] == MAP_HEALTH_CENTER_BOTTOMRIGHT) {
-                    switch (cellType) {
-                        case MAP_HEALTH_CENTER_TOPLEFT:
-                            srcHealthCenter.x = 0;
-                            srcHealthCenter.y = 240;
-                            break;
-                        case MAP_HEALTH_CENTER_TOPRIGHT:
-                            srcHealthCenter.x = 41;
-                            srcHealthCenter.y = 240;
-                            break;
-                        case MAP_HEALTH_CENTER_BOTTOMLEFT:
-                            srcHealthCenter.x = 0;
-                            srcHealthCenter.y = 281;
-                            break;
-                        case MAP_HEALTH_CENTER_BOTTOMRIGHT:
-                            srcHealthCenter.x = 41;
-                            srcHealthCenter.y = 281;
-                            break; 
-                        default:
-                            break;
-                    }
-                    SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &destHealthCenter);
-                }
-                */
-
-                //ER : essai 
-                // If the cell is the health center
-                if (mapArray[row][column] == MAP_HEALTH_CENTER_TOPLEFT) {
-                    srcHealthCenter.x = 0;
-                    srcHealthCenter.y = 240;
-                    SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &destHealthCenter);
-                }
-                if (mapArray[row][column] == MAP_HEALTH_CENTER_TOPRIGHT) {
-                    srcHealthCenter.x = 41;
-                    srcHealthCenter.y = 240;
-                    SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &destHealthCenter);
-                }
-                if (mapArray[row][column] == MAP_HEALTH_CENTER_BOTTOMLEFT) {
-                    srcHealthCenter.x = 0;
-                    srcHealthCenter.y = 281;
-                    SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &destHealthCenter);
-                }
-                if (mapArray[row][column] == MAP_HEALTH_CENTER_BOTTOMRIGHT) {
-                    srcHealthCenter.x = 41;
-                    srcHealthCenter.y = 281;
-                    SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &destHealthCenter);
-                }
-
-                
-
-                // If the cell is also the player emplacement
-                if (mapArray[row][column] == MAP_PLAYER) {
-                    SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destTexture);
-                }
-
-                // If the cell is also a pokemon emplacement
-                // pokemonCounter-20 because the pokemonCounter start at 20 (to be according to MapTileFlag)
-                // TODO: Maybe find a way to avoid the loop ?
-                for (int i = 0; i < (pokemonCounter - 20); i++) {
-                    if (row == pokemon[i].getRow() && column == pokemon[i].getColumn()) {
-                        srcPokemon.x = pokemon[i].getXSpriteCoordinate();
-                        srcPokemon.y = pokemon[i].getYSpriteCoordinate();
-                        SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &destTexture);
-                    }
-                }
+            
+            // If the cell is also the player emplacement
+            if (mapArray[row][column] == MAP_PLAYER) {
+                SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destTexture);
             }
         }
     }
+}
+
+void Map::drawExtras() {
+    // Drawing all the pokemons
+    // pokemonCounter-20 because the pokemonCounter start at 20 (according to MapTileFlag.hpp)
+    for (int i = 0; i < pokemonCounter - 20; i++) {
+        int row = pokemon[i].getRow();
+        int column = pokemon[i].getColumn();
+
+        destTexture.x = (-startingX + column) * MAP_CELL_WIDTH;
+        destTexture.y = (-startingY + row) * MAP_CELL_HEIGHT;
+
+        if ((row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
+            (row + 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
+            (column - 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y) ||
+            (column + 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y)) {
+            // interactions
+        }
+
+        srcPokemon.x = pokemon[i].getXSpriteCoordinate();
+        srcPokemon.y = pokemon[i].getYSpriteCoordinate();
+        SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &destTexture);
+
+    }
+    // If the cell is the health center 
+    for (int row = startingY; row <= endingY; row++) {
+        for (int column = startingX; column <= endingX; column++) {
+            if (mapArray[row][column] == MAP_HEALTH_CENTER) {
+                destTexture.x = (-startingX + column) * MAP_CELL_WIDTH;
+                destTexture.y = (-startingY + row) * MAP_CELL_HEIGHT;
+                destHealthCenter = destTexture;
+                destHealthCenter.w = MAP_CELL_WIDTH * 2;
+                destHealthCenter.h = MAP_CELL_HEIGHT * 2;
+                SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &destHealthCenter);
+            }
+        }
+    }
+}
+
+/**
+ * @brief Toggle the camera between debug and centered
+ */
+void Map::toggleCamera() {
+    if (centeredCamera) {
+        centeredCamera = false;
+        MAP_CELL_WIDTH = 32;
+        MAP_CELL_HEIGHT = 32;
+    } else {
+        centeredCamera = true;
+        MAP_CELL_WIDTH = 32 * 5;
+        MAP_CELL_HEIGHT = 32 * 5;
+    }
+    destTexture.w = MAP_CELL_WIDTH;
+    destTexture.h = MAP_CELL_HEIGHT;
 }
 
 /**
@@ -299,4 +257,17 @@ void Map::placePokemon(Pokemon *pokemon, int x, int y) {
     mapArray[y][x] = pokemonCounter;
     pokemon->setCoordinates(x, y);
     pokemonCounter++;
+}
+
+int getStartingPos(int playerPosition, int mapWidth, int centeredScale) {
+    int startingViewport = (playerPosition - centeredScale < 0) ? 0 : playerPosition - centeredScale;
+    int padding = (playerPosition + centeredScale > mapWidth - 1) ? (playerPosition + centeredScale - (mapWidth - 1))
+                                                                  : 0;
+    return startingViewport - padding;
+}
+
+int getEndingPos(int playerPosition, int mapWidth, int centeredScale) {
+    int endingViewport = (playerPosition + 2 >= mapWidth - 1) ? mapWidth - 1 : playerPosition + 2;
+    int padding = (playerPosition - 2 < 0) ? abs(mapWidth - 2) : 0;
+    return endingViewport + padding;
 }
