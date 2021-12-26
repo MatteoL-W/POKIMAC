@@ -7,8 +7,6 @@
 #include "../include/Text.hpp"
 #include "../include/Colors.hpp"
 
-Map *map = nullptr;
-Text *text = new Text();
 SDL_Renderer *Game::renderer = nullptr;
 
 Game::Game() {}
@@ -27,13 +25,11 @@ void Game::init(const std::string title) {
         renderer = SDL_CreateRenderer(window, -1, 0);
 
         isRunning = true;
-
-        map = new Map(true);
     }
 }
 
 /**
- * @brief Handle SDL Events
+ * @brief Handle SDL Events of the game
  */
 void Game::handleEvents() {
     SDL_PollEvent(&event);
@@ -41,58 +37,6 @@ void Game::handleEvents() {
     if (event.type == SDL_QUIT) {
         Game::isRunning = false;
     }
-
-    // Si une touche est enfoncée, on vérifie si elle correspond à une touche assignée au mouvement (flèches et ZQSD)
-    // On enclenche le déplacement si c'est le cas
-    if (event.type == SDL_KEYDOWN) {
-        map->updatePlayerSprite();
-        switch (event.key.keysym.sym) { // Quelle touche est appuyée ?
-            case SDLK_z:
-            case SDLK_UP:
-                map->updatePlayerPosition(MOVE_UP);
-                break;
-            case SDLK_q:
-            case SDLK_LEFT:
-                map->updatePlayerPosition(MOVE_LEFT);
-                break;
-            case SDLK_d:
-            case SDLK_RIGHT:
-                map->updatePlayerPosition(MOVE_RIGHT);
-                break;
-            case SDLK_s:
-            case SDLK_DOWN:
-                map->updatePlayerPosition(MOVE_DOWN);
-                break;
-            case SDLK_m:
-                map->toggleCamera();
-            default:
-                break;
-        }
-    }
-
-    if (event.type == SDL_KEYUP) {
-        map->updatePlayerSpriteToDefault();
-    }
-}
-
-/**
- * @brief Update objects in the game
- */
-void Game::update() {
-    text->create("Font testing", RedColor, "Press");
-    text->changeText("Testttttttttttttttttttttttttttttttttttttttttt");
-}
-
-/**
- * @brief Render the game (map and objects)
- */
-void Game::render() {
-    SDL_RenderClear(renderer);
-
-    map->draw();
-    text->draw();
-
-    SDL_RenderPresent(renderer);
 }
 
 /**

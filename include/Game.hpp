@@ -12,13 +12,15 @@ public:
 
     void handleEvents();
 
-    void update();
-
-    void render();
-
     void clean();
 
     bool running() { return isRunning; };
+
+    void setRunning(bool newState) { isRunning = newState; }
+
+    bool exploring() { return inExploration; };
+
+    bool attacking() { return inAttack; };
 
     static SDL_Renderer *renderer;
 
@@ -26,9 +28,14 @@ public:
 
 private:
     const int WINDOW_WIDTH = 800;
+
     const int WINDOW_HEIGHT = 800;
 
     bool isRunning = false;
+
+    bool inExploration = false;
+
+    bool inAttack = true;
 
     SDL_Window *window;
 };
