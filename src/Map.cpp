@@ -4,6 +4,10 @@
 #include "../include/Map.hpp"
 #include "../include/Pokemon.hpp"
 
+
+//ER : j'ai divisé en 4 une texture du tileset1
+
+
 Pokemon *bulbizarre = nullptr;
 Pokemon *carapuce = nullptr;
 int pokemonCounter = 20;
@@ -16,8 +20,8 @@ int first_level[Map::MAP_HEIGHT][Map::MAP_WIDTH]{
         {0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 40, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //ER : je l'ai placée sur la map
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 42, 43, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -40,10 +44,18 @@ Map::Map() {
     playerMapTexture = IMG_LoadTexture(Game::renderer, "assets/ethan_sprite.png");
     pokemonMapTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
 
+    //ER
+    HealthCenterMapTexture = IMG_LoadTexture(Game:: renderer, "assets/tileset1.png");
+    srcHealthCenter.x = srcHealthCenter.y = 0;
+    srcHealthCenter.w = srcHealthCenter.h = 40;
+    destHealthCenter = destTexture;
+    // \ER
+
     srcTexture.x = srcTexture.y = 0;
     srcTexture.w = srcTexture.h = 32;
     srcPlayer.h = srcPlayer.w = 64;
     srcPokemon = srcTexture;
+
 
     destTexture.w = MAP_CELL_WIDTH;
     destTexture.h = MAP_CELL_HEIGHT;
@@ -78,6 +90,13 @@ void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     pokemon[0] = *bulbizarre;
     pokemon[1] = *carapuce;
 
+
+    //ER
+    // define the health center emplacement
+
+
+
+
     //________________________________________________________________________
 }
 
@@ -111,11 +130,85 @@ void Map::drawMap() {
                     case MAP_DIRT:
                         srcTexture.x = 0;
                         break;
+
+                    //ER: essai de mettre le health center ici
+                    /*
+                    case MAP_HEALTH_CENTER_TOPLEFT:
+                        srcHealthCenter.x = 0;
+                        srcHealthCenter.y = 240;
+                        break;
+                    case MAP_HEALTH_CENTER_TOPRIGHT:
+                        srcHealthCenter.x = 41;
+                        srcHealthCenter.y = 240;
+                        break;
+                    case MAP_HEALTH_CENTER_BOTTOMLEFT:
+                        srcHealthCenter.x = 0;
+                        srcHealthCenter.y = 281;
+                        break;
+                    case MAP_HEALTH_CENTER_BOTTOMRIGHT:
+                        srcHealthCenter.x = 41;
+                        srcHealthCenter.y = 281;
+                        break; 
+                    */
+
                     default:
                         break;
                 }
-
+                //SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &destHealthCenter);
                 SDL_RenderCopy(Game::renderer, tilesetMapTexture, &srcTexture, &destTexture);
+
+                //ER : essai 
+                // If the cell is the health center
+                /*
+                if (mapArray[row][column] == MAP_HEALTH_CENTER_TOPLEFT || mapArray[row][column] == MAP_HEALTH_CENTER_TOPRIGHT || mapArray[row][column] == MAP_HEALTH_CENTER_BOTTOMLEFT || mapArray[row][column] == MAP_HEALTH_CENTER_BOTTOMRIGHT) {
+                    switch (cellType) {
+                        case MAP_HEALTH_CENTER_TOPLEFT:
+                            srcHealthCenter.x = 0;
+                            srcHealthCenter.y = 240;
+                            break;
+                        case MAP_HEALTH_CENTER_TOPRIGHT:
+                            srcHealthCenter.x = 41;
+                            srcHealthCenter.y = 240;
+                            break;
+                        case MAP_HEALTH_CENTER_BOTTOMLEFT:
+                            srcHealthCenter.x = 0;
+                            srcHealthCenter.y = 281;
+                            break;
+                        case MAP_HEALTH_CENTER_BOTTOMRIGHT:
+                            srcHealthCenter.x = 41;
+                            srcHealthCenter.y = 281;
+                            break; 
+                        default:
+                            break;
+                    }
+                    SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &destHealthCenter);
+                }
+                */
+
+                //ER : essai 
+                // If the cell is the health center
+                if (mapArray[row][column] == MAP_HEALTH_CENTER_TOPLEFT) {
+                    srcHealthCenter.x = 0;
+                    srcHealthCenter.y = 240;
+                    SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &destHealthCenter);
+                }
+                if (mapArray[row][column] == MAP_HEALTH_CENTER_TOPRIGHT) {
+                    srcHealthCenter.x = 41;
+                    srcHealthCenter.y = 240;
+                    SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &destHealthCenter);
+                }
+                if (mapArray[row][column] == MAP_HEALTH_CENTER_BOTTOMLEFT) {
+                    srcHealthCenter.x = 0;
+                    srcHealthCenter.y = 281;
+                    SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &destHealthCenter);
+                }
+                if (mapArray[row][column] == MAP_HEALTH_CENTER_BOTTOMRIGHT) {
+                    srcHealthCenter.x = 41;
+                    srcHealthCenter.y = 281;
+                    SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &destHealthCenter);
+                }
+
+                
 
                 // If the cell is also the player emplacement
                 if (mapArray[row][column] == MAP_PLAYER) {

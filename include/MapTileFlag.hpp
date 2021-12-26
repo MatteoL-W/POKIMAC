@@ -18,7 +18,10 @@ const int MAP_PLAYER = 10;
 
 // _____________________________________________________
 // Decors [40 - ??]
-
+const int MAP_HEALTH_CENTER_TOPLEFT = 40;
+const int MAP_HEALTH_CENTER_TOPRIGHT = 41;
+const int MAP_HEALTH_CENTER_BOTTOMLEFT = 42;
+const int MAP_HEALTH_CENTER_BOTTOMRIGHT = 43;
 
 // _____________________________________________________
 // Direction [100 - 103]
