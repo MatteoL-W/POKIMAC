@@ -29,17 +29,6 @@ void Game::init(const std::string title) {
 }
 
 /**
- * @brief Handle SDL Events of the game
- */
-void Game::handleEvents() {
-    SDL_PollEvent(&event);
-
-    if (event.type == SDL_QUIT) {
-        Game::isRunning = false;
-    }
-}
-
-/**
  * @brief Quit the game properly
  */
 void Game::clean() {

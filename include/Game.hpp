@@ -10,8 +10,6 @@ public:
 
     void init(const std::string title);
 
-    void handleEvents();
-
     void clean();
 
     bool running() { return isRunning; };

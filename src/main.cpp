@@ -3,30 +3,33 @@
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
 #include "../include/ExplorationInterface.hpp"
+#include "../include/AttackInterface.hpp"
 
 Game *game = nullptr;
 Map *map = nullptr;
-ExplorationInterface *exploration = nullptr;
+ExplorationInterface *explorationInterface = nullptr;
+AttackInterface *attackInterface = nullptr;
+Pokemon *pokemon = new Pokemon(1);
 
 int main(int argc, char *argv[]) {
     game = new Game();
     game->init("POKIMAC");
-    exploration = new ExplorationInterface(game);
+    explorationInterface = new ExplorationInterface(game);
+    attackInterface = new AttackInterface(game, pokemon);
 
     while (game->running()) {
-        game->handleEvents();
         frameStart = SDL_GetTicks();
 
         if (game->exploring()) {
-            exploration->handleEvents();
-            exploration->update();
-            exploration->render();
+            explorationInterface->handleEvents();
+            explorationInterface->update();
+            explorationInterface->render();
         }
 
-        if (game->attacking()) {
-            //attack->handleEvents();
-            //attack->update();
-            //attack->render();
+        else if (game->attacking()) {
+            attackInterface->handleEvents();
+            attackInterface->update();
+            attackInterface->render();
         }
 
         // LIMITING THE FRAMERATE
