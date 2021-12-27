@@ -124,6 +124,7 @@ void Map::drawMap() {
 void Map::drawExtras() {
     // Drawing all the pokemons
     // pokemonCounter-20 because the pokemonCounter start at 20 (according to MapTileFlag.hpp)
+    Map::canAttack = nullptr;
     for (int i = 0; i < pokemonCounter - 20; i++) {
         int row = pokemon[i].getRow();
         int column = pokemon[i].getColumn();
@@ -135,7 +136,7 @@ void Map::drawExtras() {
             (row + 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
             (column - 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y) ||
             (column + 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y)) {
-            // interactions
+            Map::canAttack = &(pokemon[i]);
         }
 
         srcPokemon.x = pokemon[i].getXSpriteCoordinate();

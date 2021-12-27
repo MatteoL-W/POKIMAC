@@ -29,6 +29,24 @@ void Game::init(const std::string title) {
 }
 
 /**
+ * @brief Change the interface
+ */
+void Game::changeInterface() {
+    if (inExploration) {
+        inAttack = true;
+        inExploration = false;
+    }
+
+    else if (inAttack) {
+        // implémenter nouvelle map
+        level++;
+        inAttack = false;
+        inExploration = true;
+    }
+
+}
+
+/**
  * @brief Quit the game properly
  */
 void Game::clean() {

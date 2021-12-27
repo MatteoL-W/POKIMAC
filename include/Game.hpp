@@ -10,6 +10,8 @@ public:
 
     void init(const std::string title);
 
+    void changeInterface();
+
     void clean();
 
     bool running() { return isRunning; };
@@ -31,9 +33,11 @@ private:
 
     bool isRunning = false;
 
-    bool inExploration = false;
+    bool inExploration = true;
 
-    bool inAttack = true;
+    bool inAttack = false;
+
+    int level = 1;
 
     SDL_Window *window;
 };

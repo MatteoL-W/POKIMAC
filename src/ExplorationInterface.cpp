@@ -21,6 +21,14 @@ void ExplorationInterface::handleEvents() {
         game->setRunning(false);
     }
 
+    if (event.type == SDL_KEYDOWN && map->getInteractingPokemon()) {
+        switch (event.key.keysym.sym) {
+            case SDLK_e:
+                game->changeInterface();
+                break;
+        }
+    }
+
     // Si une touche est enfoncée, on vérifie si elle correspond à une touche assignée au mouvement (flèches et ZQSD)
     // On enclenche le déplacement si c'est le cas
     if (event.type == SDL_KEYDOWN) {
@@ -58,8 +66,10 @@ void ExplorationInterface::handleEvents() {
  * @brief Update objects in the exploration part
  */
 void ExplorationInterface::update() {
-    text->create("Font testing", RedColor, "Press");
-    text->changeText("Testttttttttttttttttttttttttttttttttttttttttt");
+    text->create("", RedColor, "Press");
+    if (map->getInteractingPokemon()) {
+        text->changeText("Appuyer sur [E] pour interagir");
+    }
 }
 
 /**

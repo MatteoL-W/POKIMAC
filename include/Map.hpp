@@ -39,6 +39,8 @@ public:
 
     void placePokemon(Pokemon *pokemon, int x, int y);
 
+    Pokemon* getInteractingPokemon() { return canAttack; }
+
 private:
     Pokemon pokemon[2];
     SDL_Rect srcTexture, srcPlayer, srcPokemon;
@@ -49,6 +51,8 @@ private:
     SDL_Texture *pokemonMapTexture;
 
     int mapArray[MAP_HEIGHT][MAP_WIDTH];
+
+    Pokemon* canAttack;
 
     bool centeredCamera;
     int startingX, startingY, endingX, endingY;
