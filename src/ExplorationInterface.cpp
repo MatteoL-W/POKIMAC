@@ -67,9 +67,13 @@ void ExplorationInterface::handleEvents() {
  */
 void ExplorationInterface::update() {
     text->create("", RedColor, "Press");
+
     if (map->getInteractingPokemon()) {
         text->changeText("Appuyer sur [E] pour interagir");
+        text->changeColor(WhiteColor);
+        text->changeDestRect(40, 750);
     }
+
 }
 
 /**
