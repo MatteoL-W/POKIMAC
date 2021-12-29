@@ -29,7 +29,7 @@ private:
     int defense;
     int sprite_x;
     int sprite_y;
-    int type[2];
+    int type;
 
     bool wild;
     int column;

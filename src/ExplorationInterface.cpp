@@ -66,11 +66,10 @@ void ExplorationInterface::handleEvents() {
  * @brief Update objects in the exploration part
  */
 void ExplorationInterface::update() {
-    text->create("", RedColor, "Press");
+    text->create("", WhiteColor, "Press");
 
     if (map->getInteractingPokemon()) {
         text->changeText("Appuyer sur [E] pour interagir");
-        text->changeColor(WhiteColor);
         text->changeDestRect(40, 750);
     }
 

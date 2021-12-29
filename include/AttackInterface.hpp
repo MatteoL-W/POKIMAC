@@ -6,9 +6,10 @@
 
 class AttackInterface : public Interface {
 public:
-    AttackInterface(Game *game, Pokemon *pokemon) {
+    AttackInterface(Game *game, Pokemon *attackedPokemon, Pokemon *attackerPokemon) {
         AttackInterface::game = game;
-        AttackInterface::enemy = pokemon;
+        AttackInterface::enemy = attackedPokemon;
+        AttackInterface::pokemon = attackerPokemon;
     };
 
     ~AttackInterface();
@@ -23,4 +24,6 @@ private:
     Game *game;
 
     Pokemon *enemy;
+
+    Pokemon *pokemon;
 };

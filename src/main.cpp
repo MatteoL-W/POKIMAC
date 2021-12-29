@@ -6,16 +6,18 @@
 #include "../include/AttackInterface.hpp"
 
 Game *game = nullptr;
-Map *map = nullptr;
+
 ExplorationInterface *explorationInterface = nullptr;
 AttackInterface *attackInterface = nullptr;
-Pokemon *pokemon = new Pokemon(1);
+
+Pokemon *attackedPokemon = nullptr;
+Pokemon *attackerPokemon = nullptr;
 
 int main(int argc, char *argv[]) {
     game = new Game();
     game->init("POKIMAC");
     explorationInterface = new ExplorationInterface(game);
-    attackInterface = new AttackInterface(game, pokemon);
+    attackInterface = new AttackInterface(game, attackedPokemon, attackerPokemon);
 
     while (game->running()) {
         frameStart = SDL_GetTicks();
