@@ -5,12 +5,9 @@
 #include "../include/MapsArray.hpp"
 #include "../include/Pokemon.hpp"
 
-
-
 Pokemon *bulbizarre = nullptr;
 Pokemon *carapuce = nullptr;
 int pokemonCounter = 20;
-
 
 /**
  * @brief Constructor of the Map object
@@ -38,10 +35,12 @@ Map::Map(bool isCameraCentered) {
     destTexture.w = MAP_CELL_WIDTH;
     destTexture.h = MAP_CELL_HEIGHT;
     destTexture.x = destTexture.y = 0;
-    
+
     destHealthCenter.w = MAP_CELL_WIDTH * 2;
     destHealthCenter.h = MAP_CELL_HEIGHT * 2;
     destHealthCenter.x = destHealthCenter.y = 0;
+
+    centeredCamera = isCameraCentered;
 
     Map::loadMap(first_level);
 }
@@ -64,15 +63,12 @@ void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     // declare Pokemons
     bulbizarre = new Pokemon(0);
     placePokemon(bulbizarre, MAP_PLAYER_X, MAP_PLAYER_Y + 2);
-    //
-    inventory[0] = bulbizarre;
 
     carapuce = new Pokemon(1);
     placePokemon(carapuce, MAP_PLAYER_X + 3, MAP_PLAYER_Y + 1);
 
     pokemon[0] = *bulbizarre;
     pokemon[1] = *carapuce;
-
 
     //________________________________________________________________________
 }
@@ -96,7 +92,6 @@ void Map::draw() {
     drawExtras();
 }
 
-
 /**
  * @brief Draw the map
  */
@@ -110,24 +105,23 @@ void Map::drawMap() {
             destTexture.x = (-startingX + column) * MAP_CELL_WIDTH;
             destTexture.y = (-startingY + row) * MAP_CELL_HEIGHT;
 
-                // If the cell is a texture
-                switch (cellType) {
-                    case MAP_WATER:
-                        srcTexture.x = 64;
-                        break;
-                    case MAP_GRASS:
-                        srcTexture.x = 32;
-                        break;
-                    case MAP_DIRT:
-                        srcTexture.x = 0;
-                        break;
-                    default:
-                        break;
-                }
+            // If the cell is a texture
+            switch (cellType) {
+                case MAP_WATER:
+                    srcTexture.x = 64;
+                    break;
+                case MAP_GRASS:
+                    srcTexture.x = 32;
+                    break;
+                case MAP_DIRT:
+                    srcTexture.x = 0;
+                    break;
+                default:
+                    break;
+            }
 
-                SDL_RenderCopy(Game::renderer, tilesetMapTexture, &srcTexture, &destTexture);
+            SDL_RenderCopy(Game::renderer, tilesetMapTexture, &srcTexture, &destTexture);
 
-            
             // If the cell is also the player emplacement
             if (mapArray[row][column] == MAP_PLAYER) {
                 SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destTexture);
@@ -139,6 +133,7 @@ void Map::drawMap() {
 void Map::drawExtras() {
     // Drawing all the pokemons
     // pokemonCounter-20 because the pokemonCounter start at 20 (according to MapTileFlag.hpp)
+    Map::canAttack = nullptr;
     for (int i = 0; i < pokemonCounter - 20; i++) {
         int row = pokemon[i].getRow();
         int column = pokemon[i].getColumn();
@@ -150,7 +145,7 @@ void Map::drawExtras() {
             (row + 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
             (column - 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y) ||
             (column + 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y)) {
-            // interactions
+            canAttack = &(pokemon[i]);
         }
 
         srcPokemon.x = pokemon[i].getXSpriteCoordinate();
@@ -158,7 +153,7 @@ void Map::drawExtras() {
         SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &destTexture);
 
     }
-    // If the cell is the health center 
+    // If the cell is the health center
     for (int row = startingY; row <= endingY; row++) {
         for (int column = startingX; column <= endingX; column++) {
             if (mapArray[row][column] == MAP_HEALTH_CENTER) {
@@ -186,6 +181,7 @@ void Map::toggleCamera() {
         MAP_CELL_WIDTH = 32 * 5;
         MAP_CELL_HEIGHT = 32 * 5;
     }
+
     destTexture.w = MAP_CELL_WIDTH;
     destTexture.h = MAP_CELL_HEIGHT;
 }

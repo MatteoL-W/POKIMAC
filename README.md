@@ -14,6 +14,10 @@ Library needed:
 
 Just have fun !
 
+## Commands
+
+You can move with Z,S,Q,D or with arrows. You can swap the camera with M.
+
 ## Thanks
 
 - **Carl Brich** from https://www.youtube.com/c/CarlBirch

@@ -1,7 +1,7 @@
 #pragma once
 
 // *****************************************************
-// Non walkable texture [0]
+// Non-walkable texture [0]
 const int MAP_WATER = 0;
 
 // Walkable textures [1-10]

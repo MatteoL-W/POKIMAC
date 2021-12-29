@@ -24,7 +24,8 @@ void Text::create(std::string text, SDL_Color color, std::string fontName) {
     Text::font = createFont(fontName);
     Text::surface = TTF_RenderText_Solid(Text::font, Text::message.c_str(), Text::color);
     Text::texture = SDL_CreateTextureFromSurface(Game::renderer, Text::surface);
-    Text::destRect = createDestRect(Text::font, Text::message);
+    Text::destRect = createDestRect(Text::font, Text::message, 0, 0);
+    SDL_ClearError();
 }
 
 /**
@@ -44,7 +45,27 @@ void Text::changeText(std::string newText) {
     Text::message = newText.c_str();
     Text::surface = TTF_RenderText_Solid(Text::font, Text::message.c_str(), Text::color);
     Text::texture = SDL_CreateTextureFromSurface(Game::renderer, Text::surface);
-    Text::destRect = createDestRect(Text::font, Text::message);
+    Text::destRect = createDestRect(Text::font, Text::message, 0, 0);
+}
+
+/**
+ * @brief Change the color
+ * @param newText
+ */
+void Text::changeColor(SDL_Color newColor) {
+    Text::color = newColor;
+    Text::surface = TTF_RenderText_Solid(Text::font, Text::message.c_str(), Text::color);
+    Text::texture = SDL_CreateTextureFromSurface(Game::renderer, Text::surface);
+    Text::destRect = createDestRect(Text::font, Text::message, 0, 0);
+}
+
+/**
+ * @brief Change the x and y position
+ * @param x
+ * @param y
+ */
+void Text::changeDestRect(int x, int y) {
+    Text::destRect = createDestRect(Text::font, Text::message, x, y);
 }
 
 /**
@@ -69,9 +90,10 @@ TTF_Font *createFont(std::string fontName) {
  * @param text
  * @return SDL_Rect
  */
-SDL_Rect createDestRect(TTF_Font *font, std::string text) {
+SDL_Rect createDestRect(TTF_Font *font, std::string text, int x, int y) {
     SDL_Rect destMessage;
-    destMessage.x = destMessage.y = 0;
+    destMessage.x = x;
+    destMessage.y = y;
 
     if (TTF_SizeText(font, text.c_str(), &destMessage.w, &destMessage.h)) {
         std::cout << TTF_GetError() << std::endl;
