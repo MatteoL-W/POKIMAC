@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Interface.hpp"
+#include <SDL2/SDL.h>
+#include "Battle.hpp"
 #include "Game.hpp"
+#include "Interface.hpp"
 #include "Pokemon.hpp"
 
 class AttackInterface : public Interface {
@@ -10,6 +12,7 @@ public:
         AttackInterface::game = game;
         AttackInterface::enemy = attackedPokemon;
         AttackInterface::pokemon = attackerPokemon;
+        AttackInterface::battle = new Battle(enemy, pokemon);
     };
 
     ~AttackInterface();
@@ -26,4 +29,6 @@ private:
     Pokemon *enemy;
 
     Pokemon *pokemon;
+
+    Battle *battle;
 };
