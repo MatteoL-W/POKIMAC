@@ -13,6 +13,12 @@ public:
 
     void draw();
 
+    void drawBackground();
+
+    void drawPokemons();
+
+    void drawDialog();
+
 private:
     Pokemon *enemyPokemon;
 

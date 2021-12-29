@@ -16,10 +16,10 @@ Text *text2 = new Text();
 // Tranch'Herbe is the attack for TYPE_PLANT (1)
 // ...
 std::string attacks[TYPES_LENGTHS] = {
-    "Charge",
-    "Tranch'Herbe",
-    "Vibraqua",
-    "Rebondifeu"
+        "Charge",
+        "Tranch'Herbe",
+        "Vibraqua",
+        "Rebondifeu"
 };
 
 /**
@@ -48,6 +48,7 @@ void AttackInterface::update() {
 void AttackInterface::render() {
     SDL_RenderClear(Game::renderer);
 
+    battle->draw();
     text2->draw();
 
     SDL_RenderPresent(Game::renderer);

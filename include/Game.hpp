@@ -26,10 +26,10 @@ public:
 
     SDL_Event event;
 
-private:
-    const int WINDOW_WIDTH = 800;
+    static const int WINDOW_WIDTH = 800;
 
-    const int WINDOW_HEIGHT = 800;
+    static const int WINDOW_HEIGHT = 800;
+private:
 
     bool isRunning = false;
 
