@@ -44,7 +44,7 @@ public:
 private:
     Pokemon pokemon[2];
     SDL_Rect srcTexture, srcPlayer, srcPokemon, srcHealthCenter;
-    SDL_Rect destTexture, destHealthCenter;
+    SDL_Rect dest1by1, dest2by2;
 
     SDL_Texture *tilesetMapTexture;
     SDL_Texture *playerMapTexture;

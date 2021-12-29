@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include "SDL2/SDL.h"
 #include "Pokemon.hpp"
 
 const int MAX_POKEMON_INV = 6;
@@ -27,16 +28,16 @@ public:
 
     static SDL_Renderer *renderer;
 
-    SDL_Event event;
+    static Pokemon *inventory[MAX_POKEMON_INV];
 
+    SDL_Event event;
 private:
+
     const int WINDOW_WIDTH = 800;
 
     const int WINDOW_HEIGHT = 800;
 
     bool isRunning = false;
-
-    Pokemon inventory[MAX_POKEMON_INV];
 
     bool inExploration = true;
 
