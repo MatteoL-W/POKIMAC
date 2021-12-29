@@ -20,13 +20,17 @@ Pokemon::Pokemon(int id, bool isWild) {
 
     if (pokemon_db) {
         int lines = 0;
-        int hp, att, def, x_spr, y_spr, type1, type2;
+        int max_hp, att, def, x_spr, y_spr, type1, type2;
+
         std::string pokename;
 
-        while (pokemon_db >> pokename >> hp >> att >> def >> x_spr >> y_spr >> type1 >> type2) {
+
+        while (pokemon_db >> pokename >> max_hp >> att >> def >> x_spr >> y_spr >> type1 >> type2) {
             if (lines == id) {
                 name = pokename;
-                health_point = hp;
+                max_health_point = max_hp;
+                //health_point = max_hp;
+                health_point = max_hp / 3;
                 attack = att;
                 defense = def;
                 sprite_x = x_spr;
@@ -34,6 +38,7 @@ Pokemon::Pokemon(int id, bool isWild) {
                 type[0] = type1;
                 type[1] = type2;
                 wild = isWild;
+
 
                 break;
             }
@@ -54,3 +59,4 @@ void Pokemon::setCoordinates(int x, int y) {
     column = x;
     row = y;
 }
+

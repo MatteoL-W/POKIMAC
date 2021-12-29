@@ -1,15 +1,21 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
+#include <fstream>
 #include <string>
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
 #include "../include/Text.hpp"
 #include "../include/Colors.hpp"
+#include "../include/Pokemon.hpp"
+
+
 
 Map *map = nullptr;
 Text *text = new Text();
 SDL_Renderer *Game::renderer = nullptr;
+
+
 
 Game::Game() {}
 
@@ -29,6 +35,15 @@ void Game::init(const std::string title) {
         isRunning = true;
 
         map = new Map(true);
+
+
+        //pokemon inventory
+        std::ifstream pokemon_db("database/pokemon.txt");
+
+        //The first Pokemon in the inventory is the one given to the player to start the game
+        //inventory[1] = ???;  
+
+
     }
 }
 

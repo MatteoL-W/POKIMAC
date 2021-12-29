@@ -6,6 +6,7 @@
 #include "../include/Pokemon.hpp"
 
 
+
 Pokemon *bulbizarre = nullptr;
 Pokemon *carapuce = nullptr;
 int pokemonCounter = 20;
@@ -63,13 +64,14 @@ void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     // declare Pokemons
     bulbizarre = new Pokemon(0);
     placePokemon(bulbizarre, MAP_PLAYER_X, MAP_PLAYER_Y + 2);
+    //
+    inventory[0] = bulbizarre;
 
     carapuce = new Pokemon(1);
     placePokemon(carapuce, MAP_PLAYER_X + 3, MAP_PLAYER_Y + 1);
 
     pokemon[0] = *bulbizarre;
     pokemon[1] = *carapuce;
-
 
 
     //________________________________________________________________________
