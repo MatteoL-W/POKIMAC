@@ -2,6 +2,7 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include <string>
+#include "../include/Pokemon.hpp"
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
 #include "../include/Text.hpp"
@@ -14,7 +15,7 @@ Game::Game() {}
 Game::~Game() {}
 
 /**
- * @brief Initialize the game (assign the window, renderer, define the game as running
+ * @brief Initialize the game (assign the window, renderer, define the game as running)
  * @param title
  */
 void Game::init(const std::string title) {
@@ -31,19 +32,10 @@ void Game::init(const std::string title) {
 /**
  * @brief Change the interface
  */
-void Game::changeInterface() {
-    if (inExploration) {
-        inAttack = true;
-        inExploration = false;
-    }
+void Game::changeInterfaceToAttack(Pokemon *enemy) {
+    setActivity("inAttack");
 
-    else if (inAttack) {
-        // implémenter nouvelle map
-        level++;
-        inAttack = false;
-        inExploration = true;
-    }
-
+    // load le pokemon en paramètre dans le private du game
 }
 
 /**

@@ -24,7 +24,7 @@ void ExplorationInterface::handleEvents() {
     if (event.type == SDL_KEYDOWN && map->getInteractingPokemon()) {
         switch (event.key.keysym.sym) {
             case SDLK_e:
-                game->changeInterface();
+                game->changeInterfaceToAttack(map->getInteractingPokemon());
                 break;
         }
     }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include "Pokemon.hpp"
 
 class Game {
 public:
@@ -10,32 +11,42 @@ public:
 
     void init(const std::string title);
 
-    void changeInterface();
+    void changeInterfaceToAttack(Pokemon *enemy);
 
     void clean();
 
-    bool running() { return isRunning; };
-
     void setRunning(bool newState) { isRunning = newState; }
 
-    bool exploring() { return inExploration; };
+    bool running() { return isRunning; };
 
-    bool attacking() { return inAttack; };
+    bool exploring() {
+        if (activity == "inExploration") {
+            return true;
+        }
+        return false;
+    };
+
+    bool attacking() {
+        if (activity == "inAttack") {
+            return true;
+        }
+        return false;
+    };
+
+    void setActivity(std::string newActivity) { activity = newActivity; };
 
     static SDL_Renderer *renderer;
-
-    SDL_Event event;
 
     static const int WINDOW_WIDTH = 800;
 
     static const int WINDOW_HEIGHT = 800;
-private:
 
+    SDL_Event event;
+
+private:
     bool isRunning = false;
 
-    bool inExploration = true;
-
-    bool inAttack = false;
+    std::string activity = "inExploration";
 
     int level = 1;
 
