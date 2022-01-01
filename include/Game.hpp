@@ -37,6 +37,8 @@ public:
 
     static SDL_Renderer *renderer;
 
+    static int level;
+
     static const int WINDOW_WIDTH = 800;
 
     static const int WINDOW_HEIGHT = 800;
@@ -47,8 +49,6 @@ private:
     bool isRunning = false;
 
     std::string activity = "inExploration";
-
-    int level = 1;
 
     SDL_Window *window;
 };

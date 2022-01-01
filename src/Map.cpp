@@ -1,5 +1,5 @@
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
 #include "../include/MapsArray.hpp"
@@ -33,7 +33,7 @@ Map::Map(bool isCameraCentered) {
 
     centeredCamera = isCameraCentered;
 
-    Map::loadMap(first_level);
+    Map::loadMap(mapsName[Game::level]);
 }
 
 Map::~Map() {
@@ -45,7 +45,7 @@ Map::~Map() {
  * @param array
  */
 void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
-    // Copy of mapArray from first_level
+    // Copy of mapArray from level's map
     SDL_memmove(mapArray, array, sizeof(mapArray));
 
     // define the player emplacement
@@ -90,7 +90,7 @@ void Map::drawMap() {
     int cellType = 0;
     for (int row = startingY; row <= endingY; row++) {
         for (int column = startingX; column <= endingX; column++) {
-            cellType = first_level[row][column];
+            cellType = mapsName[Game::level][row][column];
 
             // The 1st rendered cell start at 0 on the top left screen (except if a padding is added)
             destTexture.x = (-startingX + column) * MAP_CELL_WIDTH;
@@ -200,7 +200,7 @@ void Map::updatePlayerPosition(int direction) {
     int futurePlayerCellTexture = mapArray[MAP_PLAYER_Y + yOperator][MAP_PLAYER_X + xOperator];
 
     if (futurePlayerCellTexture >= 1 && futurePlayerCellTexture <= 10) {
-        mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = first_level[MAP_PLAYER_Y][MAP_PLAYER_X];
+        mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = mapsName[Game::level][MAP_PLAYER_Y][MAP_PLAYER_X];
         MAP_PLAYER_Y = MAP_PLAYER_Y + yOperator;
         MAP_PLAYER_X = MAP_PLAYER_X + xOperator;
         mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;

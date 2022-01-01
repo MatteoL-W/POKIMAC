@@ -9,6 +9,7 @@
 #include "../include/Colors.hpp"
 
 SDL_Renderer *Game::renderer = nullptr;
+int Game::level = 0;
 
 Game::Game() {}
 
@@ -26,6 +27,7 @@ void Game::init(const std::string title) {
         renderer = SDL_CreateRenderer(window, -1, 0);
 
         isRunning = true;
+        level = 0;
     }
 }
 
