@@ -47,7 +47,9 @@ void Game::init(const std::string title) {
  */
 void Game::changeInterfaceToAttack(Pokemon *enemy) {
     setActivity("inAttack");
-    // load le pokemon en paramètre dans le private du game
+
+    Battle* battle = attackInterface->getBattle();
+    battle->setEnemy(enemy);
 }
 
 /**

@@ -19,6 +19,8 @@ public:
 
     void drawDialog();
 
+    void setEnemy(Pokemon *enemy) { Battle::enemyPokemon = enemy; };
+
 private:
     Pokemon *enemyPokemon;
 

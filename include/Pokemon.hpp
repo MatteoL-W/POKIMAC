@@ -22,6 +22,8 @@ public:
 
     int getColumn() { return column; };
 
+    int getHealthPoint() { return health_point; };
+
 private:
     std::string name;
     int health_point;

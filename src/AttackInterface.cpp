@@ -9,8 +9,6 @@
 #include "../include/Map.hpp"
 #include "../include/Text.hpp"
 
-Text *text2 = new Text();
-
 // (cf. AttackFlags.hpp)
 // Charge is the attack for TYPE_NORMAL (0)
 // Tranch'Herbe is the attack for TYPE_PLANT (1)
@@ -38,8 +36,6 @@ void AttackInterface::handleEvents() {
  * @brief Update objects in the exploration part
  */
 void AttackInterface::update() {
-    text2->create("Font testing", RedColor, "Press");
-    text2->changeText("Testttttttttttttttttttttttttttttttttttttttttt");
 }
 
 /**
@@ -49,7 +45,6 @@ void AttackInterface::render() {
     SDL_RenderClear(Game::renderer);
 
     battle->draw();
-    text2->draw();
 
     SDL_RenderPresent(Game::renderer);
 }
