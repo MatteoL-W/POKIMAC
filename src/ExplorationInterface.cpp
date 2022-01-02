@@ -66,6 +66,7 @@ void ExplorationInterface::handleEvents() {
  * @brief Update objects in the exploration part
  */
 void ExplorationInterface::update() {
+    //TODO: creer le truc direct dans l'interaction
     text->create("", WhiteColor, "Press");
 
     if (map->getInteractingPokemon()) {

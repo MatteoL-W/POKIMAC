@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include "../include/main.hpp"
+#include "../include/Pokemon.hpp"
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
 #include "../include/ExplorationInterface.hpp"
@@ -7,32 +8,14 @@
 
 Game *game = nullptr;
 
-ExplorationInterface *explorationInterface = nullptr;
-AttackInterface *attackInterface = nullptr;
-
-Pokemon *attackedPokemon = nullptr;
-Pokemon *attackerPokemon = nullptr;
-
 int main(int argc, char *argv[]) {
     game = new Game();
     game->init("POKIMAC");
-    explorationInterface = new ExplorationInterface(game);
-    attackInterface = new AttackInterface(game, attackedPokemon, attackerPokemon);
 
     while (game->running()) {
         frameStart = SDL_GetTicks();
 
-        if (game->exploring()) {
-            explorationInterface->handleEvents();
-            explorationInterface->update();
-            explorationInterface->render();
-        }
-
-        else if (game->attacking()) {
-            attackInterface->handleEvents();
-            attackInterface->update();
-            attackInterface->render();
-        }
+        game->refresh();
 
         // LIMITING THE FRAMERATE
         frameTime = SDL_GetTicks() - frameStart;

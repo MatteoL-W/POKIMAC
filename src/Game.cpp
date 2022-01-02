@@ -7,9 +7,17 @@
 #include "../include/Map.hpp"
 #include "../include/Text.hpp"
 #include "../include/Colors.hpp"
+#include "../include/AttackInterface.hpp"
+#include "../include/ExplorationInterface.hpp"
 
 SDL_Renderer *Game::renderer = nullptr;
 int Game::level = 0;
+
+AttackInterface *attackInterface = nullptr;
+ExplorationInterface *explorationInterface = nullptr;
+
+Pokemon *attackedPokemon = nullptr;
+Pokemon *attackerPokemon = nullptr;
 
 Game::Game() {}
 
@@ -26,6 +34,9 @@ void Game::init(const std::string title) {
                                   WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
         renderer = SDL_CreateRenderer(window, -1, 0);
 
+        explorationInterface = new ExplorationInterface(this);
+        attackInterface = new AttackInterface(this, attackedPokemon, attackerPokemon);
+
         isRunning = true;
         level = 0;
     }
@@ -36,7 +47,6 @@ void Game::init(const std::string title) {
  */
 void Game::changeInterfaceToAttack(Pokemon *enemy) {
     setActivity("inAttack");
-
     // load le pokemon en paramètre dans le private du game
 }
 
@@ -47,4 +57,18 @@ void Game::clean() {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
+}
+
+void Game::refresh() {
+    if (exploring()) {
+        explorationInterface->handleEvents();
+        explorationInterface->update();
+        explorationInterface->render();
+    }
+
+    else if (attacking()) {
+        attackInterface->handleEvents();
+        attackInterface->update();
+        attackInterface->render();
+    }
 }

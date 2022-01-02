@@ -15,6 +15,8 @@ public:
 
     void clean();
 
+    void refresh();
+
     void setRunning(bool newState) { isRunning = newState; }
 
     bool running() { return isRunning; };

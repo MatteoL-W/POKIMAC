@@ -46,7 +46,8 @@ void Battle::drawBackground() {
 }
 
 void Battle::drawPokemons() {
-    //std::cout << enemyPokemon;
+    // là le pokemon est pas mis dans le enemyPokemon encore
+//    std::cout << enemyPokemon;
 //    SDL_Texture *pokemonsTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
 //
 //    SDL_Rect destEnemy, srcEnemy;
