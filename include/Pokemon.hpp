@@ -22,6 +22,8 @@ public:
 
     int getColumn() { return column; };
 
+    int getHealthPoint() { return health_point; };
+
 private:
     std::string name;
     int health_point;
@@ -29,7 +31,7 @@ private:
     int defense;
     int sprite_x;
     int sprite_y;
-    int type[2];
+    int type;
 
     bool wild;
     int column;

@@ -20,10 +20,10 @@ Pokemon::Pokemon(int id, bool isWild) {
 
     if (pokemon_db) {
         int lines = 0;
-        int hp, att, def, x_spr, y_spr, type1, type2;
+        int hp, att, def, x_spr, y_spr, type1;
         std::string pokename;
 
-        while (pokemon_db >> pokename >> hp >> att >> def >> x_spr >> y_spr >> type1 >> type2) {
+        while (pokemon_db >> pokename >> hp >> att >> def >> x_spr >> y_spr >> type1) {
             if (lines == id) {
                 name = pokename;
                 health_point = hp;
@@ -31,8 +31,7 @@ Pokemon::Pokemon(int id, bool isWild) {
                 defense = def;
                 sprite_x = x_spr;
                 sprite_y = y_spr;
-                type[0] = type1;
-                type[1] = type2;
+                type = type1;
                 wild = isWild;
 
                 break;

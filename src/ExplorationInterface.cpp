@@ -24,7 +24,7 @@ void ExplorationInterface::handleEvents() {
     if (event.type == SDL_KEYDOWN && map->getInteractingPokemon()) {
         switch (event.key.keysym.sym) {
             case SDLK_e:
-                game->changeInterface();
+                game->changeInterfaceToAttack(map->getInteractingPokemon());
                 break;
         }
     }
@@ -66,11 +66,11 @@ void ExplorationInterface::handleEvents() {
  * @brief Update objects in the exploration part
  */
 void ExplorationInterface::update() {
-    text->create("", RedColor, "Press");
+    //TODO: creer le truc direct dans l'interaction
+    text->create("", WhiteColor, "Press");
 
     if (map->getInteractingPokemon()) {
         text->changeText("Appuyer sur [E] pour interagir");
-        text->changeColor(WhiteColor);
         text->changeDestRect(40, 750);
     }
 
