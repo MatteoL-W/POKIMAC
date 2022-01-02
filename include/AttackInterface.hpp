@@ -5,6 +5,7 @@
 #include "Game.hpp"
 #include "Interface.hpp"
 #include "Pokemon.hpp"
+#include "AttacksFlag.hpp"
 
 class AttackInterface : public Interface {
 public:

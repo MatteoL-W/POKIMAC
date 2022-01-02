@@ -9,17 +9,6 @@
 #include "../include/Map.hpp"
 #include "../include/Text.hpp"
 
-// (cf. AttackFlags.hpp)
-// Charge is the attack for TYPE_NORMAL (0)
-// Tranch'Herbe is the attack for TYPE_PLANT (1)
-// ...
-std::string attacks[TYPES_LENGTHS] = {
-        "Charge",
-        "Tranch'Herbe",
-        "Vibraqua",
-        "Rebondifeu"
-};
-
 /**
  * @brief Handle SDL Events in the exploration part
  */
