@@ -2,6 +2,7 @@
 
 #include "AttackInterface.hpp"
 #include "Pokemon.hpp"
+#include "Text.hpp"
 
 class Battle {
 public:
@@ -15,7 +16,7 @@ public:
 
     void drawBackground();
 
-    void drawPokemons();
+    void drawPokemon(Pokemon *pokemon, int x, int y);
 
     void drawDialog();
 
