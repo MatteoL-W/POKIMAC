@@ -6,6 +6,7 @@
 #include "../include/Battle.hpp"
 #include "../include/Text.hpp"
 #include "../include/Colors.hpp"
+#include "../include/Game.hpp"
 
 Text* enemyTextHP = new Text();
 Text* firstAttackText = new Text();
@@ -69,7 +70,7 @@ void Battle::load() {
  */
 void Battle::draw() {
     drawBackground();
-    drawPokemon(enemyPokemon, 175, 180);
+    drawPokemonGraphics();
     drawDialog();
 }
 
@@ -87,8 +88,50 @@ void Battle::drawBackground() {
     SDL_RenderCopy(Game::renderer, sceneBackgroundTexture, NULL, &destBackground);
 }
 
+void Battle::drawPokemonGraphics() {
+    // Drawing enemy pokemon
+    drawPokemon(enemyPokemon, 175, 180);
+    drawHealthPoint(enemyPokemon, 175, 180);
+    //________________________________________________________________________
+
+    // Drawing friend pokemon
+    //drawPokemon(pokemon,  Game::WINDOW_WIDTH- 250, 180);
+    //drawHealthPoint(pokemon, Game::WINDOW_HEIGHT - 250, 180);
+    //________________________________________________________________________
+}
+
+void Battle::drawDialog() {
+    if (pokemon == nullptr) {
+        dialogText->changeText("Choisissez votre pokemon");
+
+        //for (int i = 0; i < inventoryLength; i++) {
+        for (int i = 0; i < 6; i++) {
+            //TODO: vérifier que pokemon soit pas en hp nul
+            //pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + inventory[i]->getName());
+            pokemonListsTexts[i]->changeText("Pokemon");
+            pokemonListsTexts[i]->changeDestRect(86, 550 + 30 * i);
+            pokemonListsTexts[i]->draw();
+        }
+    }
+
+    else {
+        dialogText->changeText("Tortank vous a enlevé 7 pv");
+
+        firstAttackText->changeFont("Press", 32);
+        firstAttackText->changeText("[E] " + attacks[0]);
+        firstAttackText->changeDestRect(86,580);
+        firstAttackText->draw();
+
+        secondAttackText->changeFont("Press", 32);
+        secondAttackText->changeText("[G] " + attacks[1]);
+        secondAttackText->changeDestRect(86,630);
+        secondAttackText->draw();
+    }
+    dialogText->changeDestRect(86,485);
+    dialogText->draw();
+}
+
 void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
-    // Drawing pokemon
     SDL_Rect destPokemon, srcPokemon, destPlatform;
     destPokemon.w = destPokemon.h = 64;
     destPokemon.x = x;
@@ -104,46 +147,12 @@ void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
 
     SDL_RenderCopy(Game::renderer, pokemonPlatformTexture, NULL, &destPlatform);
     SDL_RenderCopy(Game::renderer, pokemonsTexture, &srcPokemon, &destPokemon);
-    //________________________________________________________________________
-
-    // Drawing hp
-
-    //std::string enemyHP = std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
-    std::string enemyHP = "19 / " + std::to_string(pokemon->getHealthPoint());
-    enemyTextHP->create(enemyHP, WhiteColor, "Press");
-    enemyTextHP->changeDestRect(destPokemon.x - 55, destPokemon.y + 140);
-    enemyTextHP->draw();
-
-    //________________________________________________________________________
 }
 
-void Battle::drawDialog() {
-    if (pokemon == nullptr) {
-        dialogText->changeText("Choisissez votre pokemon");
-
-        //for (int i = 0; i < inventoryLength; i++) {
-        for (int i = 0; i < 6; i++) {
-            //pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + inventory[i]->getName());
-            pokemonListsTexts[i]->changeText("Pokemon");
-            pokemonListsTexts[i]->changeDestRect(86, 550 + 30 * i);
-            pokemonListsTexts[i]->draw();
-        }
-    }
-
-    else {
-        dialogText->changeText("Tortank vous a enlevé 7 pv");
-
-        firstAttackText->changeText("[E] " + attacks[0]);
-        //TODO: increase font
-        firstAttackText->draw();
-
-        secondAttackText->changeText("[G] " + attacks[1]);
-        //TODO: increase font
-        secondAttackText->draw();
-    }
-
-    firstAttackText->changeDestRect(86,630);
-    secondAttackText->changeDestRect(86,660);
-    dialogText->changeDestRect(86,485);
-    dialogText->draw();
+void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
+    //TODO: std::string enemyHP = std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
+    std::string enemyHP = "19 / " + std::to_string(pokemon->getHealthPoint());
+    enemyTextHP->create(enemyHP, WhiteColor, "Press");
+    enemyTextHP->changeDestRect(x - 55, y + 140);
+    enemyTextHP->draw();
 }

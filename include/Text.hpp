@@ -4,10 +4,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
-TTF_Font *createFont(std::string fontName);
-
-SDL_Rect createDestRect(TTF_Font *font, std::string text, int x, int y);
-
 class Text {
 public:
     Text();
@@ -24,7 +20,11 @@ public:
 
     void changeDestRect(int x, int y);
 
+    void changeFont(std::string name, int size);
+
     std::string getText() { return message; };
+
+    int getSize() { return size; };
 
 private:
     std::string message;
@@ -38,4 +38,10 @@ private:
     SDL_Texture *texture;
 
     SDL_Rect destRect;
+
+    int size = 24;
 };
+
+TTF_Font *createFont(Text* text, std::string fontName);
+
+SDL_Rect createDestRect(TTF_Font *font, std::string text, int x, int y);

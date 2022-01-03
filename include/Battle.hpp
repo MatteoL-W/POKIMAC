@@ -16,7 +16,11 @@ public:
 
     void drawBackground();
 
+    void drawPokemonGraphics();
+
     void drawPokemon(Pokemon *pokemon, int x, int y);
+
+    void drawHealthPoint(Pokemon *pokemon, int x, int y);
 
     void drawDialog();
 

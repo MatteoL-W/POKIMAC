@@ -21,7 +21,7 @@ Text::~Text() {
 void Text::create(std::string text, SDL_Color color, std::string fontName) {
     Text::message = text;
     Text::color = color;
-    Text::font = createFont(fontName);
+    Text::font = createFont(this, fontName);
     Text::surface = TTF_RenderText_Solid(Text::font, Text::message.c_str(), Text::color);
     Text::texture = SDL_CreateTextureFromSurface(Game::renderer, Text::surface);
     Text::destRect = createDestRect(Text::font, Text::message, 0, 0);
@@ -68,13 +68,22 @@ void Text::changeDestRect(int x, int y) {
 }
 
 /**
+ * @brief Change the font size
+ * @param size
+ */
+void Text::changeFont(std::string name, int size) {
+    Text::size = size;
+    Text::font = createFont(this, name);
+}
+
+/**
  * @brief Returns a TTF_Font* from a simple string if the font is located in assets.
  * @param fontName
  * @return TTF_Font*
  */
-TTF_Font *createFont(std::string fontName) {
+TTF_Font *createFont(Text* text, std::string fontName) {
     std::string fullFontName = "./assets/" + fontName + ".ttf";
-    TTF_Font *font = TTF_OpenFont(fullFontName.c_str(), 24);
+    TTF_Font *font = TTF_OpenFont(fullFontName.c_str(), text->getSize());
 
     if (font == nullptr) {
         std::cout << fullFontName << " -> " << "Font not found" << std::endl;
