@@ -17,6 +17,7 @@ public:
     int MAP_PLAYER_X = 8;
     int MAP_PLAYER_Y = 3;
 
+
     Map(bool isCameraCentered);
 
     ~Map();
@@ -39,6 +40,10 @@ public:
 
     void placePokemon(Pokemon *pokemon, int x, int y);
 
+    //!!!!
+    int findTiles(int map_nb); 
+
+
     Pokemon* getInteractingPokemon() { return canAttack; }
 
 private:
@@ -57,4 +62,8 @@ private:
 
     bool centeredCamera;
     int startingX, startingY, endingX, endingY;
+
+        //..... (positions que findTiles trouve)
+    int TILES_X;
+    int TILES_Y;
 };

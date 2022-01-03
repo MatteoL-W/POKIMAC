@@ -5,6 +5,9 @@
 #include "../include/MapsArray.hpp"
 #include "../include/Pokemon.hpp"
 
+#include <iostream>
+
+
 Pokemon *bulbizarre = nullptr;
 Pokemon *carapuce = nullptr;
 Pokemon *Game::inventory[MAX_POKEMON_INV];
@@ -157,14 +160,34 @@ void Map::drawExtras() {
         SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &dest1by1);
 
     }
-    // If the cell is the health center
+    // The health center
     for (int row = startingY; row <= endingY; row++) {
         for (int column = startingX; column <= endingX; column++) {
-            if (mapArray[row][column] == MAP_HEALTH_CENTER) {
+            if (mapArray[row][column] == MAP_HEALTH_CENTER) { // Draw the health center
                 dest2by2.x = (-startingX + column) * MAP_CELL_WIDTH;
                 dest2by2.y = (-startingY + row) * MAP_CELL_HEIGHT;
                 SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &dest2by2);
             }
+
+            Map::findTiles(71);
+            int health_row = TILES_X; 
+            int health_column = TILES_Y; 
+            if ((health_column - 1 == MAP_PLAYER_Y && health_row - 1 == MAP_PLAYER_X) ||
+                (health_column == MAP_PLAYER_Y && health_row - 1 == MAP_PLAYER_X) ||
+                (health_column + 1 == MAP_PLAYER_Y && health_row - 1 == MAP_PLAYER_X) ||
+                (health_column + 2 == MAP_PLAYER_Y && health_row - 1 == MAP_PLAYER_X) ||
+                (health_column + 2 == MAP_PLAYER_Y && health_row == MAP_PLAYER_X) ||
+                (health_column + 2 == MAP_PLAYER_Y && health_row + 1 == MAP_PLAYER_X) ||
+                (health_column + 2 == MAP_PLAYER_Y && health_row + 2 == MAP_PLAYER_X) ||
+                (health_column + 1 == MAP_PLAYER_Y && health_row + 2 == MAP_PLAYER_X) ||
+                (health_column == MAP_PLAYER_Y && health_row + 2 == MAP_PLAYER_X) ||
+                (health_column - 1 == MAP_PLAYER_Y && health_row + 2 == MAP_PLAYER_X) ||
+                (health_column - 1 == MAP_PLAYER_Y && health_row + 1 == MAP_PLAYER_X) ||
+                (health_column - 1 == MAP_PLAYER_Y && health_row == MAP_PLAYER_X)) { // If the player is around the health center
+                    //interaction
+                    std::cout << "ici ";
+                }
+
         }
     }
 }
@@ -272,3 +295,18 @@ int getEndingPos(int playerPosition, int mapWidth, int centeredScale) {
     int padding = (playerPosition - 2 < 0) ? abs(mapWidth - 2) : 0;
     return endingViewport + padding;
 }
+
+
+int Map::findTiles(int map_nb) { 
+    for (int row = 0; row <= Map::MAP_WIDTH; row++) {
+        for (int column = 0; column <= Map::MAP_HEIGHT; column++) {
+            if (first_level[row][column] == map_nb) {
+                TILES_X = column;
+                TILES_Y = row;
+            }
+        }
+    }
+    return TILES_X;   
+}
+
+
