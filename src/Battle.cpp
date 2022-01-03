@@ -9,12 +9,14 @@
 #include "../include/Game.hpp"
 
 Text* enemyTextHP = new Text();
+
 Text* firstAttackText = new Text();
 Text* secondAttackText = new Text();
 Text* thirdPokemonText = new Text();
 Text* fourthPokemonText = new Text();
 Text* fifthPokemonText = new Text();
 Text* sixPokemonText = new Text();
+
 Text* dialogText = new Text();
 
 Text* pokemonListsTexts[6] = {
@@ -124,9 +126,11 @@ void Battle::drawDialog() {
 
         secondAttackText->changeFont("Press", 32);
         secondAttackText->changeText("[G] " + attacks[1]);
+        //secondAttackText->changeText("[G] " + attacks[pokemon->getType()]);
         secondAttackText->changeDestRect(86,630);
         secondAttackText->draw();
     }
+
     dialogText->changeDestRect(86,485);
     dialogText->draw();
 }
@@ -136,6 +140,7 @@ void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
     destPokemon.w = destPokemon.h = 64;
     destPokemon.x = x;
     destPokemon.y = y;
+
     srcPokemon.w = srcPokemon.h = 32;
     srcPokemon.x = pokemon->getXSpriteCoordinate();
     srcPokemon.y = pokemon->getYSpriteCoordinate();

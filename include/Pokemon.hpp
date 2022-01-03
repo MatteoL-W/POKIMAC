@@ -24,6 +24,8 @@ public:
 
     int getHealthPoint() { return health_point; };
 
+    int getType() { return type; };
+
 private:
     std::string name;
     int health_point;
