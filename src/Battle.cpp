@@ -42,6 +42,10 @@ void Battle::load() {
     firstAttackText->create("", WhiteColor, "Press");
     secondAttackText->create("", WhiteColor, "Press");
     dialogText->create("", WhiteColor, "Press");
+
+    sceneBackgroundTexture = IMG_LoadTexture(Game::renderer, "assets/attack_scene.png");
+    pokemonsTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
+    pokemonPlatformTexture = IMG_LoadTexture(Game::renderer, "assets/attack_platform.png");
 }
 
 /**
@@ -59,8 +63,6 @@ void Battle::draw() {
 void Battle::drawBackground() {
     SDL_SetRenderDrawColor(Game::renderer, 51, 57, 58, 255);
 
-    SDL_Texture *sceneBackgroundTexture = IMG_LoadTexture(Game::renderer, "assets/attack_scene.png");
-
     SDL_Rect destBackground;
     destBackground.w = Game::WINDOW_WIDTH;
     destBackground.h = Game::WINDOW_HEIGHT / 2;
@@ -71,9 +73,6 @@ void Battle::drawBackground() {
 
 void Battle::drawPokemons() {
     // Drawing enemy pokemon
-    SDL_Texture *pokemonsTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
-    SDL_Texture *pokemonPlatformTexture = IMG_LoadTexture(Game::renderer, "assets/attack_platform.png");
-
     SDL_Rect destEnemy, srcEnemy, destEnemyPlatform;
     destEnemy.w = destEnemy.h = 64;
     destEnemy.y = 180;
@@ -101,13 +100,11 @@ void Battle::drawPokemons() {
 
 void Battle::drawDialog() {
     if (pokemon == nullptr) {
-        //std::cout << "faire définir le pokmeon";
-    //}
+        dialogText->changeText("Choisissez votre pokemon");
+    }
 
-    //else {
+    else {
         dialogText->changeText("Tortank vous a enlevé 7 pv");
-        dialogText->changeDestRect(86,515);
-        dialogText->draw();
 
         firstAttackText->changeText("[E] " + attacks[0]);
         firstAttackText->changeDestRect(86,630);
@@ -119,4 +116,6 @@ void Battle::drawDialog() {
         secondAttackText->changeDestRect(86,660);
         secondAttackText->draw();
     }
+    dialogText->changeDestRect(86,515);
+    dialogText->draw();
 }
