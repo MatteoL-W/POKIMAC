@@ -19,6 +19,14 @@ void AttackInterface::handleEvents() {
     if (event.type == SDL_QUIT) {
         game->setRunning(false);
     }
+
+    if (event.type == SDL_KEYDOWN) {
+        switch (event.key.keysym.sym) {
+            case SDLK_e:
+                game->changeInterfaceToExplorationAndLevelUp();
+                break;
+        }
+    }
 }
 
 /**

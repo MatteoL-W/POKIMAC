@@ -13,6 +13,8 @@ public:
 
     void changeInterfaceToAttack(Pokemon *enemy);
 
+    void changeInterfaceToExplorationAndLevelUp();
+
     void clean();
 
     void refresh();

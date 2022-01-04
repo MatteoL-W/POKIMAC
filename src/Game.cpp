@@ -5,6 +5,7 @@
 #include "../include/Pokemon.hpp"
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
+#include "../include/MapsArray.hpp"
 #include "../include/Text.hpp"
 #include "../include/Colors.hpp"
 #include "../include/AttackInterface.hpp"
@@ -18,6 +19,9 @@ ExplorationInterface *explorationInterface = nullptr;
 
 Pokemon *attackedPokemon = nullptr;
 Pokemon *attackerPokemon = nullptr;
+
+Battle* battle = nullptr;
+Map* map = nullptr;
 
 Game::Game() {}
 
@@ -36,6 +40,8 @@ void Game::init(const std::string title) {
 
         explorationInterface = new ExplorationInterface(this);
         attackInterface = new AttackInterface(this, attackedPokemon, attackerPokemon);
+        battle = attackInterface->getBattle();
+        map = explorationInterface->getMap();
 
         isRunning = true;
         level = 0;
@@ -43,13 +49,21 @@ void Game::init(const std::string title) {
 }
 
 /**
- * @brief Change the interface
+ * @brief Change the interface to attack
  */
 void Game::changeInterfaceToAttack(Pokemon *enemy) {
     setActivity("inAttack");
-
-    Battle* battle = attackInterface->getBattle();
     battle->setEnemy(enemy);
+}
+
+/**
+ * @brief Change the interface to exploration
+ */
+void Game::changeInterfaceToExplorationAndLevelUp() {
+    //TODO: vérifier qu'on peut level++;
+    level++;
+    map->loadMap(allMaps[Game::level]);
+    setActivity("inExploration");
 }
 
 /**

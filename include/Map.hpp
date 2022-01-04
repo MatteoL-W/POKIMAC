@@ -21,7 +21,7 @@ public:
 
     ~Map();
 
-    void loadMap(int array[MAP_HEIGHT][MAP_WIDTH]);
+    void loadMap(const int array[MAP_HEIGHT][MAP_WIDTH]);
 
     void draw();
 
