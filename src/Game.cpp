@@ -60,14 +60,23 @@ void Game::changeInterfaceToAttack(Pokemon *enemy) {
 }
 
 /**
- * @brief Change the interface to exploration
+ * @brief Change the interface to exploration and level up
  */
 void Game::changeInterfaceToExplorationAndLevelUp() {
     //TODO: vérifier qu'on peut level++;
     level++;
+    Battle::state = "inactive";
     map->loadMap(allMaps[Game::level]);
     setActivity("inExploration");
-    std::cout << "break";
+}
+
+/**
+ * @brief Change the interface to exploration
+ */
+void Game::changeInterfaceToExploration() {
+    Battle::state = "inactive";
+    map->loadMap(allMaps[Game::level]);
+    setActivity("inExploration");
 }
 
 /**

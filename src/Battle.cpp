@@ -8,6 +8,8 @@
 #include "../include/Colors.hpp"
 #include "../include/Game.hpp"
 
+std::string Battle::state = "inactive";
+
 Text* enemyTextHP = new Text();
 
 Text* firstAttackText = new Text();
@@ -108,6 +110,7 @@ void Battle::drawPokemonGraphics() {
 
 void Battle::drawDialog() {
     if (pokemon == nullptr) {
+        Battle::state = "pokemonChoice";
         dialogText->changeText("Choisissez votre pokemon");
 
         for (int i = 0; i < Game::inventoryLength; i++) {

@@ -18,6 +18,8 @@ public:
 
     void changeInterfaceToExplorationAndLevelUp();
 
+    void changeInterfaceToExploration();
+
     void clean();
 
     void refresh();

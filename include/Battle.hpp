@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include "AttackInterface.hpp"
 #include "Pokemon.hpp"
 #include "Text.hpp"
@@ -24,9 +25,21 @@ public:
 
     void drawDialog();
 
+    void setPokemon(Pokemon *pokemon) { Battle::pokemon = pokemon; };
+
     void setEnemy(Pokemon *enemy) { Battle::enemyPokemon = enemy; };
 
+    bool isWaitingForPokemon() {
+        if (state == "pokemonChoice") {
+            return true;
+        }
+        return false;
+    }
+
+    static std::string state;
+
 private:
+
     Pokemon *enemyPokemon;
 
     Pokemon *pokemon;

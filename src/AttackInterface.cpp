@@ -9,6 +9,10 @@
 #include "../include/Map.hpp"
 #include "../include/Text.hpp"
 
+int SDL_KeysFrom1To6[6] = {
+        SDLK_0, SDLK_1, SDLK_2, SDLK_3, SDLK_4, SDLK_5,
+};
+
 /**
  * @brief Handle SDL Events in the exploration part
  */
@@ -20,10 +24,20 @@ void AttackInterface::handleEvents() {
         game->setRunning(false);
     }
 
+    if (battle->isWaitingForPokemon() && event.type == SDL_KEYDOWN) {
+        for (int i = 0; i < Game::inventoryLength; i++) {
+            if (event.key.keysym.sym == SDL_KeysFrom1To6[i] && Game::inventory[i]->getHealthPoint() != 0) {
+                battle->setPokemon(Game::inventory[i]);
+                Battle::state = "waitingForAttack";
+            }
+        }
+
+    }
+
     if (event.type == SDL_KEYDOWN) {
         switch (event.key.keysym.sym) {
-            case SDLK_e:
-                game->changeInterfaceToExplorationAndLevelUp();
+            case SDLK_ESCAPE:
+                game->changeInterfaceToExploration();
                 break;
         }
     }
