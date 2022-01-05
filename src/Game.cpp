@@ -23,6 +23,9 @@ Pokemon *attackerPokemon = nullptr;
 Battle* battle = nullptr;
 Map* map = nullptr;
 
+Pokemon *Game::inventory[MAX_POKEMON_INV];
+int Game::inventoryLength = 0;
+
 Game::Game() {}
 
 Game::~Game() {}
@@ -64,6 +67,7 @@ void Game::changeInterfaceToExplorationAndLevelUp() {
     level++;
     map->loadMap(allMaps[Game::level]);
     setActivity("inExploration");
+    std::cout << "break";
 }
 
 /**

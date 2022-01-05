@@ -16,6 +16,7 @@ Text* thirdPokemonText = new Text();
 Text* fourthPokemonText = new Text();
 Text* fifthPokemonText = new Text();
 Text* sixPokemonText = new Text();
+Text* exitText = new Text();
 
 Text* dialogText = new Text();
 
@@ -60,6 +61,7 @@ void Battle::load() {
     fourthPokemonText->create("", WhiteColor, "Press");
     fifthPokemonText->create("", WhiteColor, "Press");
     sixPokemonText->create("", WhiteColor, "Press");
+    exitText->create("", WhiteColor, "Press");
     dialogText->create("", WhiteColor, "Press");
 
     sceneBackgroundTexture = IMG_LoadTexture(Game::renderer, "assets/attack_scene.png");
@@ -97,8 +99,10 @@ void Battle::drawPokemonGraphics() {
     //________________________________________________________________________
 
     // Drawing friend pokemon
-    //drawPokemon(pokemon,  Game::WINDOW_WIDTH- 250, 180);
-    //drawHealthPoint(pokemon, Game::WINDOW_HEIGHT - 250, 180);
+    if (pokemon != nullptr) {
+        drawPokemon(pokemon, Game::WINDOW_WIDTH - 250, 180);
+        drawHealthPoint(pokemon, Game::WINDOW_HEIGHT - 250, 180);
+    }
     //________________________________________________________________________
 }
 
@@ -106,14 +110,20 @@ void Battle::drawDialog() {
     if (pokemon == nullptr) {
         dialogText->changeText("Choisissez votre pokemon");
 
-        //for (int i = 0; i < inventoryLength; i++) {
-        for (int i = 0; i < 6; i++) {
-            //TODO: vérifier que pokemon soit pas en hp nul
-            //pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + inventory[i]->getName());
-            pokemonListsTexts[i]->changeText("Pokemon");
+        for (int i = 0; i < Game::inventoryLength; i++) {
+            pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + Game::inventory[i]->getName());
+
+            if (Game::inventory[i]->getHealthPoint() == 0) {
+                pokemonListsTexts[i]->changeColor(GreyColor);
+            }
             pokemonListsTexts[i]->changeDestRect(86, 550 + 30 * i);
             pokemonListsTexts[i]->draw();
         }
+
+        exitText->changeText("[EXIT] Annuler");
+        exitText->changeDestRect(86, 550 + 30 * Game::inventoryLength);
+        exitText->draw();
+        //TODO
     }
 
     else {
@@ -155,8 +165,7 @@ void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
 }
 
 void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
-    //TODO: std::string enemyHP = std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
-    std::string enemyHP = "19 / " + std::to_string(pokemon->getHealthPoint());
+    std::string enemyHP = std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
     enemyTextHP->create(enemyHP, WhiteColor, "Press");
     enemyTextHP->changeDestRect(x - 55, y + 140);
     enemyTextHP->draw();

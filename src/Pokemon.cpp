@@ -27,7 +27,7 @@ Pokemon::Pokemon(int id, bool isWild) {
             if (lines == id) {
                 name = pokename;
                 max_health_point = max_hp;
-                health_point = max_hp / 3;
+                health_point = 0;
                 attack = att;
                 defense = def;
                 sprite_x = x_spr;

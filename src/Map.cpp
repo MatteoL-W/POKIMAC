@@ -8,7 +8,6 @@
 
 Pokemon *bulbizarre = nullptr;
 Pokemon *carapuce = nullptr;
-Pokemon *Game::inventory[MAX_POKEMON_INV];
 
 int *health_center_coordinates = nullptr;
 int pokemonCounter = 20;
@@ -73,8 +72,15 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     pokemon[0] = *bulbizarre;
     pokemon[1] = *carapuce;
 
-    Game::inventory[0] = bulbizarre;
-    Game::inventory[1] = carapuce;
+    if (Game::inventory[0] == 0) {
+        Game::inventory[0] = bulbizarre;
+        Game::inventory[1] = carapuce;
+
+        Game::inventoryLength++;
+        Game::inventoryLength++;
+    }
+
+
 
     //________________________________________________________________________
 }
@@ -298,8 +304,7 @@ void Map::drawHealthCenter() {
         (row - 1 == MAP_PLAYER_Y && column + 1 == MAP_PLAYER_X) ||
         (row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X)
         ) {
-        //interaction /!\ beaucoup d'intéractions générées car dans la boucle
-        std::cout << "test";
+        //interaction
     }
 }
 

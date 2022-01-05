@@ -46,6 +46,8 @@ public:
 
     static Pokemon *inventory[MAX_POKEMON_INV];
 
+    static int inventoryLength;
+
     static int level;
 
     static const int WINDOW_WIDTH = 800;
