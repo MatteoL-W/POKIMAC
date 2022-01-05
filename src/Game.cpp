@@ -36,9 +36,7 @@ void Game::changeInterface() {
     if (inExploration) {
         inAttack = true;
         inExploration = false;
-    }
-
-    else if (inAttack) {
+    } else if (inAttack) {
         // implémenter nouvelle map
         level++;
         inAttack = false;

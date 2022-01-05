@@ -24,9 +24,7 @@ int main(int argc, char *argv[]) {
             explorationInterface->handleEvents();
             explorationInterface->update();
             explorationInterface->render();
-        }
-
-        else if (game->attacking()) {
+        } else if (game->attacking()) {
             attackInterface->handleEvents();
             attackInterface->update();
             attackInterface->render();

@@ -22,6 +22,9 @@ public:
 
     int getColumn() { return column; };
 
+    int getHealthPoint() { return health_point; };
+
+    int getMaxHealthPoint() { return max_health_point; };
 
 private:
     std::string name;

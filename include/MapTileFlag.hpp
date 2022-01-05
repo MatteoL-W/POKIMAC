@@ -20,7 +20,6 @@ const int MAP_PLAYER = 10;
 // Decors [70 - ??]
 const int MAP_HEALTH_CENTER = 71;
 
-
 // _____________________________________________________
 // Direction [100 - 103]
 const int MOVE_RIGHT = 100;

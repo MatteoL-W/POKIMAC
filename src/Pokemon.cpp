@@ -21,15 +21,12 @@ Pokemon::Pokemon(int id, bool isWild) {
     if (pokemon_db) {
         int lines = 0;
         int max_hp, att, def, x_spr, y_spr, type1, type2;
-
         std::string pokename;
-
 
         while (pokemon_db >> pokename >> max_hp >> att >> def >> x_spr >> y_spr >> type1 >> type2) {
             if (lines == id) {
                 name = pokename;
                 max_health_point = max_hp;
-                //health_point = max_hp;
                 health_point = max_hp / 3;
                 attack = att;
                 defense = def;

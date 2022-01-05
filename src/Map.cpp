@@ -1,3 +1,4 @@
+#include <iostream>
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "../include/Game.hpp"
@@ -5,13 +6,11 @@
 #include "../include/MapsArray.hpp"
 #include "../include/Pokemon.hpp"
 
-#include <iostream>
-
-
 Pokemon *bulbizarre = nullptr;
 Pokemon *carapuce = nullptr;
 Pokemon *Game::inventory[MAX_POKEMON_INV];
 
+int *health_center_coordinates = nullptr;
 int pokemonCounter = 20;
 
 /**
@@ -160,33 +159,10 @@ void Map::drawExtras() {
         SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &dest1by1);
 
     }
-    // The health center
-    for (int row = startingY; row <= endingY; row++) {
-        for (int column = startingX; column <= endingX; column++) {
-            if (mapArray[row][column] == MAP_HEALTH_CENTER) { // Draw the health center
-                dest2by2.x = (-startingX + column) * MAP_CELL_WIDTH;
-                dest2by2.y = (-startingY + row) * MAP_CELL_HEIGHT;
-                SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &dest2by2);
-            }
 
-            int health_center_coordinates[] = Map::findTiles(first_level, 71);
-            if ((health_center_coordinates[1] - 1 == MAP_PLAYER_Y && health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] == MAP_PLAYER_Y && health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] + 1 == MAP_PLAYER_Y && health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y && health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y && health_center_coordinates[0] == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y && health_center_coordinates[0] + 1 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y && health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] + 1 == MAP_PLAYER_Y && health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] == MAP_PLAYER_Y && health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y && health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y && health_center_coordinates[0] + 1 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y && health_center_coordinates[0] == MAP_PLAYER_X)) { // If the player is around the health center
-                    //interaction
-                    std::cout << "ici ";
-                }
-
-        }
+    health_center_coordinates = findTiles(first_level, MAP_HEALTH_CENTER);
+    if (health_center_coordinates != nullptr) {
+        drawHealthCenter();
     }
 }
 
@@ -281,6 +257,63 @@ void Map::placePokemon(Pokemon *pokemon, int x, int y) {
     pokemonCounter++;
 }
 
+/**
+ * @brief Find a tile from a level with his map code (cf. MapTileFlag.hpp)
+ * @param level
+ * @param map_nb
+ * @return
+ */
+int *Map::findTiles(int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb) {
+    static int coordinates[2];
+    for (int row = 0; row <= Map::MAP_WIDTH; row++) {
+        for (int column = 0; column <= Map::MAP_HEIGHT; column++) {
+            if (level[row][column] == map_nb) {
+                coordinates[0] = column;
+                coordinates[1] = row;
+                return coordinates;
+            }
+        }
+    }
+    return nullptr;
+}
+
+void Map::drawHealthCenter() {
+    for (int row = startingY; row <= endingY; row++) {
+        for (int column = startingX; column <= endingX; column++) {
+            if (mapArray[row][column] == MAP_HEALTH_CENTER) { // Draw the health center
+                dest2by2.x = (-startingX + column) * MAP_CELL_WIDTH;
+                dest2by2.y = (-startingY + row) * MAP_CELL_HEIGHT;
+                SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &dest2by2);
+            }
+
+            // If the player is around the health center
+            if ((health_center_coordinates[1] - 1 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] == MAP_PLAYER_Y && health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 1 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y && health_center_coordinates[0] == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] + 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 1 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] == MAP_PLAYER_Y && health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] + 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] == MAP_PLAYER_X)) {
+                //interaction /!\ beaucoup d'intéractions générées car dans la boucle
+            }
+        }
+    }
+}
+
 int getStartingPos(int playerPosition, int mapWidth, int centeredScale) {
     int startingViewport = (playerPosition - centeredScale < 0) ? 0 : playerPosition - centeredScale;
     int padding = (playerPosition + centeredScale > mapWidth - 1) ? (playerPosition + centeredScale - (mapWidth - 1))
@@ -294,18 +327,5 @@ int getEndingPos(int playerPosition, int mapWidth, int centeredScale) {
     return endingViewport + padding;
 }
 
-
-int[2] Map::findTiles(int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb) { 
-    int coordinates[2];
-    for (int row = 0; row <= Map::MAP_WIDTH; row++) {
-        for (int column = 0; column <= Map::MAP_HEIGHT; column++) {
-            if (level[row][column] == map_nb) {
-                coordinates[0] = column;
-                coordinates[1] = row;
-                return coordinates; 
-            }
-        }
-    }
-}
 
 

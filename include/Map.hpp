@@ -40,10 +40,11 @@ public:
 
     void placePokemon(Pokemon *pokemon, int x, int y);
 
-    int[2] findTiles(int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb); 
+    int *findTiles(int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb);
 
+    void drawHealthCenter();
 
-    Pokemon* getInteractingPokemon() { return canAttack; }
+    Pokemon *getInteractingPokemon() { return canAttack; }
 
 private:
     Pokemon pokemon[2];
@@ -57,12 +58,8 @@ private:
 
     int mapArray[MAP_HEIGHT][MAP_WIDTH];
 
-    Pokemon* canAttack;
+    Pokemon *canAttack;
 
     bool centeredCamera;
     int startingX, startingY, endingX, endingY;
-
-        //..... (positions que findTiles trouve)
-    //int TILES_X;
-    //int TILES_Y;
 };
