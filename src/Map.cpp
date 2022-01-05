@@ -22,6 +22,7 @@ Map::Map(bool isCameraCentered) {
     HealthCenterMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset1.png");
 
     srcTexture.x = srcTexture.y = 0;
+    srcPlayer.x = srcPlayer.y = 0;
     srcTexture.w = srcTexture.h = 32;
     srcPlayer.h = srcPlayer.w = 64;
     srcPokemon = srcTexture;
