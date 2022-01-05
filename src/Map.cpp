@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "../include/Game.hpp"
@@ -63,6 +64,19 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     // define the player emplacement
     mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
 
+    loadPokemons();
+}
+
+/**
+ * @brief Load the Pokemons
+ */
+void Map::loadPokemons() {
+    /*for (int iterator = 0; iterator < 3; iterator++) {
+        Pokemon* pokemon = new Pokemon();
+        placePokemon(pokemon, 3, 3);
+        //pokemon[0] = *pokemon;
+    }*/
+
     // declare Pokemons
     bulbizarre = new Pokemon(0);
     placePokemon(bulbizarre, MAP_PLAYER_X, MAP_PLAYER_Y + 2);
@@ -72,7 +86,6 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
 
     pokemon[0] = *bulbizarre;
     pokemon[1] = *carapuce;
-
 }
 
 void Map::draw() {
@@ -132,6 +145,9 @@ void Map::drawMap() {
     }
 }
 
+/**
+ * @brief Draw decors and pokemons
+ */
 void Map::drawExtras() {
     // Drawing all the pokemons
     // pokemonCounter-20 because the pokemonCounter start at 20 (according to MapTileFlag.hpp)
@@ -272,6 +288,9 @@ int *Map::findTiles(const int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb
     return nullptr;
 }
 
+/**
+ * @brief Draw the Health Center
+ */
 void Map::drawHealthCenter() {
     int column = health_center_coordinates[0];
     int row = health_center_coordinates[1];
@@ -293,7 +312,7 @@ void Map::drawHealthCenter() {
         (row - 1 == MAP_PLAYER_Y && column + 2 == MAP_PLAYER_X) ||
         (row - 1 == MAP_PLAYER_Y && column + 1 == MAP_PLAYER_X) ||
         (row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X)
-        ) {
+            ) {
         //interaction
     }
 }
@@ -309,4 +328,9 @@ int getEndingPos(int playerPosition, int mapWidth, int centeredScale) {
     int endingViewport = (playerPosition + 2 >= mapWidth - 1) ? mapWidth - 1 : playerPosition + 2;
     int padding = (playerPosition - 2 < 0) ? abs(mapWidth - 2) : 0;
     return endingViewport + padding;
+}
+
+int getRandomNumberTo(int max) {
+    std::random_device rd;
+    return rand() % max;
 }

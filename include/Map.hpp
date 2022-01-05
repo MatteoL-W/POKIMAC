@@ -7,6 +7,8 @@ int getStartingPos(int playerPosition, int mapWidth, int centeredScale);
 
 int getEndingPos(int playerPosition, int mapWidth, int centeredScale);
 
+int getRandomNumberTo(int max);
+
 class Map {
 public:
     static const int MAP_WIDTH = 25;
@@ -23,6 +25,8 @@ public:
     ~Map();
 
     void loadMap(const int array[MAP_HEIGHT][MAP_WIDTH]);
+
+    void loadPokemons();
 
     void draw();
 
@@ -47,7 +51,8 @@ public:
     Pokemon *getInteractingPokemon() { return canAttack; }
 
 private:
-    Pokemon pokemon[2];
+    Pokemon pokemon[20];
+    //TODO alloc dynamique
     SDL_Rect srcTexture, srcPlayer, srcPokemon, srcHealthCenter;
     SDL_Rect dest1by1, dest2by2;
 
