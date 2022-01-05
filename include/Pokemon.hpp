@@ -2,11 +2,11 @@
 
 #include <iostream>
 
-const int MAX_POKEMON = 2;
+const int POKEMON_AVAILABLE = 3;
 
 class Pokemon {
 public:
-    Pokemon(int id = (rand() % MAX_POKEMON), bool isWild = true);
+    Pokemon(int id = (rand() % POKEMON_AVAILABLE), bool isWild = true);
 
     ~Pokemon();
 

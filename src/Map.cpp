@@ -73,17 +73,6 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     pokemon[0] = *bulbizarre;
     pokemon[1] = *carapuce;
 
-    if (Game::inventory[0] == 0) {
-        Game::inventory[0] = bulbizarre;
-        Game::inventory[1] = carapuce;
-
-        Game::inventoryLength++;
-        Game::inventoryLength++;
-    }
-
-
-
-    //________________________________________________________________________
 }
 
 void Map::draw() {

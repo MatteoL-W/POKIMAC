@@ -1,2 +1,3 @@
 Bulbizarre 45 49 49 384 0 1
 Carapuce   45 49 49 0   0 2
+Salameche  45 49 49 384 128 0 3

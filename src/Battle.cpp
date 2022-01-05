@@ -213,6 +213,8 @@ void Battle::enemysTurn() {
  */
 void Battle::win() {
     std::cout << "lose";
+    // pokemon in inventory +
+    // set pokemon in not wild
 }
 
 /**

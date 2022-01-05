@@ -46,6 +46,10 @@ void Game::init(const std::string title) {
         battle = attackInterface->getBattle();
         map = explorationInterface->getMap();
 
+        Pokemon* starter = new Pokemon(0);
+        Game::inventory[0] = starter;
+        Game::inventoryLength++;
+
         isRunning = true;
         level = 0;
     }
