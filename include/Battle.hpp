@@ -29,12 +29,36 @@ public:
 
     void setEnemy(Pokemon *enemy) { Battle::enemyPokemon = enemy; };
 
+    Pokemon* getPokemon() { return pokemon; };
+
+    Pokemon* getEnemy() { return enemyPokemon; };
+
     bool isWaitingForPokemon() {
         if (state == "pokemonChoice") {
             return true;
         }
         return false;
     }
+
+    bool isWaitingForAttack() {
+        if (state == "waitingForAttack") {
+            return true;
+        }
+        return false;
+    }
+
+    bool isWaitingForAction() {
+        if (state == "enemysTurn") {
+            return true;
+        }
+        return false;
+    }
+
+    void enemysTurn();
+
+    void win();
+
+    void lose();
 
     static std::string state;
 

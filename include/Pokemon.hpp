@@ -14,6 +14,8 @@ public:
 
     void setCoordinates(int x, int y);
 
+    void kill() { health_point = 0; };
+
     int getXSpriteCoordinate() { return sprite_x; };
 
     int getYSpriteCoordinate() { return sprite_y; };

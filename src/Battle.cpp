@@ -54,7 +54,7 @@ Battle::~Battle() {
 }
 
 /**
- * @brief Load the battle
+ * @brief Load texture and text of the battle
  */
 void Battle::load() {
     firstAttackText->create("", WhiteColor, "Press");
@@ -72,7 +72,7 @@ void Battle::load() {
 }
 
 /**
- * @brief Draw the battle scne
+ * @brief Draw the battle secne
  */
 void Battle::draw() {
     drawBackground();
@@ -94,7 +94,11 @@ void Battle::drawBackground() {
     SDL_RenderCopy(Game::renderer, sceneBackgroundTexture, NULL, &destBackground);
 }
 
+/**
+ * @brief Order the draw of enemy and pokemon graphics
+ */
 void Battle::drawPokemonGraphics() {
+
     // Drawing enemy pokemon
     drawPokemon(enemyPokemon, 175, 180);
     drawHealthPoint(enemyPokemon, 175, 180);
@@ -108,6 +112,9 @@ void Battle::drawPokemonGraphics() {
     //________________________________________________________________________
 }
 
+/**
+ * @brief Draw the dialog (pokemon choice / attack)
+ */
 void Battle::drawDialog() {
     if (pokemon == nullptr) {
         Battle::state = "pokemonChoice";
@@ -126,11 +133,10 @@ void Battle::drawDialog() {
         exitText->changeText("[EXIT] Annuler");
         exitText->changeDestRect(86, 550 + 30 * Game::inventoryLength);
         exitText->draw();
-        //TODO
     }
 
     else {
-        dialogText->changeText("Tortank vous a enlevé 7 pv");
+        dialogText->changeText("Choisissez votre attaque");
 
         firstAttackText->changeFont("Press", 32);
         firstAttackText->changeText("[E] " + attacks[0]);
@@ -138,8 +144,7 @@ void Battle::drawDialog() {
         firstAttackText->draw();
 
         secondAttackText->changeFont("Press", 32);
-        secondAttackText->changeText("[G] " + attacks[1]);
-        //secondAttackText->changeText("[G] " + attacks[pokemon->getType()]);
+        secondAttackText->changeText("[G] " + attacks[pokemon->getType()]);
         secondAttackText->changeDestRect(86,630);
         secondAttackText->draw();
     }
@@ -148,6 +153,12 @@ void Battle::drawDialog() {
     dialogText->draw();
 }
 
+/**
+ * @brief Draw pokemon sprite and his platform
+ * @param pokemon
+ * @param x
+ * @param y
+ */
 void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
     SDL_Rect destPokemon, srcPokemon, destPlatform;
     destPokemon.w = destPokemon.h = 64;
@@ -167,9 +178,46 @@ void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
     SDL_RenderCopy(Game::renderer, pokemonsTexture, &srcPokemon, &destPokemon);
 }
 
+/**
+ * @brief Draw the health point text and gauge
+ * @param pokemon
+ * @param x
+ * @param y
+ */
 void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
     std::string enemyHP = std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
     enemyTextHP->create(enemyHP, WhiteColor, "Press");
     enemyTextHP->changeDestRect(x - 55, y + 140);
     enemyTextHP->draw();
+}
+
+/**
+ * @brief Let the enemy attack
+ */
+void Battle::enemysTurn() {
+    if (enemyPokemon->getHealthPoint() == 0) {
+        win();
+        return;
+    }
+
+    // TODO: générer l'attaque de l'ennemie, la répercuter puis l'afficher
+    Battle::state = "enemysTurn";
+
+    if (pokemon->getHealthPoint() == 0) {
+        lose();
+    }
+}
+
+/**
+ * @brief The player wins the battle
+ */
+void Battle::win() {
+    std::cout << "lose";
+}
+
+/**
+ * @brief The player loses the battle
+ */
+void Battle::lose() {
+    std::cout << "lose";
 }
