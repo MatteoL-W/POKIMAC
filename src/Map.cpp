@@ -277,39 +277,29 @@ int *Map::findTiles(const int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb
 }
 
 void Map::drawHealthCenter() {
-    for (int row = startingY; row <= endingY; row++) {
-        for (int column = startingX; column <= endingX; column++) {
-            if (mapArray[row][column] == MAP_HEALTH_CENTER) { // Draw the health center
-                dest2by2.x = (-startingX + column) * MAP_CELL_WIDTH;
-                dest2by2.y = (-startingY + row) * MAP_CELL_HEIGHT;
-                SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &dest2by2);
-            }
+    int column = health_center_coordinates[0];
+    int row = health_center_coordinates[1];
 
-            // If the player is around the health center
-            if ((health_center_coordinates[1] - 1 == MAP_PLAYER_Y &&
-                 health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] == MAP_PLAYER_Y && health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] + 1 == MAP_PLAYER_Y &&
-                 health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y &&
-                 health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y && health_center_coordinates[0] == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y &&
-                 health_center_coordinates[0] + 1 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y &&
-                 health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] + 1 == MAP_PLAYER_Y &&
-                 health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] == MAP_PLAYER_Y && health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y &&
-                 health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y &&
-                 health_center_coordinates[0] + 1 == MAP_PLAYER_X) ||
-                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y &&
-                 health_center_coordinates[0] == MAP_PLAYER_X)) {
-                //interaction /!\ beaucoup d'intéractions générées car dans la boucle
-            }
-        }
+    dest2by2.x = (-startingX + column) * MAP_CELL_WIDTH;
+    dest2by2.y = (-startingY + row) * MAP_CELL_HEIGHT;
+    SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &dest2by2);
+
+    // If the player is around the health center
+    if ((row - 1 == MAP_PLAYER_Y && column - 1 == MAP_PLAYER_X) ||
+        (row == MAP_PLAYER_Y && column - 1 == MAP_PLAYER_X) ||
+        (row + 1 == MAP_PLAYER_Y && column - 1 == MAP_PLAYER_X) ||
+        (row + 2 == MAP_PLAYER_Y && column - 1 == MAP_PLAYER_X) ||
+        (row + 2 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
+        (row + 2 == MAP_PLAYER_Y && column + 1 == MAP_PLAYER_X) ||
+        (row + 2 == MAP_PLAYER_Y && column + 2 == MAP_PLAYER_X) ||
+        (row + 1 == MAP_PLAYER_Y && column + 2 == MAP_PLAYER_X) ||
+        (row == MAP_PLAYER_Y && column + 2 == MAP_PLAYER_X) ||
+        (row - 1 == MAP_PLAYER_Y && column + 2 == MAP_PLAYER_X) ||
+        (row - 1 == MAP_PLAYER_Y && column + 1 == MAP_PLAYER_X) ||
+        (row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X)
+        ) {
+        //interaction /!\ beaucoup d'intéractions générées car dans la boucle
+        std::cout << "test";
     }
 }
 
