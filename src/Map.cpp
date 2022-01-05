@@ -169,21 +169,19 @@ void Map::drawExtras() {
                 SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &dest2by2);
             }
 
-            Map::findTiles(71);
-            int health_row = TILES_X; 
-            int health_column = TILES_Y; 
-            if ((health_column - 1 == MAP_PLAYER_Y && health_row - 1 == MAP_PLAYER_X) ||
-                (health_column == MAP_PLAYER_Y && health_row - 1 == MAP_PLAYER_X) ||
-                (health_column + 1 == MAP_PLAYER_Y && health_row - 1 == MAP_PLAYER_X) ||
-                (health_column + 2 == MAP_PLAYER_Y && health_row - 1 == MAP_PLAYER_X) ||
-                (health_column + 2 == MAP_PLAYER_Y && health_row == MAP_PLAYER_X) ||
-                (health_column + 2 == MAP_PLAYER_Y && health_row + 1 == MAP_PLAYER_X) ||
-                (health_column + 2 == MAP_PLAYER_Y && health_row + 2 == MAP_PLAYER_X) ||
-                (health_column + 1 == MAP_PLAYER_Y && health_row + 2 == MAP_PLAYER_X) ||
-                (health_column == MAP_PLAYER_Y && health_row + 2 == MAP_PLAYER_X) ||
-                (health_column - 1 == MAP_PLAYER_Y && health_row + 2 == MAP_PLAYER_X) ||
-                (health_column - 1 == MAP_PLAYER_Y && health_row + 1 == MAP_PLAYER_X) ||
-                (health_column - 1 == MAP_PLAYER_Y && health_row == MAP_PLAYER_X)) { // If the player is around the health center
+            int health_center_coordinates[] = Map::findTiles(first_level, 71);
+            if ((health_center_coordinates[1] - 1 == MAP_PLAYER_Y && health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] == MAP_PLAYER_Y && health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 1 == MAP_PLAYER_Y && health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y && health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y && health_center_coordinates[0] == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y && health_center_coordinates[0] + 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y && health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 1 == MAP_PLAYER_Y && health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] == MAP_PLAYER_Y && health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y && health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y && health_center_coordinates[0] + 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y && health_center_coordinates[0] == MAP_PLAYER_X)) { // If the player is around the health center
                     //interaction
                     std::cout << "ici ";
                 }
@@ -297,16 +295,17 @@ int getEndingPos(int playerPosition, int mapWidth, int centeredScale) {
 }
 
 
-int Map::findTiles(int map_nb) { 
+int[2] Map::findTiles(int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb) { 
+    int coordinates[2];
     for (int row = 0; row <= Map::MAP_WIDTH; row++) {
         for (int column = 0; column <= Map::MAP_HEIGHT; column++) {
-            if (first_level[row][column] == map_nb) {
-                TILES_X = column;
-                TILES_Y = row;
+            if (level[row][column] == map_nb) {
+                coordinates[0] = column;
+                coordinates[1] = row;
+                return coordinates; 
             }
         }
     }
-    return TILES_X;   
 }
 
 
