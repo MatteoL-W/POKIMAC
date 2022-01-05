@@ -1,6 +1,6 @@
 #include <iostream>
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
 #include "../include/MapsArray.hpp"
@@ -45,7 +45,7 @@ Map::Map(bool isCameraCentered) {
 
     centeredCamera = isCameraCentered;
 
-    Map::loadMap(first_level);
+    Map::loadMap(allMaps[Game::level]);
 }
 
 Map::~Map() {
@@ -56,8 +56,8 @@ Map::~Map() {
  * @Brief Copy the external map into our map system
  * @param array
  */
-void Map::loadMap(int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
-    // Copy of mapArray from first_level
+void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
+    // Copy of mapArray from level's map
     SDL_memmove(mapArray, array, sizeof(mapArray));
 
     // define the player emplacement
@@ -105,7 +105,7 @@ void Map::drawMap() {
     int cellType = 0;
     for (int row = startingY; row <= endingY; row++) {
         for (int column = startingX; column <= endingX; column++) {
-            cellType = first_level[row][column];
+            cellType = allMaps[Game::level][row][column];
 
             // The 1st rendered cell start at 0 on the top left screen (except if a padding is added)
             dest1by1.x = (-startingX + column) * MAP_CELL_WIDTH;
@@ -151,16 +151,15 @@ void Map::drawExtras() {
             (row + 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
             (column - 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y) ||
             (column + 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y)) {
-            canAttack = &(pokemon[i]);
+            Map::canAttack = &(pokemon[i]);
         }
 
         srcPokemon.x = pokemon[i].getXSpriteCoordinate();
         srcPokemon.y = pokemon[i].getYSpriteCoordinate();
         SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &dest1by1);
-
     }
 
-    health_center_coordinates = findTiles(first_level, MAP_HEALTH_CENTER);
+    health_center_coordinates = findTiles(allMaps[Game::level], MAP_HEALTH_CENTER);
     if (health_center_coordinates != nullptr) {
         drawHealthCenter();
     }
@@ -224,7 +223,7 @@ void Map::updatePlayerPosition(int direction) {
     int futurePlayerCellTexture = mapArray[MAP_PLAYER_Y + yOperator][MAP_PLAYER_X + xOperator];
 
     if (futurePlayerCellTexture >= 1 && futurePlayerCellTexture <= 10) {
-        mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = first_level[MAP_PLAYER_Y][MAP_PLAYER_X];
+        mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = allMaps[Game::level][MAP_PLAYER_Y][MAP_PLAYER_X];
         MAP_PLAYER_Y = MAP_PLAYER_Y + yOperator;
         MAP_PLAYER_X = MAP_PLAYER_X + xOperator;
         mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
@@ -263,7 +262,7 @@ void Map::placePokemon(Pokemon *pokemon, int x, int y) {
  * @param map_nb
  * @return
  */
-int *Map::findTiles(int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb) {
+int *Map::findTiles(const int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb) {
     static int coordinates[2];
     for (int row = 0; row <= Map::MAP_WIDTH; row++) {
         for (int column = 0; column <= Map::MAP_HEIGHT; column++) {
@@ -326,6 +325,3 @@ int getEndingPos(int playerPosition, int mapWidth, int centeredScale) {
     int padding = (playerPosition - 2 < 0) ? abs(mapWidth - 2) : 0;
     return endingViewport + padding;
 }
-
-
-

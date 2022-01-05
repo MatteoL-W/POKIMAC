@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
 #include "Pokemon.hpp"
 
 const int MAX_POKEMON_INV = 6;
@@ -14,36 +14,50 @@ public:
 
     void init(const std::string title);
 
-    void changeInterface();
+    void changeInterfaceToAttack(Pokemon *enemy);
+
+    void changeInterfaceToExplorationAndLevelUp();
 
     void clean();
 
-    bool running() { return isRunning; };
+    void refresh();
 
     void setRunning(bool newState) { isRunning = newState; }
 
-    bool exploring() { return inExploration; };
+    bool running() { return isRunning; };
 
-    bool attacking() { return inAttack; };
+    bool exploring() {
+        if (activity == "inExploration") {
+            return true;
+        }
+        return false;
+    };
+
+    bool attacking() {
+        if (activity == "inAttack") {
+            return true;
+        }
+        return false;
+    };
+
+    void setActivity(std::string newActivity) { activity = newActivity; };
 
     static SDL_Renderer *renderer;
 
     static Pokemon *inventory[MAX_POKEMON_INV];
 
+    static int level;
+
+    static const int WINDOW_WIDTH = 800;
+
+    static const int WINDOW_HEIGHT = 800;
+
     SDL_Event event;
+
 private:
-
-    const int WINDOW_WIDTH = 800;
-
-    const int WINDOW_HEIGHT = 800;
-
     bool isRunning = false;
 
-    bool inExploration = true;
-
-    bool inAttack = false;
-
-    int level = 1;
+    std::string activity = "inExploration";
 
     SDL_Window *window;
 };

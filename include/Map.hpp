@@ -22,7 +22,7 @@ public:
 
     ~Map();
 
-    void loadMap(int array[MAP_HEIGHT][MAP_WIDTH]);
+    void loadMap(const int array[MAP_HEIGHT][MAP_WIDTH]);
 
     void draw();
 
@@ -40,7 +40,7 @@ public:
 
     void placePokemon(Pokemon *pokemon, int x, int y);
 
-    int *findTiles(int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb);
+    int *findTiles(const int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb);
 
     void drawHealthCenter();
 

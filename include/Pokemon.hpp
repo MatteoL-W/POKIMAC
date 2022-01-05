@@ -26,6 +26,8 @@ public:
 
     int getMaxHealthPoint() { return max_health_point; };
 
+    int getType() { return type; };
+
 private:
     std::string name;
     int health_point;
@@ -34,7 +36,7 @@ private:
     int defense;
     int sprite_x;
     int sprite_y;
-    int type[2];
+    int type;
 
     bool wild;
     int column;
