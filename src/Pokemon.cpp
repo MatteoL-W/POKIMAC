@@ -1,9 +1,9 @@
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
-#include "../include/Map.hpp"
-#include "../include/Pokemon.hpp"
 #include <fstream>
 #include <iostream>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include "../include/Map.hpp"
+#include "../include/Pokemon.hpp"
 
 /**
  * @brief Initialize a new pokemon set from the txt database
@@ -20,13 +20,14 @@ Pokemon::Pokemon(int id, bool isWild) {
 
     if (pokemon_db) {
         int lines = 0;
-        int hp, att, def, x_spr, y_spr, type1;
+        int max_hp, att, def, x_spr, y_spr, type1;
         std::string pokename;
 
-        while (pokemon_db >> pokename >> hp >> att >> def >> x_spr >> y_spr >> type1) {
+        while (pokemon_db >> pokename >> max_hp >> att >> def >> x_spr >> y_spr >> type1) {
             if (lines == id) {
                 name = pokename;
-                health_point = hp;
+                max_health_point = max_hp;
+                health_point = max_hp / 3;
                 attack = att;
                 defense = def;
                 sprite_x = x_spr;

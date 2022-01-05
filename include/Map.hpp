@@ -17,6 +17,7 @@ public:
     int MAP_PLAYER_X = 8;
     int MAP_PLAYER_Y = 3;
 
+
     Map(bool isCameraCentered);
 
     ~Map();
@@ -39,20 +40,25 @@ public:
 
     void placePokemon(Pokemon *pokemon, int x, int y);
 
-    Pokemon* getInteractingPokemon() { return canAttack; }
+    int *findTiles(const int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb);
+
+    void drawHealthCenter();
+
+    Pokemon *getInteractingPokemon() { return canAttack; }
 
 private:
     Pokemon pokemon[2];
-    SDL_Rect srcTexture, srcPlayer, srcPokemon;
-    SDL_Rect destTexture;
+    SDL_Rect srcTexture, srcPlayer, srcPokemon, srcHealthCenter;
+    SDL_Rect dest1by1, dest2by2;
 
     SDL_Texture *tilesetMapTexture;
     SDL_Texture *playerMapTexture;
     SDL_Texture *pokemonMapTexture;
+    SDL_Texture *HealthCenterMapTexture;
 
     int mapArray[MAP_HEIGHT][MAP_WIDTH];
 
-    Pokemon* canAttack;
+    Pokemon *canAttack;
 
     bool centeredCamera;
     int startingX, startingY, endingX, endingY;

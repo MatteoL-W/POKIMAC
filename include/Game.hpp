@@ -1,7 +1,10 @@
 #pragma once
 
 #include <iostream>
+#include <SDL2/SDL.h>
 #include "Pokemon.hpp"
+
+const int MAX_POKEMON_INV = 6;
 
 class Game {
 public:
@@ -40,6 +43,8 @@ public:
     void setActivity(std::string newActivity) { activity = newActivity; };
 
     static SDL_Renderer *renderer;
+
+    static Pokemon *inventory[MAX_POKEMON_INV];
 
     static int level;
 

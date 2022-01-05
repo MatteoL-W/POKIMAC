@@ -24,11 +24,14 @@ public:
 
     int getHealthPoint() { return health_point; };
 
+    int getMaxHealthPoint() { return max_health_point; };
+
     int getType() { return type; };
 
 private:
     std::string name;
     int health_point;
+    int max_health_point;
     int attack;
     int defense;
     int sprite_x;

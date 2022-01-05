@@ -1,3 +1,4 @@
+#include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "../include/Game.hpp"
@@ -7,6 +8,9 @@
 
 Pokemon *bulbizarre = nullptr;
 Pokemon *carapuce = nullptr;
+Pokemon *Game::inventory[MAX_POKEMON_INV];
+
+int *health_center_coordinates = nullptr;
 int pokemonCounter = 20;
 
 /**
@@ -16,20 +20,28 @@ Map::Map(bool isCameraCentered) {
     tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset_map_texture.png");
     playerMapTexture = IMG_LoadTexture(Game::renderer, "assets/ethan_sprite.png");
     pokemonMapTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
+    HealthCenterMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset1.png");
 
     srcTexture.x = srcTexture.y = 0;
     srcTexture.w = srcTexture.h = 32;
     srcPlayer.h = srcPlayer.w = 64;
     srcPokemon = srcTexture;
+    srcHealthCenter.x = 0;
+    srcHealthCenter.y = 240;
+    srcHealthCenter.w = srcHealthCenter.h = 80;
 
     if (isCameraCentered) {
         MAP_CELL_WIDTH = 32 * 5;
         MAP_CELL_HEIGHT = 32 * 5;
     }
 
-    destTexture.w = MAP_CELL_WIDTH;
-    destTexture.h = MAP_CELL_HEIGHT;
-    destTexture.x = destTexture.y = 0;
+    dest1by1.w = MAP_CELL_WIDTH;
+    dest1by1.h = MAP_CELL_HEIGHT;
+    dest1by1.x = dest1by1.y = 0;
+
+    dest2by2.w = MAP_CELL_WIDTH * 2;
+    dest2by2.h = MAP_CELL_HEIGHT * 2;
+    dest2by2.x = dest2by2.y = 0;
 
     centeredCamera = isCameraCentered;
 
@@ -60,6 +72,9 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
 
     pokemon[0] = *bulbizarre;
     pokemon[1] = *carapuce;
+
+    Game::inventory[0] = bulbizarre;
+    Game::inventory[1] = carapuce;
 
     //________________________________________________________________________
 }
@@ -93,8 +108,8 @@ void Map::drawMap() {
             cellType = allMaps[Game::level][row][column];
 
             // The 1st rendered cell start at 0 on the top left screen (except if a padding is added)
-            destTexture.x = (-startingX + column) * MAP_CELL_WIDTH;
-            destTexture.y = (-startingY + row) * MAP_CELL_HEIGHT;
+            dest1by1.x = (-startingX + column) * MAP_CELL_WIDTH;
+            dest1by1.y = (-startingY + row) * MAP_CELL_HEIGHT;
 
             // If the cell is a texture
             switch (cellType) {
@@ -111,11 +126,11 @@ void Map::drawMap() {
                     break;
             }
 
-            SDL_RenderCopy(Game::renderer, tilesetMapTexture, &srcTexture, &destTexture);
+            SDL_RenderCopy(Game::renderer, tilesetMapTexture, &srcTexture, &dest1by1);
 
             // If the cell is also the player emplacement
             if (mapArray[row][column] == MAP_PLAYER) {
-                SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &destTexture);
+                SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &dest1by1);
             }
         }
     }
@@ -129,8 +144,8 @@ void Map::drawExtras() {
         int row = pokemon[i].getRow();
         int column = pokemon[i].getColumn();
 
-        destTexture.x = (-startingX + column) * MAP_CELL_WIDTH;
-        destTexture.y = (-startingY + row) * MAP_CELL_HEIGHT;
+        dest1by1.x = (-startingX + column) * MAP_CELL_WIDTH;
+        dest1by1.y = (-startingY + row) * MAP_CELL_HEIGHT;
 
         if ((row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
             (row + 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
@@ -141,7 +156,12 @@ void Map::drawExtras() {
 
         srcPokemon.x = pokemon[i].getXSpriteCoordinate();
         srcPokemon.y = pokemon[i].getYSpriteCoordinate();
-        SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &destTexture);
+        SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &dest1by1);
+    }
+
+    health_center_coordinates = findTiles(allMaps[Game::level], MAP_HEALTH_CENTER);
+    if (health_center_coordinates != nullptr) {
+        drawHealthCenter();
     }
 }
 
@@ -158,8 +178,11 @@ void Map::toggleCamera() {
         MAP_CELL_WIDTH = 32 * 5;
         MAP_CELL_HEIGHT = 32 * 5;
     }
-    destTexture.w = MAP_CELL_WIDTH;
-    destTexture.h = MAP_CELL_HEIGHT;
+
+    dest1by1.w = MAP_CELL_WIDTH;
+    dest1by1.h = MAP_CELL_HEIGHT;
+    dest2by2.w = MAP_CELL_WIDTH * 2;
+    dest2by2.h = MAP_CELL_HEIGHT * 2;
 }
 
 /**
@@ -231,6 +254,63 @@ void Map::placePokemon(Pokemon *pokemon, int x, int y) {
     mapArray[y][x] = pokemonCounter;
     pokemon->setCoordinates(x, y);
     pokemonCounter++;
+}
+
+/**
+ * @brief Find a tile from a level with his map code (cf. MapTileFlag.hpp)
+ * @param level
+ * @param map_nb
+ * @return
+ */
+int *Map::findTiles(const int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb) {
+    static int coordinates[2];
+    for (int row = 0; row <= Map::MAP_WIDTH; row++) {
+        for (int column = 0; column <= Map::MAP_HEIGHT; column++) {
+            if (level[row][column] == map_nb) {
+                coordinates[0] = column;
+                coordinates[1] = row;
+                return coordinates;
+            }
+        }
+    }
+    return nullptr;
+}
+
+void Map::drawHealthCenter() {
+    for (int row = startingY; row <= endingY; row++) {
+        for (int column = startingX; column <= endingX; column++) {
+            if (mapArray[row][column] == MAP_HEALTH_CENTER) { // Draw the health center
+                dest2by2.x = (-startingX + column) * MAP_CELL_WIDTH;
+                dest2by2.y = (-startingY + row) * MAP_CELL_HEIGHT;
+                SDL_RenderCopy(Game::renderer, HealthCenterMapTexture, &srcHealthCenter, &dest2by2);
+            }
+
+            // If the player is around the health center
+            if ((health_center_coordinates[1] - 1 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] == MAP_PLAYER_Y && health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 1 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] - 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y && health_center_coordinates[0] == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] + 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 2 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] + 1 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] == MAP_PLAYER_Y && health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] + 2 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] + 1 == MAP_PLAYER_X) ||
+                (health_center_coordinates[1] - 1 == MAP_PLAYER_Y &&
+                 health_center_coordinates[0] == MAP_PLAYER_X)) {
+                //interaction /!\ beaucoup d'intéractions générées car dans la boucle
+            }
+        }
+    }
 }
 
 int getStartingPos(int playerPosition, int mapWidth, int centeredScale) {
