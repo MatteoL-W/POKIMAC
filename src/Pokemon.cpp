@@ -54,3 +54,11 @@ void Pokemon::setCoordinates(int x, int y) {
     column = x;
     row = y;
 }
+
+
+
+//§§§§
+
+void Pokemon::updateHealthPoint(int new_health_point) {
+    health_point = new_health_point;
+}

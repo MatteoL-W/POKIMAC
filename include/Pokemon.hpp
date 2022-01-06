@@ -28,6 +28,8 @@ public:
 
     int getType() { return type; };
 
+    void updateHealthPoint(int new_health_point);
+
 private:
     std::string name;
     int health_point;

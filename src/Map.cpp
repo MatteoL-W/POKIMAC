@@ -304,7 +304,10 @@ void Map::drawHealthCenter() {
         (row - 1 == MAP_PLAYER_Y && column + 1 == MAP_PLAYER_X) ||
         (row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X)
         ) {
-        //interaction
+        Map::canAttack = nullptr;
+        for (int i = 0; i < Game::inventoryLength; i++) {
+            Map::canBeCured = Game::inventory[i];
+        }
     }
 }
 

@@ -46,6 +46,9 @@ public:
 
     Pokemon *getInteractingPokemon() { return canAttack; }
 
+    ///§§§§
+    Pokemon *getInteractingHealthCenter() { return canBeCured;}
+
 private:
     Pokemon pokemon[2];
     SDL_Rect srcTexture, srcPlayer, srcPokemon, srcHealthCenter;
@@ -59,6 +62,9 @@ private:
     int mapArray[MAP_HEIGHT][MAP_WIDTH];
 
     Pokemon *canAttack;
+
+    //§§§§§
+    Pokemon *canBeCured;
 
     bool centeredCamera;
     int startingX, startingY, endingX, endingY;
