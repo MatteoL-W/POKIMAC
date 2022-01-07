@@ -7,8 +7,7 @@
 #include "../include/MapsArray.hpp"
 #include "../include/Pokemon.hpp"
 
-Pokemon *bulbizarre = nullptr;
-Pokemon *carapuce = nullptr;
+Pokemon *newPokemon = nullptr;
 
 int *health_center_coordinates = nullptr;
 int pokemonCounter = 20;
@@ -71,21 +70,24 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
  * @brief Load the Pokemons
  */
 void Map::loadPokemons() {
-    /*for (int iterator = 0; iterator < 3; iterator++) {
-        Pokemon* pokemon = new Pokemon();
-        placePokemon(pokemon, 3, 3);
-        //pokemon[0] = *pokemon;
-    }*/
+    for (int i = 0; i < 3; i++) {
+        newPokemon = new Pokemon();
+        int randomX = getRandomNumberTo(MAP_WIDTH);
+        int randomY = getRandomNumberTo(MAP_HEIGHT);
 
-    // declare Pokemons
-    bulbizarre = new Pokemon(0);
-    placePokemon(bulbizarre, MAP_PLAYER_X, MAP_PLAYER_Y + 2);
+        while (mapArray[randomY][randomX] < 1 || mapArray[randomY][randomX] > 10) {
+            randomX = getRandomNumberTo(MAP_WIDTH);
+            randomY = getRandomNumberTo(MAP_HEIGHT);
+        }
 
-    carapuce = new Pokemon(1);
-    placePokemon(carapuce, MAP_PLAYER_X + 3, MAP_PLAYER_Y + 1);
+        int generatedCoordinates[2] = {
+                randomX,
+                randomY
+        };
 
-    pokemon[0] = *bulbizarre;
-    pokemon[1] = *carapuce;
+        placePokemon(newPokemon, generatedCoordinates[0], generatedCoordinates[1]);
+        pokemon[i] = *newPokemon;
+    }
 }
 
 void Map::draw() {
