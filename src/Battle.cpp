@@ -98,7 +98,6 @@ void Battle::drawBackground() {
  * @brief Order the draw of enemy and pokemon graphics
  */
 void Battle::drawPokemonGraphics() {
-
     // Drawing enemy pokemon
     drawPokemon(enemyPokemon, 175, 180);
     drawHealthPoint(enemyPokemon, 175, 180);
@@ -212,9 +211,12 @@ void Battle::enemysTurn() {
  * @brief The player wins the battle
  */
 void Battle::win() {
-    std::cout << "lose";
-    // pokemon in inventory +
-    // set pokemon in not wild
+    Game::inventory[Game::inventoryLength] = getEnemy();
+    Game::inventoryLength++;
+
+    for (int i = 0; i < Game::inventoryLength; i++) {
+        std::cout << "Item " << i << " : " << Game::inventory[i]->getName() << std::endl;
+    }
 }
 
 /**

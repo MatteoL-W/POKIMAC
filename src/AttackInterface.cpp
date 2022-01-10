@@ -61,13 +61,20 @@ void AttackInterface::handleEvents() {
                 break;
 
             // là c'est des trucs de tests qu'on enlèvera à la fin
-            case SDLK_c:
+            case SDLK_k:
                 // cheatcode
                 enemy->kill();
                 break;
             case SDLK_h:
                 // ennemy's turn
                 battle->enemysTurn();
+                break;
+            case SDLK_w:
+                game->changeInterfaceToExplorationAndLevelUp();
+                battle->win();
+                break;
+            case SDLK_l:
+                battle->lose();
                 break;
         }
     }

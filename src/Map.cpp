@@ -71,7 +71,7 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
  */
 void Map::loadPokemons() {
     for (int i = 0; i < 3; i++) {
-        newPokemon = new Pokemon();
+        newPokemon = new Pokemon(i);
         int randomX = getRandomNumberTo(MAP_WIDTH);
         int randomY = getRandomNumberTo(MAP_HEIGHT);
 

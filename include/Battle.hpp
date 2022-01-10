@@ -63,7 +63,6 @@ public:
     static std::string state;
 
 private:
-
     Pokemon *enemyPokemon;
 
     Pokemon *pokemon;
