@@ -1,17 +1,20 @@
 #pragma once
 
 #include <iostream>
+#include "Game.hpp"
 #include "AttackInterface.hpp"
 #include "Pokemon.hpp"
 #include "Text.hpp"
 
 class Battle {
 public:
-    Battle(Pokemon *enemy, Pokemon *myPokemon);
+    Battle(Pokemon *enemy, Pokemon *myPokemon, Game *game);
 
     ~Battle();
 
     void load();
+
+    void reload();
 
     void draw();
 
@@ -63,6 +66,8 @@ public:
     static std::string state;
 
 private:
+    Game *game;
+
     Pokemon *enemyPokemon;
 
     Pokemon *pokemon;

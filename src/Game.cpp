@@ -10,6 +10,7 @@
 #include "../include/Colors.hpp"
 #include "../include/AttackInterface.hpp"
 #include "../include/ExplorationInterface.hpp"
+#include "../include/MapsArray.hpp"
 
 SDL_Renderer *Game::renderer = nullptr;
 int Game::level = 0;
@@ -59,6 +60,7 @@ void Game::init(const std::string title) {
  * @brief Change the interface to attack
  */
 void Game::changeInterfaceToAttack(Pokemon *enemy) {
+    battle->reload();
     setActivity("inAttack");
     battle->setEnemy(enemy);
 }
@@ -67,8 +69,8 @@ void Game::changeInterfaceToAttack(Pokemon *enemy) {
  * @brief Change the interface to exploration and level up
  */
 void Game::changeInterfaceToExplorationAndLevelUp() {
-    //TODO: vérifier qu'on peut level++;
-    level++;
+    if (level + 1 < MAX_MAPS)
+        level++;
     Battle::state = "inactive";
     map->loadMap(allMaps[Game::level]);
     setActivity("inExploration");
@@ -79,7 +81,6 @@ void Game::changeInterfaceToExplorationAndLevelUp() {
  */
 void Game::changeInterfaceToExploration() {
     Battle::state = "inactive";
-    map->loadMap(allMaps[Game::level]);
     setActivity("inExploration");
 }
 

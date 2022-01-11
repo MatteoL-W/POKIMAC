@@ -13,7 +13,7 @@ public:
         AttackInterface::game = game;
         AttackInterface::enemy = attackedPokemon;
         AttackInterface::pokemon = attackerPokemon;
-        AttackInterface::battle = new Battle(enemy, pokemon);
+        AttackInterface::battle = new Battle(enemy, pokemon, game);
     };
 
     ~AttackInterface();

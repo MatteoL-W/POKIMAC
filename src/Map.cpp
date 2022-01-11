@@ -71,6 +71,7 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
  */
 void Map::loadPokemons() {
     for (int i = 0; i < 3; i++) {
+
         newPokemon = new Pokemon(i);
         int randomX = getRandomNumberTo(MAP_WIDTH);
         int randomY = getRandomNumberTo(MAP_HEIGHT);
@@ -155,6 +156,7 @@ void Map::drawExtras() {
     // pokemonCounter-20 because the pokemonCounter start at 20 (according to MapTileFlag.hpp)
     Map::canAttack = nullptr;
     for (int i = 0; i < pokemonCounter - 20; i++) {
+        //TODO: fix the drawing of former pokemons
         int row = pokemon[i].getRow();
         int column = pokemon[i].getColumn();
 
@@ -176,6 +178,7 @@ void Map::drawExtras() {
     health_center_coordinates = findTiles(allMaps[Game::level], MAP_HEALTH_CENTER);
     if (health_center_coordinates != nullptr) {
         drawHealthCenter();
+
     }
 }
 

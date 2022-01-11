@@ -65,13 +65,9 @@ void AttackInterface::handleEvents() {
                 // cheatcode
                 enemy->kill();
                 break;
-            case SDLK_h:
+            case SDLK_p:
                 // ennemy's turn
                 battle->enemysTurn();
-                break;
-            case SDLK_w:
-                game->changeInterfaceToExplorationAndLevelUp();
-                battle->win();
                 break;
             case SDLK_l:
                 battle->lose();

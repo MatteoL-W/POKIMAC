@@ -42,9 +42,10 @@ std::string attacks[TYPES_LENGTHS] = {
         "Rebondifeu"
 };
 
-Battle::Battle(Pokemon *enemy, Pokemon *myPokemon) {
+Battle::Battle(Pokemon *enemy, Pokemon *myPokemon, Game* game) {
     Battle::enemyPokemon = enemy;
     Battle::pokemon = myPokemon;
+    Battle::game = game;
 
     load();
 }
@@ -69,6 +70,14 @@ void Battle::load() {
     sceneBackgroundTexture = IMG_LoadTexture(Game::renderer, "assets/attack_scene.png");
     pokemonsTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
     pokemonPlatformTexture = IMG_LoadTexture(Game::renderer, "assets/attack_platform.png");
+}
+
+/**
+ * @brief Method to reload before every battle
+ */
+void Battle::reload() {
+    setPokemon(nullptr);
+
 }
 
 /**
@@ -213,10 +222,7 @@ void Battle::enemysTurn() {
 void Battle::win() {
     Game::inventory[Game::inventoryLength] = getEnemy();
     Game::inventoryLength++;
-
-    for (int i = 0; i < Game::inventoryLength; i++) {
-        std::cout << "Item " << i << " : " << Game::inventory[i]->getName() << std::endl;
-    }
+    game->changeInterfaceToExplorationAndLevelUp();
 }
 
 /**
