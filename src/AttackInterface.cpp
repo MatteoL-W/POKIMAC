@@ -51,8 +51,8 @@ void AttackInterface::handleEvents() {
         switch (event.key.keysym.sym) {
             case SDLK_e:
                 // TODO: attack N°0
-                // faire une méthode pour calculer le nb de hp enlevé
-                // faire une méthode pour retirer sur l'objet le nombre d'hp du dessus
+                // faire une méthode pour calculer le nb de hp enlevé (en enlevant des HP fixes dans un premier temps puis prendre en compte le type par la suite)
+                // faire une méthode pour retirer sur l'objet le nombre d'hp du dessus (genre pokemon->removeHealthPoints(int hp) où ça enlève les PV voulus)
                 // afficher les dégats de l'attaque dans le texte informatif
                 // battle->enemysTurn();
                 break;
@@ -60,13 +60,13 @@ void AttackInterface::handleEvents() {
                 // TODO: attack N°1
                 break;
 
-                // là c'est des trucs de tests qu'on enlèvera à la fin
+                //cheatcodes
             case SDLK_k:
-                // cheatcode
+                // appuyer sur K pour mettre les HP de l'adversaire à 0
                 enemy->kill();
                 break;
             case SDLK_p:
-                // ennemy's turn
+                // appuyer sur P pour passer au tour de l'ennemi
                 battle->enemysTurn();
                 break;
             case SDLK_l:
@@ -78,7 +78,7 @@ void AttackInterface::handleEvents() {
     // enemy's turn
     if (battle->isWaitingForAction() && event.type == SDL_KEYDOWN) {
         switch (event.key.keysym.sym) {
-            //TODO: faire bouton pour poursuivre
+            //TODO: faire bouton pour poursuivre (je pense le faire)
         }
     }
 }
