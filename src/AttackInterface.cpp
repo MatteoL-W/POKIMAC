@@ -63,7 +63,11 @@ void AttackInterface::handleEvents() {
                 //cheatcodes
             case SDLK_k:
                 // appuyer sur K pour mettre les HP de l'adversaire à 0
+                //enemy->kill();
                 enemy->kill();
+                break;
+            case SDLK_n:
+                enemy->updateHealthPoint(enemy->getHealthPoint()-10);
                 break;
             case SDLK_p:
                 // appuyer sur P pour passer au tour de l'ennemi

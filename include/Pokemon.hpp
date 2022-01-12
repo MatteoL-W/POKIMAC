@@ -28,7 +28,7 @@ public:
 
     int getMaxHealthPoint() { return max_health_point; };
 
-    int getHealthPercent() { return health_point / max_health_point * 100; };
+    float getHealthPercent() { return (float)health_point / max_health_point * 100; };
 
     int getType() { return type; };
 

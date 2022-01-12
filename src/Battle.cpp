@@ -31,7 +31,7 @@ Text *pokemonListsTexts[6] = {
         sixPokemonText
 };
 
-int maxWidthBar = 240;
+int maxWidthBar = 240, dynamicRed, dynamicGreen;
 
 // (cf. AttackFlags.hpp)
 // Charge is the attack for TYPE_NORMAL (0)
@@ -203,6 +203,7 @@ void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
     enemyTextHP->draw();
 
     // Health Bar Max
+
     SDL_SetRenderDrawColor(Game::renderer, 255, 255, 255, 255);
 
     SDL_Rect healthBarMax;
@@ -214,12 +215,15 @@ void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
     SDL_RenderFillRect(Game::renderer, &healthBarMax);
 
     // Dynamic Health Bar
-    SDL_SetRenderDrawColor(Game::renderer, 245, 211, 20, 255);
+    int healthPercent = pokemon->getHealthPercent();
+    dynamicGreen = healthPercent * 255 / 100;
+    dynamicRed = 255 - dynamicGreen;
+    SDL_SetRenderDrawColor(Game::renderer, dynamicRed, dynamicGreen, 0, 255);
 
     SDL_Rect healthBar;
     healthBar.x = x - 90;
     healthBar.y = y + 95;
-    healthBar.w = maxWidthBar * pokemon->getHealthPercent() / 100;
+    healthBar.w = maxWidthBar * healthPercent / 100;
     healthBar.h = 15;
 
     SDL_RenderFillRect(Game::renderer, &healthBar);
