@@ -71,8 +71,7 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
  */
 void Map::loadPokemons() {
     for (int i = 0; i < 3; i++) {
-
-        newPokemon = new Pokemon(i);
+        newPokemon = new Pokemon(pokemonsFromMaps[Game::level][i]);
         int randomX = getRandomNumberTo(MAP_WIDTH);
         int randomY = getRandomNumberTo(MAP_HEIGHT);
 
@@ -180,7 +179,6 @@ void Map::drawExtras() {
     health_center_coordinates = findTiles(allMaps[Game::level], MAP_HEALTH_CENTER);
     if (health_center_coordinates != nullptr) {
         drawHealthCenter();
-
     }
 }
 

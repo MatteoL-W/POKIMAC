@@ -2,10 +2,26 @@
 
 #include <iostream>
 #include "Map.hpp"
+#include "PokemonsFromId.hpp"
 
 const int MAX_MAPS = 2;
+const int MAX_POKEMON_PER_MAPS = 3;
 
 //TODO: Push les tableaux plutôt que de les initialiser direct
+
+const int pokemonsFromMaps[MAX_MAPS][MAX_POKEMON_PER_MAPS] = {
+        {
+                POKEMON_BULBIZARRE,
+                POKEMON_CARAPUCE,
+                POKEMON_SALAMECHE
+        },
+
+        {
+                POKEMON_BULBIZARRE,
+                POKEMON_CARAPUCE,
+                POKEMON_SALAMECHE
+        }
+};
 
 const int allMaps[MAX_MAPS][25][25] = {
         {
