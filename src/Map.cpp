@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "../include/Game.hpp"
@@ -6,8 +7,7 @@
 #include "../include/MapsArray.hpp"
 #include "../include/Pokemon.hpp"
 
-Pokemon *bulbizarre = nullptr;
-Pokemon *carapuce = nullptr;
+Pokemon *newPokemon = nullptr;
 
 int *health_center_coordinates = nullptr;
 int pokemonCounter = 20;
@@ -22,6 +22,7 @@ Map::Map(bool isCameraCentered) {
     HealthCenterMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset1.png");
 
     srcTexture.x = srcTexture.y = 0;
+    srcPlayer.x = srcPlayer.y = 0;
     srcTexture.w = srcTexture.h = 32;
     srcPlayer.h = srcPlayer.w = 64;
     srcPokemon = srcTexture;
@@ -62,27 +63,32 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     // define the player emplacement
     mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
 
-    // declare Pokemons
-    bulbizarre = new Pokemon(0);
-    placePokemon(bulbizarre, MAP_PLAYER_X, MAP_PLAYER_Y + 2);
+    loadPokemons();
+}
 
-    carapuce = new Pokemon(1);
-    placePokemon(carapuce, MAP_PLAYER_X + 3, MAP_PLAYER_Y + 1);
+/**
+ * @brief Load the Pokemons
+ */
+void Map::loadPokemons() {
+    for (int i = 0; i < 3; i++) {
 
-    pokemon[0] = *bulbizarre;
-    pokemon[1] = *carapuce;
+        newPokemon = new Pokemon(i);
+        int randomX = getRandomNumberTo(MAP_WIDTH);
+        int randomY = getRandomNumberTo(MAP_HEIGHT);
 
-    if (Game::inventory[0] == 0) {
-        Game::inventory[0] = bulbizarre;
-        Game::inventory[1] = carapuce;
+        while (mapArray[randomY][randomX] < 1 || mapArray[randomY][randomX] > 10) {
+            randomX = getRandomNumberTo(MAP_WIDTH);
+            randomY = getRandomNumberTo(MAP_HEIGHT);
+        }
 
-        Game::inventoryLength++;
-        Game::inventoryLength++;
+        int generatedCoordinates[2] = {
+                randomX,
+                randomY
+        };
+
+        placePokemon(newPokemon, generatedCoordinates[0], generatedCoordinates[1]);
+        pokemon[i] = *newPokemon;
     }
-
-
-
-    //________________________________________________________________________
 }
 
 void Map::draw() {
@@ -142,6 +148,9 @@ void Map::drawMap() {
     }
 }
 
+/**
+ * @brief Draw decors and pokemons
+ */
 void Map::drawExtras() {
     // Drawing all the pokemons
     // pokemonCounter-20 because the pokemonCounter start at 20 (according to MapTileFlag.hpp)
@@ -149,6 +158,7 @@ void Map::drawExtras() {
     Map::canBeCured = false;
 
     for (int i = 0; i < pokemonCounter - 20; i++) {
+        //TODO: fix the drawing of former pokemons
         int row = pokemon[i].getRow();
         int column = pokemon[i].getColumn();
 
@@ -170,6 +180,7 @@ void Map::drawExtras() {
     health_center_coordinates = findTiles(allMaps[Game::level], MAP_HEALTH_CENTER);
     if (health_center_coordinates != nullptr) {
         drawHealthCenter();
+
     }
 }
 
@@ -284,6 +295,9 @@ int *Map::findTiles(const int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb
     return nullptr;
 }
 
+/**
+ * @brief Draw the Health Center
+ */
 void Map::drawHealthCenter() {
     int column = health_center_coordinates[0];
     int row = health_center_coordinates[1];
@@ -321,4 +335,9 @@ int getEndingPos(int playerPosition, int mapWidth, int centeredScale) {
     int endingViewport = (playerPosition + 2 >= mapWidth - 1) ? mapWidth - 1 : playerPosition + 2;
     int padding = (playerPosition - 2 < 0) ? abs(mapWidth - 2) : 0;
     return endingViewport + padding;
+}
+
+int getRandomNumberTo(int max) {
+    std::random_device rd;
+    return rand() % max;
 }

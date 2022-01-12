@@ -30,11 +30,17 @@ void ExplorationInterface::handleEvents() {
     }
 
     if (event.type == SDL_KEYDOWN && map->getInteractingHealthCenter()) {
-        for (int i = 0; i < Game::inventoryLength; i++) {
-            if (Game::inventory[i]->getHealthPoint() != Game::inventory[i]->getMaxHealthPoint()) {
-                Game::inventory[i]->updateHealthPoint(Game::inventory[i]->getMaxHealthPoint());
-            }
+        switch (event.key.keysym.sym) {
+            case SDLK_e:
+                for (int i = 0; i < Game::inventoryLength; i++) {
+                    if (Game::inventory[i]->getHealthPoint() != Game::inventory[i]->getMaxHealthPoint()) {
+                        Game::inventory[i]->updateHealthPoint(Game::inventory[i]->getMaxHealthPoint());
+                        std::cout << "heal";
+                    }
+                }
+                break;
         }
+        
     }
 
 

@@ -2,17 +2,19 @@
 
 #include <iostream>
 
-const int MAX_POKEMON = 2;
+const int POKEMON_AVAILABLE = 3;
 
 class Pokemon {
 public:
-    Pokemon(int id = (rand() % MAX_POKEMON), bool isWild = true);
+    Pokemon(int id = (rand() % POKEMON_AVAILABLE), bool isWild = true);
 
     ~Pokemon();
 
     std::string getName() { return name; };
 
     void setCoordinates(int x, int y);
+
+    void kill() { health_point = 0; };
 
     int getXSpriteCoordinate() { return sprite_x; };
 
@@ -28,7 +30,7 @@ public:
 
     int getType() { return type; };
 
-    void updateHealthPoint(int new_health_point);
+    void updateHealthPoint(int new_health_point) { Pokemon::health_point = new_health_point; };
 
 private:
     std::string name;

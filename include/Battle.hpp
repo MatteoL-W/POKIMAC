@@ -1,17 +1,20 @@
 #pragma once
 
 #include <iostream>
+#include "Game.hpp"
 #include "AttackInterface.hpp"
 #include "Pokemon.hpp"
 #include "Text.hpp"
 
 class Battle {
 public:
-    Battle(Pokemon *enemy, Pokemon *myPokemon);
+    Battle(Pokemon *enemy, Pokemon *myPokemon, Game *game);
 
     ~Battle();
 
     void load();
+
+    void reload();
 
     void draw();
 
@@ -29,6 +32,10 @@ public:
 
     void setEnemy(Pokemon *enemy) { Battle::enemyPokemon = enemy; };
 
+    Pokemon* getPokemon() { return pokemon; };
+
+    Pokemon* getEnemy() { return enemyPokemon; };
+
     bool isWaitingForPokemon() {
         if (state == "pokemonChoice") {
             return true;
@@ -36,9 +43,30 @@ public:
         return false;
     }
 
+    bool isWaitingForAttack() {
+        if (state == "waitingForAttack") {
+            return true;
+        }
+        return false;
+    }
+
+    bool isWaitingForAction() {
+        if (state == "enemysTurn") {
+            return true;
+        }
+        return false;
+    }
+
+    void enemysTurn();
+
+    void win();
+
+    void lose();
+
     static std::string state;
 
 private:
+    Game *game;
 
     Pokemon *enemyPokemon;
 
