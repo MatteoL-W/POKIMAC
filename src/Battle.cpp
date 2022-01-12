@@ -10,19 +10,19 @@
 
 std::string Battle::state = "inactive";
 
-Text* enemyTextHP = new Text();
+Text *enemyTextHP = new Text();
 
-Text* firstAttackText = new Text();
-Text* secondAttackText = new Text();
-Text* thirdPokemonText = new Text();
-Text* fourthPokemonText = new Text();
-Text* fifthPokemonText = new Text();
-Text* sixPokemonText = new Text();
-Text* exitText = new Text();
+Text *firstAttackText = new Text();
+Text *secondAttackText = new Text();
+Text *thirdPokemonText = new Text();
+Text *fourthPokemonText = new Text();
+Text *fifthPokemonText = new Text();
+Text *sixPokemonText = new Text();
+Text *exitText = new Text();
 
-Text* dialogText = new Text();
+Text *dialogText = new Text();
 
-Text* pokemonListsTexts[6] = {
+Text *pokemonListsTexts[6] = {
         firstAttackText,
         secondAttackText,
         thirdPokemonText,
@@ -42,7 +42,7 @@ std::string attacks[TYPES_LENGTHS] = {
         "Rebondifeu"
 };
 
-Battle::Battle(Pokemon *enemy, Pokemon *myPokemon, Game* game) {
+Battle::Battle(Pokemon *enemy, Pokemon *myPokemon, Game *game) {
     Battle::enemyPokemon = enemy;
     Battle::pokemon = myPokemon;
     Battle::game = game;
@@ -141,23 +141,21 @@ void Battle::drawDialog() {
         exitText->changeText("[EXIT] Annuler");
         exitText->changeDestRect(86, 550 + 30 * Game::inventoryLength);
         exitText->draw();
-    }
-
-    else {
+    } else {
         dialogText->changeText("Choisissez votre attaque");
 
         firstAttackText->changeFont("Press", 32);
         firstAttackText->changeText("[E] " + attacks[0]);
-        firstAttackText->changeDestRect(86,580);
+        firstAttackText->changeDestRect(86, 580);
         firstAttackText->draw();
 
         secondAttackText->changeFont("Press", 32);
         secondAttackText->changeText("[G] " + attacks[pokemon->getType()]);
-        secondAttackText->changeDestRect(86,630);
+        secondAttackText->changeDestRect(86, 630);
         secondAttackText->draw();
     }
 
-    dialogText->changeDestRect(86,485);
+    dialogText->changeDestRect(86, 485);
     dialogText->draw();
 }
 
@@ -193,7 +191,8 @@ void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
  * @param y
  */
 void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
-    std::string enemyHP = std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
+    std::string enemyHP =
+            std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
     enemyTextHP->create(enemyHP, WhiteColor, "Press");
     enemyTextHP->changeDestRect(x - 55, y + 140);
     enemyTextHP->draw();

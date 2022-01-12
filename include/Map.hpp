@@ -50,8 +50,7 @@ public:
 
     Pokemon *getInteractingPokemon() { return canAttack; }
 
-    ///§§§§
-    bool getInteractingHealthCenter() { return canBeCured;}
+    bool getInteractingHealthCenter() { return canBeCured; }
 
 private:
     Pokemon pokemon[20];
@@ -68,7 +67,6 @@ private:
 
     Pokemon *canAttack;
 
-    //§§§§§
     bool canBeCured;
 
     bool centeredCamera;

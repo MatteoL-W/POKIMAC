@@ -42,6 +42,6 @@ private:
     int size = 24;
 };
 
-TTF_Font *createFont(Text* text, std::string fontName);
+TTF_Font *createFont(Text *text, std::string fontName);
 
 SDL_Rect createDestRect(TTF_Font *font, std::string text, int x, int y);

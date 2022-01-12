@@ -32,9 +32,9 @@ public:
 
     void setEnemy(Pokemon *enemy) { Battle::enemyPokemon = enemy; };
 
-    Pokemon* getPokemon() { return pokemon; };
+    Pokemon *getPokemon() { return pokemon; };
 
-    Pokemon* getEnemy() { return enemyPokemon; };
+    Pokemon *getEnemy() { return enemyPokemon; };
 
     bool isWaitingForPokemon() {
         if (state == "pokemonChoice") {

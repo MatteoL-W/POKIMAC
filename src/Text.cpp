@@ -81,7 +81,7 @@ void Text::changeFont(std::string name, int size) {
  * @param fontName
  * @return TTF_Font*
  */
-TTF_Font *createFont(Text* text, std::string fontName) {
+TTF_Font *createFont(Text *text, std::string fontName) {
     std::string fullFontName = "./assets/" + fontName + ".ttf";
     TTF_Font *font = TTF_OpenFont(fullFontName.c_str(), text->getSize());
 

@@ -24,7 +24,7 @@ public:
 
     void render();
 
-    Battle* getBattle() { return battle; };
+    Battle *getBattle() { return battle; };
 
 private:
     Game *game;

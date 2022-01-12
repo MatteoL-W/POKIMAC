@@ -35,12 +35,11 @@ void ExplorationInterface::handleEvents() {
                 for (int i = 0; i < Game::inventoryLength; i++) {
                     if (Game::inventory[i]->getHealthPoint() != Game::inventory[i]->getMaxHealthPoint()) {
                         Game::inventory[i]->updateHealthPoint(Game::inventory[i]->getMaxHealthPoint());
-                        std::cout << "heal";
                     }
                 }
                 break;
         }
-        
+
     }
 
 
@@ -85,14 +84,12 @@ void ExplorationInterface::update() {
 
     if (map->getInteractingPokemon()) {
         text->changeText("Appuyer sur [E] pour interagir");
-        text->changeDestRect(40, 700);
+        text->changeDestRect(40, Game::WINDOW_HEIGHT - 100);
     }
-
-    //§§§§
 
     if (map->getInteractingHealthCenter()) {
         text->changeText("Appuyer sur [E] pour soigner les Pokemons");
-        text->changeDestRect(40, 700);
+        text->changeDestRect(40, Game::WINDOW_HEIGHT - 100);
     }
 }
 
@@ -108,7 +105,6 @@ void ExplorationInterface::render() {
         text->draw();
     }
 
-    //§§§§
     if (map->getInteractingHealthCenter()) {
         text->draw();
     }
