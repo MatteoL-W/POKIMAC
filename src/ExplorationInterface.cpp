@@ -29,6 +29,20 @@ void ExplorationInterface::handleEvents() {
         }
     }
 
+    if (event.type == SDL_KEYDOWN && map->getInteractingHealthCenter()) {
+        switch (event.key.keysym.sym) {
+            case SDLK_e:
+                for (int i = 0; i < Game::inventoryLength; i++) {
+                    if (Game::inventory[i]->getHealthPoint() != Game::inventory[i]->getMaxHealthPoint()) {
+                        Game::inventory[i]->updateHealthPoint(Game::inventory[i]->getMaxHealthPoint());
+                    }
+                }
+                break;
+        }
+
+    }
+
+
     // Si une touche est enfoncée, on vérifie si elle correspond à une touche assignée au mouvement (flèches et ZQSD)
     // On enclenche le déplacement si c'est le cas
     if (event.type == SDL_KEYDOWN) {
@@ -70,7 +84,12 @@ void ExplorationInterface::update() {
 
     if (map->getInteractingPokemon()) {
         text->changeText("Appuyer sur [E] pour interagir");
-        text->changeDestRect(40, 750);
+        text->changeDestRect(40, Game::WINDOW_HEIGHT - 100);
+    }
+
+    if (map->getInteractingHealthCenter()) {
+        text->changeText("Appuyer sur [E] pour soigner les Pokemons");
+        text->changeDestRect(40, Game::WINDOW_HEIGHT - 100);
     }
 }
 
@@ -83,6 +102,10 @@ void ExplorationInterface::render() {
     map->draw();
 
     if (map->getInteractingPokemon()) {
+        text->draw();
+    }
+
+    if (map->getInteractingHealthCenter()) {
         text->draw();
     }
 

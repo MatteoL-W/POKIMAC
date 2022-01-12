@@ -21,8 +21,8 @@ ExplorationInterface *explorationInterface = nullptr;
 Pokemon *attackedPokemon = nullptr;
 Pokemon *attackerPokemon = nullptr;
 
-Battle* battle = nullptr;
-Map* map = nullptr;
+Battle *battle = nullptr;
+Map *map = nullptr;
 
 Pokemon *Game::inventory[MAX_POKEMON_INV];
 int Game::inventoryLength = 0;
@@ -47,7 +47,7 @@ void Game::init(const std::string title) {
         battle = attackInterface->getBattle();
         map = explorationInterface->getMap();
 
-        Pokemon* starter = new Pokemon(0);
+        Pokemon *starter = new Pokemon(0);
         Game::inventory[0] = starter;
         Game::inventoryLength++;
 
@@ -98,9 +98,7 @@ void Game::refresh() {
         explorationInterface->handleEvents();
         explorationInterface->update();
         explorationInterface->render();
-    }
-
-    else if (attacking()) {
+    } else if (attacking()) {
         attackInterface->handleEvents();
         attackInterface->update();
         attackInterface->render();

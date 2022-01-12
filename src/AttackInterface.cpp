@@ -60,7 +60,7 @@ void AttackInterface::handleEvents() {
                 // TODO: attack N°1
                 break;
 
-            // là c'est des trucs de tests qu'on enlèvera à la fin
+                // là c'est des trucs de tests qu'on enlèvera à la fin
             case SDLK_k:
                 // cheatcode
                 enemy->kill();

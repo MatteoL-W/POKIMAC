@@ -155,6 +155,8 @@ void Map::drawExtras() {
     // Drawing all the pokemons
     // pokemonCounter-20 because the pokemonCounter start at 20 (according to MapTileFlag.hpp)
     Map::canAttack = nullptr;
+    Map::canBeCured = false;
+
     for (int i = 0; i < pokemonCounter - 20; i++) {
         //TODO: fix the drawing of former pokemons
         int row = pokemon[i].getRow();
@@ -318,7 +320,7 @@ void Map::drawHealthCenter() {
         (row - 1 == MAP_PLAYER_Y && column + 1 == MAP_PLAYER_X) ||
         (row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X)
             ) {
-        //interaction
+        Map::canBeCured = true;
     }
 }
 

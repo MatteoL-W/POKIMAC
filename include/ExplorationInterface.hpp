@@ -19,7 +19,7 @@ public:
 
     void render();
 
-    Map* getMap() { return map; };
+    Map *getMap() { return map; };
 
 private:
     Game *game;

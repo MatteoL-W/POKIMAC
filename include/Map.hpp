@@ -50,6 +50,8 @@ public:
 
     Pokemon *getInteractingPokemon() { return canAttack; }
 
+    bool getInteractingHealthCenter() { return canBeCured; }
+
 private:
     Pokemon pokemon[20];
     //TODO alloc dynamique
@@ -64,6 +66,8 @@ private:
     int mapArray[MAP_HEIGHT][MAP_WIDTH];
 
     Pokemon *canAttack;
+
+    bool canBeCured;
 
     bool centeredCamera;
     int startingX, startingY, endingX, endingY;
