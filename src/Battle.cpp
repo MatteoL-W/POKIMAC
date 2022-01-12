@@ -201,9 +201,9 @@ void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
 
     enemyTextHP->changeDestRect(x - 55, y + 140);
     enemyTextHP->draw();
+    //________________________________________________________________________
 
     // Health Bar Max
-
     SDL_SetRenderDrawColor(Game::renderer, 255, 255, 255, 255);
 
     SDL_Rect healthBarMax;
@@ -213,11 +213,13 @@ void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
     healthBarMax.h = 25;
 
     SDL_RenderFillRect(Game::renderer, &healthBarMax);
+    //________________________________________________________________________
 
     // Dynamic Health Bar
     int healthPercent = pokemon->getHealthPercent();
-    dynamicGreen = healthPercent * 255 / 100;
-    dynamicRed = 255 - dynamicGreen;
+    // Green(0,255,0); Yellow(255,255,0); Red(255,0,0)
+    dynamicGreen = (healthPercent < 50) ? healthPercent * 255 / 50 : 255;
+    dynamicRed = (healthPercent < 50) ? 255 : 255 - (healthPercent * 255 / 50);
     SDL_SetRenderDrawColor(Game::renderer, dynamicRed, dynamicGreen, 0, 255);
 
     SDL_Rect healthBar;
@@ -227,6 +229,7 @@ void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
     healthBar.h = 15;
 
     SDL_RenderFillRect(Game::renderer, &healthBar);
+    //________________________________________________________________________
 }
 
 /**
