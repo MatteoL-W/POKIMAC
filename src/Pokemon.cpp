@@ -27,7 +27,7 @@ Pokemon::Pokemon(int id, bool isWild) {
             if (lines == id) {
                 name = pokename;
                 max_health_point = max_hp;
-                health_point = max_hp;
+                health_point = max_hp /3;
                 attack = att;
                 defense = def;
                 sprite_x = x_spr;
@@ -54,10 +54,6 @@ void Pokemon::setCoordinates(int x, int y) {
     column = x;
     row = y;
 }
-
-
-
-//§§§§
 
 void Pokemon::updateHealthPoint(int new_health_point) {
     health_point = new_health_point;

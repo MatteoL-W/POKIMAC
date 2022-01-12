@@ -79,14 +79,14 @@ void ExplorationInterface::update() {
 
     if (map->getInteractingPokemon()) {
         text->changeText("Appuyer sur [E] pour interagir");
-        text->changeDestRect(40, 750);
+        text->changeDestRect(40, 700);
     }
 
     //§§§§
 
     if (map->getInteractingHealthCenter()) {
         text->changeText("Appuyer sur [E] pour soigner les Pokemons");
-        text->changeDestRect(40, 750);
+        text->changeDestRect(40, 700);
     }
 }
 
@@ -106,7 +106,6 @@ void ExplorationInterface::render() {
     if (map->getInteractingHealthCenter()) {
         text->draw();
     }
-
 
     SDL_RenderPresent(Game::renderer);
 }
