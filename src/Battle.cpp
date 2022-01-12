@@ -31,6 +31,8 @@ Text *pokemonListsTexts[6] = {
         sixPokemonText
 };
 
+int maxWidthBar = 240;
+
 // (cf. AttackFlags.hpp)
 // Charge is the attack for TYPE_NORMAL (0)
 // Tranch'Herbe is the attack for TYPE_PLANT (1)
@@ -94,6 +96,7 @@ void Battle::draw() {
  */
 void Battle::drawBackground() {
     SDL_SetRenderDrawColor(Game::renderer, 51, 57, 58, 255);
+    SDL_RenderClear(Game::renderer);
 
     SDL_Rect destBackground;
     destBackground.w = Game::WINDOW_WIDTH;
@@ -191,11 +194,35 @@ void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
  * @param y
  */
 void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
+    // Health Points
     std::string enemyHP =
             std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
     enemyTextHP->create(enemyHP, WhiteColor, "Press");
+
     enemyTextHP->changeDestRect(x - 55, y + 140);
     enemyTextHP->draw();
+
+    // Health Bar Max
+    SDL_SetRenderDrawColor(Game::renderer, 255, 255, 255, 255);
+
+    SDL_Rect healthBarMax;
+    healthBarMax.x = x - 90;
+    healthBarMax.y = y + 90;
+    healthBarMax.w = maxWidthBar;
+    healthBarMax.h = 25;
+
+    SDL_RenderFillRect(Game::renderer, &healthBarMax);
+
+    // Dynamic Health Bar
+    SDL_SetRenderDrawColor(Game::renderer, 245, 211, 20, 255);
+
+    SDL_Rect healthBar;
+    healthBar.x = x - 90;
+    healthBar.y = y + 95;
+    healthBar.w = maxWidthBar * pokemon->getHealthPercent() / 100;
+    healthBar.h = 15;
+
+    SDL_RenderFillRect(Game::renderer, &healthBar);
 }
 
 /**

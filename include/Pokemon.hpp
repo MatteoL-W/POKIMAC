@@ -28,6 +28,8 @@ public:
 
     int getMaxHealthPoint() { return max_health_point; };
 
+    int getHealthPercent() { return health_point / max_health_point * 100; };
+
     int getType() { return type; };
 
     void updateHealthPoint(int new_health_point) { Pokemon::health_point = new_health_point; };
