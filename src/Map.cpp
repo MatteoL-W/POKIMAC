@@ -31,8 +31,8 @@ Map::Map(bool isCameraCentered) {
     srcHealthCenter.w = srcHealthCenter.h = 80;
 
     if (isCameraCentered) {
-        MAP_CELL_WIDTH = 32 * 5;
-        MAP_CELL_HEIGHT = 32 * 5;
+        MAP_CELL_WIDTH = Game::SCALE_CAMERA * 32 * 5;
+        MAP_CELL_HEIGHT = Game::SCALE_CAMERA * 32 * 5;
     }
 
     dest1by1.w = MAP_CELL_WIDTH;
@@ -192,12 +192,11 @@ void Map::drawExtras() {
 void Map::toggleCamera() {
     if (centeredCamera) {
         centeredCamera = false;
-        MAP_CELL_WIDTH = 32;
-        MAP_CELL_HEIGHT = 32;
+        MAP_CELL_WIDTH = MAP_CELL_HEIGHT = 32 * Game::SCALE_CAMERA;
+        std::cout << Game::SCALE_CAMERA;
     } else {
         centeredCamera = true;
-        MAP_CELL_WIDTH = 32 * 5;
-        MAP_CELL_HEIGHT = 32 * 5;
+        MAP_CELL_WIDTH = MAP_CELL_HEIGHT = 32 * Game::SCALE_CAMERA * 5;
     }
 
     dest1by1.w = MAP_CELL_WIDTH;

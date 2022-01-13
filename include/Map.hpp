@@ -2,6 +2,7 @@
 
 #include "MapTileFlag.hpp"
 #include "Pokemon.hpp"
+#include "Game.hpp"
 
 int getStartingPos(int playerPosition, int mapWidth, int centeredScale);
 
@@ -13,12 +14,11 @@ class Map {
 public:
     static const int MAP_WIDTH = 25;
     static const int MAP_HEIGHT = 25;
-    int MAP_CELL_WIDTH = 32;
-    int MAP_CELL_HEIGHT = 32;
+    float MAP_CELL_WIDTH = 32 * Game::SCALE_CAMERA;
+    float MAP_CELL_HEIGHT = 32 * Game::SCALE_CAMERA;
 
     int MAP_PLAYER_X = 8;
     int MAP_PLAYER_Y = 3;
-
 
     Map(bool isCameraCentered);
 
