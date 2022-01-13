@@ -230,3 +230,14 @@ void Battle::win() {
 void Battle::lose() {
     std::cout << "lose";
 }
+
+
+/**
+ * @brief Draw the comments of the battle
+ */
+
+void Battle::drawComments(int health_point) {
+    std::string damageHP = enemyPokemon->getName() + " a perdu " + std::to_string(health_point) + "PV";
+    dialogText->changeText(damageHP);
+    dialogText->draw();
+}

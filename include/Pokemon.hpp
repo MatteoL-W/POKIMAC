@@ -32,6 +32,8 @@ public:
 
     void updateHealthPoint(int new_health_point) { Pokemon::health_point = new_health_point; };
 
+    void removeHealthPoint(int health_point);
+
 private:
     std::string name;
     int health_point;

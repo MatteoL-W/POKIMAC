@@ -52,9 +52,12 @@ void AttackInterface::handleEvents() {
             case SDLK_e:
                 // TODO: attack N°0
                 // faire une méthode pour calculer le nb de hp enlevé (en enlevant des HP fixes dans un premier temps puis prendre en compte le type par la suite)
-                // faire une méthode pour retirer sur l'objet le nombre d'hp du dessus (genre pokemon->removeHealthPoints(int hp) où ça enlève les PV voulus)
+                //<<<<faire une méthode pour retirer sur l'objet le nombre d'hp du dessus (genre pokemon->removeHealthPoints(int hp) où ça enlève les PV voulus)
                 // afficher les dégats de l'attaque dans le texte informatif
                 // battle->enemysTurn();
+                enemy->removeHealthPoint(12);
+                battle->drawComments(12);
+                battle->enemysTurn();
                 break;
             case SDLK_g:
                 // TODO: attack N°1
@@ -100,3 +103,4 @@ void AttackInterface::render() {
 
     SDL_RenderPresent(Game::renderer);
 }
+

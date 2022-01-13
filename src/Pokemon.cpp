@@ -4,6 +4,8 @@
 #include <SDL2/SDL_image.h>
 #include "../include/Map.hpp"
 #include "../include/Pokemon.hpp"
+//§§§
+#include "../include/AttackInterface.hpp"
 
 /**
  * @brief Initialize a new pokemon set from the txt database
@@ -53,4 +55,8 @@ Pokemon::~Pokemon() {
 void Pokemon::setCoordinates(int x, int y) {
     column = x;
     row = y;
+}
+
+void Pokemon::removeHealthPoint(int health_point) {
+    Pokemon::health_point = Pokemon::health_point - health_point;
 }

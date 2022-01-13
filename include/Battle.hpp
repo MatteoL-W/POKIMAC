@@ -63,6 +63,9 @@ public:
 
     void lose();
 
+    //§§§
+    void drawComments(int health_point);
+
     static std::string state;
 
 private:

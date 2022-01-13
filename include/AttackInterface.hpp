@@ -26,6 +26,7 @@ public:
 
     Battle *getBattle() { return battle; };
 
+
 private:
     Game *game;
 

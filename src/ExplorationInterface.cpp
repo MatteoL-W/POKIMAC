@@ -39,7 +39,7 @@ void ExplorationInterface::handleEvents() {
                 }
                 break;
         }
-
+        
     }
 
 
@@ -88,7 +88,7 @@ void ExplorationInterface::update() {
     }
 
     if (map->getInteractingHealthCenter()) {
-        text->changeText("Appuyer sur [E] pour soigner les Pokemons");
+        text->changeText("Appuyer sur [E] pour soigner");
         text->changeDestRect(40, Game::WINDOW_HEIGHT - 100);
     }
 }

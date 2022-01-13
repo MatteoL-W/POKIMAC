@@ -319,7 +319,7 @@ void Map::drawHealthCenter() {
         (row - 1 == MAP_PLAYER_Y && column + 2 == MAP_PLAYER_X) ||
         (row - 1 == MAP_PLAYER_Y && column + 1 == MAP_PLAYER_X) ||
         (row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X)
-            ) {
+        ) {
         Map::canBeCured = true;
     }
 }
