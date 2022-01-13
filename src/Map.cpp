@@ -128,9 +128,13 @@ void Map::drawMap() {
                     srcTexture.x = 64;
                     break;
                 case MAP_GRASS:
+                case MAP_GRASS_NO_POKEMON:
+                case MAP_GRASS_NOT_WALKABLE:
                     srcTexture.x = 32;
                     break;
                 case MAP_DIRT:
+                case MAP_DIRT_NO_POKEMON:
+                case MAP_DIRT_NOT_WALKABLE:
                     srcTexture.x = 0;
                     break;
                 default:
@@ -239,7 +243,7 @@ void Map::updatePlayerPosition(int direction) {
     // On vérifie que le nouvel endroit où le joueur va marcher est bien une "walkable texture [1-10] dans MapTileFlag.hpp"
     int futurePlayerCellTexture = mapArray[MAP_PLAYER_Y + yOperator][MAP_PLAYER_X + xOperator];
 
-    if (futurePlayerCellTexture >= 1 && futurePlayerCellTexture <= 10) {
+    if (futurePlayerCellTexture >= 1 && futurePlayerCellTexture <= 13) {
         mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = allMaps[Game::level][MAP_PLAYER_Y][MAP_PLAYER_X];
         MAP_PLAYER_Y = MAP_PLAYER_Y + yOperator;
         MAP_PLAYER_X = MAP_PLAYER_X + xOperator;
