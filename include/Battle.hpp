@@ -27,6 +27,10 @@ public:
     void drawHealthPoint(Pokemon *pokemon, int x, int y);
 
     void drawDialog();
+    void drawDialogPokemonChoice();
+    void drawDialogAttackChoice();
+    void drawDialogPostAttack();
+    void drawDialogEnemyTurn();
 
     void setPokemon(Pokemon *pokemon) { Battle::pokemon = pokemon; };
 
@@ -36,6 +40,10 @@ public:
 
     Pokemon *getEnemy() { return enemyPokemon; };
 
+    /**
+     * @brief When the state is 'pokemonChoice'
+     * @return
+     */
     bool isWaitingForPokemon() {
         if (state == "pokemonChoice") {
             return true;
@@ -43,6 +51,10 @@ public:
         return false;
     }
 
+    /**
+     * @brief When the state is 'waitingForAttack'
+     * @return
+     */
     bool isWaitingForAttack() {
         if (state == "waitingForAttack") {
             return true;
@@ -50,7 +62,22 @@ public:
         return false;
     }
 
-    bool isWaitingForAction() {
+    /**
+     * @brief When the state is 'postAttack'
+     * @return
+     */
+    bool isWaitingForActionPostAttack() {
+        if (state == "postAttack") {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @brief When the state is 'enemysTurn'
+     * @return
+     */
+    bool isWaitingForEnemyTurn() {
         if (state == "enemysTurn") {
             return true;
         }
@@ -62,9 +89,6 @@ public:
     void win();
 
     void lose();
-
-    //§§§
-    void drawComments(int health_point);
 
     static std::string state;
 
