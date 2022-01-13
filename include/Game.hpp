@@ -28,6 +28,13 @@ public:
 
     bool running() { return isRunning; };
 
+    bool starting() {
+        if (activity == "inStarter") {
+            return true;
+        }
+        return false;
+    };
+
     bool exploring() {
         if (activity == "inExploration") {
             return true;
@@ -61,7 +68,7 @@ public:
 private:
     bool isRunning = false;
 
-    std::string activity = "inExploration";
+    std::string activity = "inStarter";
 
     SDL_Window *window;
 };

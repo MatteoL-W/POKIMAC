@@ -10,11 +10,13 @@
 #include "../include/Colors.hpp"
 #include "../include/AttackInterface.hpp"
 #include "../include/ExplorationInterface.hpp"
+#include "../include/StarterInterface.hpp"
 #include "../include/MapsArray.hpp"
 
 SDL_Renderer *Game::renderer = nullptr;
 int Game::level = 0;
 
+StarterInterface *starterInterface = nullptr;
 AttackInterface *attackInterface = nullptr;
 ExplorationInterface *explorationInterface = nullptr;
 
@@ -44,12 +46,9 @@ void Game::init(const std::string title) {
 
         explorationInterface = new ExplorationInterface(this);
         attackInterface = new AttackInterface(this, attackedPokemon, attackerPokemon);
+        starterInterface = new StarterInterface(this);
         battle = attackInterface->getBattle();
         map = explorationInterface->getMap();
-
-        Pokemon *starter = new Pokemon(0);
-        Game::inventory[0] = starter;
-        Game::inventoryLength++;
 
         isRunning = true;
         level = 0;
@@ -94,7 +93,11 @@ void Game::clean() {
 }
 
 void Game::refresh() {
-    if (exploring()) {
+    if (starting()) {
+        starterInterface->handleEvents();
+        starterInterface->update();
+        starterInterface->render();
+    } else if (exploring()) {
         explorationInterface->handleEvents();
         explorationInterface->update();
         explorationInterface->render();
