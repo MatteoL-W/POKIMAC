@@ -193,7 +193,6 @@ void Map::toggleCamera() {
     if (centeredCamera) {
         centeredCamera = false;
         MAP_CELL_WIDTH = MAP_CELL_HEIGHT = 32 * Game::SCALE_CAMERA;
-        std::cout << Game::SCALE_CAMERA;
     } else {
         centeredCamera = true;
         MAP_CELL_WIDTH = MAP_CELL_HEIGHT = 32 * Game::SCALE_CAMERA * 5;

@@ -79,7 +79,6 @@ void Battle::load() {
  */
 void Battle::reload() {
     setPokemon(nullptr);
-
 }
 
 /**
@@ -195,9 +194,9 @@ void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
  */
 void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
     // Health Points
-    std::string enemyHP =
+    std::string pokemonHP =
             std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
-    enemyTextHP->create(enemyHP, WhiteColor, "Press");
+    enemyTextHP->create(pokemonHP, WhiteColor, "Press");
 
     enemyTextHP->changeDestRect(x - 55, y + 140);
     enemyTextHP->draw();

@@ -61,8 +61,8 @@ public:
 
     static int level;
 
-    static const int WINDOW_WIDTH = 1000;
-    static const int WINDOW_HEIGHT = 1000;
+    static const int WINDOW_WIDTH = 750;
+    static const int WINDOW_HEIGHT = 750;
     static constexpr float SCALE_CAMERA = WINDOW_WIDTH / (float)800;
 
     SDL_Event event;

@@ -37,6 +37,7 @@ void InventoryInterface::update() {
 void InventoryInterface::render() {
     SDL_RenderClear(Game::renderer);
 
+    inventory->draw();
 
     SDL_RenderPresent(Game::renderer);
 }
