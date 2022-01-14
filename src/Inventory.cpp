@@ -9,53 +9,77 @@
 #include "../include/Text.hpp"
 #include "../include/Colors.hpp"
 
+Text *nameText = new Text();
+Text *typeText = new Text();
+Text *healthPointText = new Text();
+
 void Inventory::draw() {
+    // Draw the background
     SDL_SetRenderDrawColor(Game::renderer, 51, 57, 58, 255);
     SDL_RenderClear(Game::renderer);
 
-    // Health Bar Max
+    // Draw The blocks and the pokemons
+    int xOperator = 0, yOperator = 0;
+    for (int i = 0; i < Game::inventoryLength; i++) {
+        Pokemon *pokemon = Game::inventory[i];
+        xOperator = i % 3;
+        if (i > 2) {
+            yOperator = 1;
+        }
+        drawBlock(xOperator, yOperator);
+        drawPokemon(pokemon, xOperator, yOperator);
+    }
+
+}
+
+void Inventory::drawBlock(int xOperator, int yOperator) {
     SDL_SetRenderDrawColor(Game::renderer, 255, 255, 255, 255);
 
     SDL_Rect blockItem;
-    blockItem.x = 20;
-    blockItem.y = 20;
+    blockItem.x = (Game::WINDOW_WIDTH / 3) * xOperator + 20;
+    blockItem.y = (Game::WINDOW_HEIGHT / 2) * yOperator + 20;
     blockItem.w = Game::WINDOW_WIDTH / 3 - 40;
     blockItem.h = Game::WINDOW_HEIGHT / 2 - 40;
 
     SDL_RenderFillRect(Game::renderer, &blockItem);
+}
 
-    //__________________________________________________________________
-    Pokemon *pokemon = Game::inventory[0];
-
+void Inventory::drawPokemon(Pokemon *pokemon, int xOperator, int yOperator) {
     SDL_Rect srcPokemon, dstPokemon;
     srcPokemon.x = pokemon->getXSpriteCoordinate();
     srcPokemon.y = pokemon->getYSpriteCoordinate();
     srcPokemon.w = srcPokemon.h = 32;
 
-    dstPokemon.x = dstPokemon.y = 20;
-    dstPokemon.w = dstPokemon.h = Game::WINDOW_WIDTH / 3 - 40;
+    drawPokemonSprite(xOperator, yOperator, &srcPokemon, &dstPokemon);
+    drawPokemonInfo(xOperator, yOperator, pokemon, dstPokemon);
+}
 
-    SDL_RenderCopy(Game::renderer, pokemonsTexture, &srcPokemon, &dstPokemon);
+void Inventory::drawPokemonSprite(int xOperator, int yOperator, SDL_Rect *srcPokemon, SDL_Rect *dstPokemon) {
+    dstPokemon->x = (Game::WINDOW_WIDTH / 3) * xOperator + 20;
+    dstPokemon->y = (Game::WINDOW_HEIGHT / 2) * yOperator + 20;
+    dstPokemon->w = dstPokemon->h = Game::WINDOW_WIDTH / 3 - 40;
 
-    //__________________________________________________________________
-    Text *nameText = new Text();
-    nameText->changeFont("Press", 18);
+    SDL_RenderCopy(Game::renderer, pokemonsTexture, srcPokemon, dstPokemon);
+}
+
+void Inventory::drawPokemonInfo(int xOperator, int yOperator, Pokemon* pokemon, SDL_Rect dstPokemon) {
     nameText->create(pokemon->getName(), BlackColor, "Press");
-    nameText->changeDestRect(getPadding(dstPokemon.w, nameText->getDestRect()) + dstPokemon.x, dstPokemon.h + 25);
-    nameText->draw();
+    nameText->changeFont("Press", 18);
+    nameText->changeDestRect(getPadding(dstPokemon.w, nameText->getDestRect()) + dstPokemon.x, yOperator * (dstPokemon.y - 20) + dstPokemon.h + 25);
 
-    Text *typeText = new Text();
-    typeText->changeFont("Press", 18);
     typeText->create(types[pokemon->getType()], BlackColor, "Press");
-    typeText->changeDestRect(getPadding(dstPokemon.w, typeText->getDestRect()) + dstPokemon.x, dstPokemon.h + 25 + 30);
-    typeText->draw();
+    typeText->changeFont("Press", 18);
+    typeText->changeDestRect(getPadding(dstPokemon.w, typeText->getDestRect()) + dstPokemon.x, yOperator * (dstPokemon.y - 20) + dstPokemon.h + 25 + 30);
 
-    Text *healthPointText = new Text();
-    healthPointText->changeFont("Press", 15);
     std::string pokemonHP =
             std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
     healthPointText->create(pokemonHP, BlackColor, "Press");
-    healthPointText->changeDestRect(getPadding(dstPokemon.w, healthPointText->getDestRect()) + dstPokemon.x, dstPokemon.h + 25 + 30 * 2);
+    healthPointText->changeFont("Press", 15);
+    healthPointText->changeDestRect(getPadding(dstPokemon.w, healthPointText->getDestRect()) + dstPokemon.x,
+                                    yOperator * (dstPokemon.y - 20) + dstPokemon.h + 25 + 30 * 2);
+
+    nameText->draw();
+    typeText->draw();
     healthPointText->draw();
 }
 
