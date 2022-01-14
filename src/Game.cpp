@@ -52,14 +52,6 @@ void Game::init(const std::string title) {
 
         Pokemon *starter = new Pokemon(0);
         Game::inventory[0] = starter;
-        Game::inventory[1] = starter;
-        Game::inventory[2] = starter;
-        Game::inventory[3] = starter;
-        Game::inventory[4] = starter;
-        Game::inventoryLength++;
-        Game::inventoryLength++;
-        Game::inventoryLength++;
-        Game::inventoryLength++;
         Game::inventoryLength++;
 
         isRunning = true;

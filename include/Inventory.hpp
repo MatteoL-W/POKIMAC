@@ -2,6 +2,7 @@
 
 #include "Game.hpp"
 #include "Pokemon.hpp"
+#include "Text.hpp"
 
 int getPadding(int blockWidth, int textWidth);
 
@@ -9,6 +10,15 @@ class Inventory {
 public:
     Inventory() {
         Inventory::pokemonsTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
+        Inventory::backgroundTexture = IMG_LoadTexture(Game::renderer, "assets/inventoryBackground.jpg");
+
+        Inventory::nameText = new Text();
+        Inventory::typeText = new Text();
+        Inventory::healthPointText = new Text();
+
+        nameText->changeFont("Press", 18);
+        typeText->changeFont("Press", 18);
+        healthPointText->changeFont("Press", 15);
     };
 
     ~Inventory() {};
@@ -21,4 +31,9 @@ public:
 
 private:
     SDL_Texture *pokemonsTexture;
+    SDL_Texture *backgroundTexture;
+
+    Text *nameText;
+    Text *typeText;
+    Text *healthPointText;
 };

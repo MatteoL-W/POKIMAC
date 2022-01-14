@@ -9,14 +9,10 @@
 #include "../include/Text.hpp"
 #include "../include/Colors.hpp"
 
-Text *nameText = new Text();
-Text *typeText = new Text();
-Text *healthPointText = new Text();
 
 void Inventory::draw() {
     // Draw the background
-    SDL_SetRenderDrawColor(Game::renderer, 51, 57, 58, 255);
-    SDL_RenderClear(Game::renderer);
+    SDL_RenderCopy(Game::renderer, backgroundTexture, NULL, NULL);
 
     // Draw The blocks and the pokemons
     int xOperator = 0, yOperator = 0;
@@ -29,6 +25,8 @@ void Inventory::draw() {
         drawBlock(xOperator, yOperator);
         drawPokemon(pokemon, xOperator, yOperator);
     }
+
+    std::cout << SDL_GetError();
 
 }
 
@@ -64,17 +62,14 @@ void Inventory::drawPokemonSprite(int xOperator, int yOperator, SDL_Rect *srcPok
 
 void Inventory::drawPokemonInfo(int xOperator, int yOperator, Pokemon* pokemon, SDL_Rect dstPokemon) {
     nameText->create(pokemon->getName(), BlackColor, "Press");
-    nameText->changeFont("Press", 18);
     nameText->changeDestRect(getPadding(dstPokemon.w, nameText->getDestRect()) + dstPokemon.x, yOperator * (dstPokemon.y - 20) + dstPokemon.h + 25);
 
     typeText->create(types[pokemon->getType()], BlackColor, "Press");
-    typeText->changeFont("Press", 18);
     typeText->changeDestRect(getPadding(dstPokemon.w, typeText->getDestRect()) + dstPokemon.x, yOperator * (dstPokemon.y - 20) + dstPokemon.h + 25 + 30);
 
     std::string pokemonHP =
             std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
     healthPointText->create(pokemonHP, BlackColor, "Press");
-    healthPointText->changeFont("Press", 15);
     healthPointText->changeDestRect(getPadding(dstPokemon.w, healthPointText->getDestRect()) + dstPokemon.x,
                                     yOperator * (dstPokemon.y - 20) + dstPokemon.h + 25 + 30 * 2);
 
