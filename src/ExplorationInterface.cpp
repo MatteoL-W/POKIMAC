@@ -66,6 +66,10 @@ void ExplorationInterface::handleEvents() {
                 break;
             case SDLK_m:
                 map->toggleCamera();
+                break;
+            case SDLK_i:
+                game->changeInterfaceToInventory();
+                break;
             default:
                 break;
         }

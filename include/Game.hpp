@@ -20,6 +20,8 @@ public:
 
     void changeInterfaceToExploration();
 
+    void changeInterfaceToInventory();
+
     void clean();
 
     void refresh();
@@ -42,6 +44,13 @@ public:
         return false;
     };
 
+    bool displayingInventory() {
+        if (activity == "inInventory") {
+            return true;
+        }
+        return false;
+    };
+
     void setActivity(std::string newActivity) { activity = newActivity; };
 
     static SDL_Renderer *renderer;
@@ -52,8 +61,8 @@ public:
 
     static int level;
 
-    static const int WINDOW_WIDTH = 750;
-    static const int WINDOW_HEIGHT = 750;
+    static const int WINDOW_WIDTH = 1000;
+    static const int WINDOW_HEIGHT = 1000;
     static constexpr float SCALE_CAMERA = WINDOW_WIDTH / (float)800;
 
     SDL_Event event;

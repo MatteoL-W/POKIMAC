@@ -39,6 +39,7 @@ void AttackInterface::handleEvents() {
 
         switch (event.key.keysym.sym) {
             case SDLK_ESCAPE:
+                Battle::state = "inactive";
                 game->changeInterfaceToExploration();
                 break;
         }
