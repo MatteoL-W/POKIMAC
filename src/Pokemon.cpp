@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "../include/Game.hpp"
 #include "../include/Map.hpp"
 #include "../include/Pokemon.hpp"
 
@@ -39,6 +40,8 @@ Pokemon::Pokemon(int id, bool isWild) {
             }
             lines++;
         }
+
+        Game::pokedex[id] = this;
     }
 }
 

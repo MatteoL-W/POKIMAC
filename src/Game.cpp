@@ -26,6 +26,7 @@ Pokemon *attackerPokemon = nullptr;
 Battle *battle = nullptr;
 Map *map = nullptr;
 
+Pokemon *Game::pokedex[MAX_POKEMONS_POKEDEX];
 Pokemon *Game::inventory[MAX_POKEMON_INV];
 int Game::inventoryLength = 0;
 
