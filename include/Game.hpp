@@ -5,6 +5,7 @@
 #include "Pokemon.hpp"
 
 const int MAX_POKEMON_INV = 6;
+const int MAX_POKEMONS_POKEDEX = 36;
 
 class Game {
 public:
@@ -54,6 +55,8 @@ public:
     void setActivity(std::string newActivity) { activity = newActivity; };
 
     static SDL_Renderer *renderer;
+
+    static Pokemon *pokedex[MAX_POKEMONS_POKEDEX];
 
     static Pokemon *inventory[MAX_POKEMON_INV];
 

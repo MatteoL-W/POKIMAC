@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "../include/Game.hpp"
 #include "../include/Map.hpp"
 #include "../include/Pokemon.hpp"
 
@@ -30,6 +31,7 @@ Pokemon::Pokemon(int id, bool isWild) {
                 health_point = max_hp;
                 attack = att;
                 defense = def;
+                sprite_x_o = x_spr;
                 sprite_x = x_spr;
                 sprite_y = y_spr;
                 type = type1;
@@ -39,6 +41,8 @@ Pokemon::Pokemon(int id, bool isWild) {
             }
             lines++;
         }
+
+        Game::pokedex[id] = this;
     }
 }
 
@@ -53,4 +57,13 @@ Pokemon::~Pokemon() {
 void Pokemon::setCoordinates(int x, int y) {
     column = x;
     row = y;
+}
+
+/**
+ * @brief Update the sprite of the pokemon
+ */
+void Pokemon::updateSprite() {
+    int speed = 200;
+    int frames = 3;
+    sprite_x = getOriginalXSpriteCoordinate() + (32 * static_cast<int>((SDL_GetTicks() / speed) % frames));
 }

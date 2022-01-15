@@ -92,7 +92,13 @@ void AttackInterface::handleEvents() {
  * @brief Update objects in the exploration part
  */
 void AttackInterface::update() {
+    Pokemon *pokemon = battle->getPokemon();
+    Pokemon *enemy = battle->getEnemy();
 
+    enemy->updateSprite();
+    if (pokemon != nullptr) {
+        pokemon->updateSprite();
+    }
 }
 
 /**
