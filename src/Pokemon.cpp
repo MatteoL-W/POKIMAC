@@ -31,6 +31,7 @@ Pokemon::Pokemon(int id, bool isWild) {
                 health_point = max_hp;
                 attack = att;
                 defense = def;
+                sprite_x_o = x_spr;
                 sprite_x = x_spr;
                 sprite_y = y_spr;
                 type = type1;
@@ -56,4 +57,13 @@ Pokemon::~Pokemon() {
 void Pokemon::setCoordinates(int x, int y) {
     column = x;
     row = y;
+}
+
+/**
+ * @brief Update the sprite of the pokemon
+ */
+void Pokemon::updateSprite() {
+    int speed = 200;
+    int frames = 3;
+    sprite_x = getOriginalXSpriteCoordinate() + (32 * static_cast<int>((SDL_GetTicks() / speed) % frames));
 }
