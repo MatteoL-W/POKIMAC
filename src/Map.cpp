@@ -16,7 +16,8 @@ int pokemonCounter = 20;
  * @brief Constructor of the Map object
  */
 Map::Map(bool isCameraCentered) {
-    tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset_map_texture.png");
+    //tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset_map_texture.png");
+    tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/all_tileset_map_texture.png");
     playerMapTexture = IMG_LoadTexture(Game::renderer, "assets/ethan_sprite.png");
     pokemonMapTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
     HealthCenterMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset1.png");
@@ -123,20 +124,39 @@ void Map::drawMap() {
             dest1by1.x = (-startingX + column) * MAP_CELL_WIDTH;
             dest1by1.y = (-startingY + row) * MAP_CELL_HEIGHT;
 
-            // If the cell is a texture
+            //If the cell is a texture
+            
+            // switch (cellType) {
+            //     case MAP_WATER:
+            //         srcTexture.x = 64;
+            //         break;
+            //     case MAP_GRASS:
+            //         srcTexture.x = 32;
+            //         break;
+            //     case MAP_DIRT:
+            //         srcTexture.x = 0;
+            //         break;
+            //     default:
+            //         break;
+            // }
+            
             switch (cellType) {
-                case MAP_WATER:
-                    srcTexture.x = 64;
-                    break;
-                case MAP_GRASS:
-                    srcTexture.x = 32;
-                    break;
-                case MAP_DIRT:
-                    srcTexture.x = 0;
-                    break;
-                default:
-                    break;
+                    case MAP_WATER:
+                        srcTexture.x = 64;
+                        srcTexture.y = Game::level * 32;
+                        break;
+                    case MAP_GRASS:
+                        srcTexture.x = 32;
+                        srcTexture.y = Game::level * 32;
+                        break;
+                    case MAP_DIRT:
+                        srcTexture.x = 0;
+                        srcTexture.y = Game::level * 32;
+                        break;
+                    default:
+                        break;
             }
+
 
             SDL_RenderCopy(Game::renderer, tilesetMapTexture, &srcTexture, &dest1by1);
 
