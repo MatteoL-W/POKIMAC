@@ -9,8 +9,10 @@
 
 Pokemon *newPokemon = nullptr;
 
+int startingI = 0;
 int *health_center_coordinates = nullptr;
 int pokemonCounter = 20;
+// 20 because dynamic value (cf. MapTileFlag.hpp)
 
 /**
  * @brief Constructor of the Map object
@@ -70,7 +72,8 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
  * @brief Load the Pokemons
  */
 void Map::loadPokemons() {
-    for (int i = 0; i < 6; i++) {
+    startingI = Game::level * 6;
+    for (int i = startingI; i < startingI + 6; i++) {
         newPokemon = new Pokemon(pokemonsFromMaps[Game::level][i]);
         int randomX = getRandomNumberTo(MAP_WIDTH);
         int randomY = getRandomNumberTo(MAP_HEIGHT);
@@ -155,13 +158,11 @@ void Map::drawMap() {
  * @brief Draw decors and pokemons
  */
 void Map::drawExtras() {
-    // Drawing all the pokemons
-    // pokemonCounter-20 because the pokemonCounter start at 20 (according to MapTileFlag.hpp)
     Map::canAttack = nullptr;
-    Map::canBeCured = false;
+    startingI = Game::level * 6;
 
-    for (int i = 0; i < pokemonCounter - 20; i++) {
-        //TODO: fix the drawing of former pokemons
+    // Drawing all the pokemons
+    for (int i = startingI; i < startingI + 6; i++) {
         int row = pokemon[i].getRow();
         int column = pokemon[i].getColumn();
 
@@ -299,6 +300,8 @@ int *Map::findTiles(const int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb
  * @brief Draw the Health Center
  */
 void Map::drawHealthCenter() {
+    Map::canBeCured = false;
+
     int column = health_center_coordinates[0];
     int row = health_center_coordinates[1];
 

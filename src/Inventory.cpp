@@ -26,8 +26,6 @@ void Inventory::draw() {
         drawPokemon(pokemon, xOperator, yOperator);
     }
 
-    std::cout << SDL_GetError();
-
 }
 
 void Inventory::drawBlock(int xOperator, int yOperator) {

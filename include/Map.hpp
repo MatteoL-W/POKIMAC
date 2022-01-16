@@ -53,7 +53,7 @@ public:
     bool getInteractingHealthCenter() { return canBeCured; }
 
 private:
-    Pokemon pokemon[20];
+    Pokemon pokemon[50];
     //TODO alloc dynamique
     SDL_Rect srcTexture, srcPlayer, srcPokemon, srcHealthCenter;
     SDL_Rect dest1by1, dest2by2;
