@@ -159,9 +159,10 @@ void Map::drawMap() {
  */
 void Map::drawExtras() {
     Map::canAttack = nullptr;
+    startingI = Game::level * 6;
 
     // Drawing all the pokemons
-    for (int i = 0; i < 6; i++) {
+    for (int i = startingI; i < startingI + 6; i++) {
         int row = pokemon[i].getRow();
         int column = pokemon[i].getColumn();
 
