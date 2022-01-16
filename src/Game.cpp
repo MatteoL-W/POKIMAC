@@ -11,6 +11,7 @@
 #include "../include/AttackInterface.hpp"
 #include "../include/ExplorationInterface.hpp"
 #include "../include/InventoryInterface.hpp"
+#include "../include/EndingInterface.hpp"
 #include "../include/MapsArray.hpp"
 
 SDL_Renderer *Game::renderer = nullptr;
@@ -20,6 +21,7 @@ int Game::level = 0;
 AttackInterface *attackInterface = nullptr;
 ExplorationInterface *explorationInterface = nullptr;
 InventoryInterface *inventoryInterface = nullptr;
+EndingInterface *endingInterface = nullptr;
 
 Pokemon *attackedPokemon = nullptr;
 Pokemon *attackerPokemon = nullptr;
@@ -50,6 +52,7 @@ void Game::init(const std::string title) {
         explorationInterface = new ExplorationInterface(this);
         attackInterface = new AttackInterface(this, attackedPokemon, attackerPokemon);
         inventoryInterface = new InventoryInterface(this);
+        endingInterface = new EndingInterface(this);
         battle = attackInterface->getBattle();
         map = explorationInterface->getMap();
 
@@ -96,6 +99,10 @@ void Game::changeInterfaceToInventory() {
     setActivity("inInventory");
 }
 
+void Game::changeInterfaceToEnding() {
+    setActivity("inEnd");
+}
+
 /**
  * @brief Quit the game properly
  */
@@ -118,5 +125,9 @@ void Game::refresh() {
         inventoryInterface->handleEvents();
         inventoryInterface->update();
         inventoryInterface->render();
+    } else if (ending()) {
+        endingInterface->handleEvents();
+        endingInterface->update();
+        endingInterface->render();
     }
 }

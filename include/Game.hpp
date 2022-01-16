@@ -23,6 +23,8 @@ public:
 
     void changeInterfaceToInventory();
 
+    void changeInterfaceToEnding();
+
     void clean();
 
     void refresh();
@@ -51,6 +53,13 @@ public:
         }
         return false;
     };
+
+    bool ending() {
+        if (activity == "inEnd") {
+            return true;
+        }
+        return false;
+    }
 
     void setActivity(std::string newActivity) { activity = newActivity; };
 
