@@ -16,6 +16,12 @@ make init
 make
 make st
 ```
+You can change the window size by changeing these values (Game.hpp):
+```
+static const int WINDOW_WIDTH = 750;
+static const int WINDOW_HEIGHT = 750;
+```
+Please maintain a square format.
 
 ## How to play ?
 
