@@ -21,7 +21,7 @@ const int MAP_DIRT_NOT_WALKABLE = 15;
 const int MAP_PLAYER = 19;
 
 // *****************************************************
-// Pokemon [20 - 40]
+// Pokemon [20 - 70]
 // Dynamic value
 
 // *****************************************************

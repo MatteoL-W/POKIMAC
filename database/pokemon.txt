@@ -28,7 +28,7 @@ Nidoking   81  102 77  191  0  4
 Grolem     80  120 130 671  64 4
 Ossatueur  60  80  110 767  64 4
 Lippoutou  65  30  35  1055 64 5
-Lamantine  90  80  70  1929 0 5
+Lamantine  90  80  70  1919 0 5
 Otaria     60  45  55  0    64 5
 Lokhlass   135 85  80  1247 0  5
 Kokiyas    30  65  100 96   64 5
