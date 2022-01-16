@@ -12,6 +12,7 @@ int getRandomNumberTo(int max);
 
 class Map {
 public:
+    static const int BOSS_LEVEL = 5;
     static const int MAP_WIDTH = 25;
     static const int MAP_HEIGHT = 25;
     float MAP_CELL_WIDTH = 32 * Game::SCALE_CAMERA;

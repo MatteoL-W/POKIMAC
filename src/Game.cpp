@@ -75,11 +75,11 @@ void Game::changeInterfaceToAttack(Pokemon *enemy) {
  * @brief Change the interface to exploration and level up
  */
 void Game::changeInterfaceToExplorationAndLevelUp() {
-    if (level + 1 < MAX_MAPS)
+    if (level-1 < MAX_MAPS)
         level++;
     Battle::state = "inactive";
     map->loadMap(allMaps[Game::level]);
-    setActivity("inExploration");
+    changeInterfaceToExploration();
 }
 
 /**

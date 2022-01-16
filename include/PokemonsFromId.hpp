@@ -36,3 +36,5 @@ const int POKEMON_LOKHLASS = 32;
 const int POKEMON_KOKIYAS = 33;
 const int POKEMON_CRUSTABRI = 34;
 const int POKEMON_ARTIKODIN = 35;
+const int POKEMON_MEWTWO = 36;
+const int POKEMON_MEW = 37;
