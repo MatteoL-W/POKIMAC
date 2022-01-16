@@ -14,6 +14,7 @@
 #include "../include/MapsArray.hpp"
 
 SDL_Renderer *Game::renderer = nullptr;
+SDL_Texture *Game::pokemonsTexture = nullptr;
 int Game::level = 0;
 
 AttackInterface *attackInterface = nullptr;
@@ -44,6 +45,7 @@ void Game::init(const std::string title) {
         window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH,
                                   WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
         renderer = SDL_CreateRenderer(window, -1, 0);
+        Game::pokemonsTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
 
         explorationInterface = new ExplorationInterface(this);
         attackInterface = new AttackInterface(this, attackedPokemon, attackerPokemon);

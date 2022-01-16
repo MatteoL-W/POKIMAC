@@ -41,7 +41,9 @@ std::string attacks[TYPES_LENGTHS] = {
         "Charge",
         "Tranch'Herbe",
         "Vibraqua",
-        "Rebondifeu"
+        "Rebondifeu",
+        "Lame de Roc",
+        "Laser Glace"
 };
 
 Battle::Battle(Pokemon *enemy, Pokemon *myPokemon, Game *game) {
@@ -70,7 +72,6 @@ void Battle::load() {
     dialogText->create("", WhiteColor, "Press");
 
     sceneBackgroundTexture = IMG_LoadTexture(Game::renderer, "assets/attack_scene.png");
-    pokemonsTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
     pokemonPlatformTexture = IMG_LoadTexture(Game::renderer, "assets/attack_platform.png");
 }
 
@@ -137,10 +138,12 @@ void Battle::drawDialog() {
                 pokemonListsTexts[i]->changeColor(GreyColor);
             }
             pokemonListsTexts[i]->changeDestRect(86, 550 + 30 * i);
+            pokemonListsTexts[i]->changeFont("Press", 22);
             pokemonListsTexts[i]->draw();
         }
 
         exitText->changeText("[EXIT] Annuler");
+        exitText->changeFont("Press", 22);
         exitText->changeDestRect(86, 550 + 30 * Game::inventoryLength);
         exitText->draw();
     } else {
@@ -183,7 +186,7 @@ void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
     destPlatform.y = destPokemon.y + 30;
 
     SDL_RenderCopy(Game::renderer, pokemonPlatformTexture, NULL, &destPlatform);
-    SDL_RenderCopy(Game::renderer, pokemonsTexture, &srcPokemon, &destPokemon);
+    SDL_RenderCopy(Game::renderer, Game::pokemonsTexture, &srcPokemon, &destPokemon);
 }
 
 /**
@@ -253,6 +256,7 @@ void Battle::enemysTurn() {
  */
 void Battle::win() {
     Game::inventory[Game::inventoryLength] = getEnemy();
+    Game::inventory[Game::inventoryLength]->heal();
     Game::inventoryLength++;
     game->changeInterfaceToExplorationAndLevelUp();
 }

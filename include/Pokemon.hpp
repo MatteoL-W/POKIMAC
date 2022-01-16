@@ -36,6 +36,8 @@ public:
 
     void updateHealthPoint(int new_health_point) { Pokemon::health_point = new_health_point; };
 
+    void heal() { Pokemon::health_point = Pokemon::max_health_point; };
+
     void updateSprite();
 
 

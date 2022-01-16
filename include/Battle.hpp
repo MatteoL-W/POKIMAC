@@ -73,6 +73,5 @@ private:
     Pokemon *pokemon;
 
     SDL_Texture *sceneBackgroundTexture;
-    SDL_Texture *pokemonsTexture;
     SDL_Texture *pokemonPlatformTexture;
 };

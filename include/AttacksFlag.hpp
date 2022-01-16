@@ -1,10 +1,12 @@
 #pragma once
 
-const int TYPES_LENGTHS = 4;
+const int TYPES_LENGTHS = 6;
 
 const std::string types[TYPES_LENGTHS] = {
         "Normal",
         "Plante",
         "Eau",
-        "Feu"
+        "Feu",
+        "Sol",
+        "Glace"
 };

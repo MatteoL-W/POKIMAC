@@ -9,7 +9,6 @@ int getPadding(int blockWidth, int textWidth);
 class Inventory {
 public:
     Inventory() {
-        Inventory::pokemonsTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
         Inventory::backgroundTexture = IMG_LoadTexture(Game::renderer, "assets/inventoryBackground.jpg");
 
         Inventory::nameText = new Text();
@@ -30,7 +29,6 @@ public:
     void drawPokemonInfo(int xOperator, int yOperator, Pokemon* pokemon, SDL_Rect dstPokemon);
 
 private:
-    SDL_Texture *pokemonsTexture;
     SDL_Texture *backgroundTexture;
 
     Text *nameText;

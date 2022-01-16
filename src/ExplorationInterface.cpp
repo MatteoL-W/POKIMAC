@@ -34,7 +34,7 @@ void ExplorationInterface::handleEvents() {
             case SDLK_e:
                 for (int i = 0; i < Game::inventoryLength; i++) {
                     if (Game::inventory[i]->getHealthPoint() != Game::inventory[i]->getMaxHealthPoint()) {
-                        Game::inventory[i]->updateHealthPoint(Game::inventory[i]->getMaxHealthPoint());
+                        Game::inventory[i]->heal();
                     }
                 }
                 break;

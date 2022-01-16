@@ -55,7 +55,7 @@ void Inventory::drawPokemonSprite(int xOperator, int yOperator, SDL_Rect *srcPok
     dstPokemon->y = (Game::WINDOW_HEIGHT / 2) * yOperator + 20;
     dstPokemon->w = dstPokemon->h = Game::WINDOW_WIDTH / 3 - 40;
 
-    SDL_RenderCopy(Game::renderer, pokemonsTexture, srcPokemon, dstPokemon);
+    SDL_RenderCopy(Game::renderer, Game::pokemonsTexture, srcPokemon, dstPokemon);
 }
 
 void Inventory::drawPokemonInfo(int xOperator, int yOperator, Pokemon* pokemon, SDL_Rect dstPokemon) {

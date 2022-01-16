@@ -20,7 +20,6 @@ int pokemonCounter = 20;
 Map::Map(bool isCameraCentered) {
     tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset_map_texture.png");
     playerMapTexture = IMG_LoadTexture(Game::renderer, "assets/ethan_sprite.png");
-    pokemonMapTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
     HealthCenterMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset1.png");
 
     srcTexture.x = srcTexture.y = 0;
@@ -178,7 +177,7 @@ void Map::drawExtras() {
 
         srcPokemon.x = pokemon[i].getXSpriteCoordinate();
         srcPokemon.y = pokemon[i].getYSpriteCoordinate();
-        SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &dest1by1);
+        SDL_RenderCopy(Game::renderer, Game::pokemonsTexture, &srcPokemon, &dest1by1);
     }
 
     health_center_coordinates = findTiles(allMaps[Game::level], MAP_HEALTH_CENTER);

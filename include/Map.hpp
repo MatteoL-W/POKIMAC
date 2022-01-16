@@ -58,10 +58,8 @@ private:
     SDL_Rect srcTexture, srcPlayer, srcPokemon, srcHealthCenter;
     SDL_Rect dest1by1, dest2by2;
 
-    //TODO: move to Game
     SDL_Texture *tilesetMapTexture;
     SDL_Texture *playerMapTexture;
-    SDL_Texture *pokemonMapTexture;
     SDL_Texture *HealthCenterMapTexture;
 
     int mapArray[MAP_HEIGHT][MAP_WIDTH];

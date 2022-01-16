@@ -14,7 +14,7 @@ Tentacruel 80  70  65  575  64 2
 Staross    60  75  85  959  64 2
 Magicarpe  20  10  55  1055 0  2
 Leviator   95  125 79  1151 0  2
-Dracaufeu  78  84  77  1535 64 3
+Dracaufeu  78  84  77  1538 64 3
 Magmar     65  95  57  1151 64 3
 Ponyta     50  85  55  863  0  3
 Galopa     65  100 70  863  64 3
@@ -30,7 +30,7 @@ Ossatueur  60  80  110 767  64 4
 Lippoutou  65  30  35  1055 64 5
 Lamantine  90  80  70  1919 0 5
 Otaria     60  45  55  0    64 5
-Lokhlass   135 85  80  1247 0  5
+Lokhlass   135 85  80  1249 0  5
 Kokiyas    30  65  100 96   64 5
 Crustabri  50  95  180 96   0  5
 Artikodin  90  85  100 1247 64 5
