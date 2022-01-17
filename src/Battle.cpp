@@ -132,7 +132,8 @@ void Battle::drawDialog() {
         dialogText->changeText("Choisissez votre pokemon");
 
         for (int i = 0; i < Game::inventoryLength; i++) {
-            pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + Game::inventory[i]->getName());
+            pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + Game::inventory[i]->getName() + " - " +
+                                             std::to_string(Game::inventory[i]->getHealthPoint()) + "pv");
 
             if (Game::inventory[i]->getHealthPoint() == 0) {
                 pokemonListsTexts[i]->changeColor(GreyColor);

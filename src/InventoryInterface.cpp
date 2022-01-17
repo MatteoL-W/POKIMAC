@@ -16,6 +16,7 @@ void InventoryInterface::handleEvents() {
 
     if (event.type == SDL_KEYDOWN) {
         switch (event.key.keysym.sym) {
+            case SDLK_i:
             case SDLK_ESCAPE:
                 game->changeInterfaceToExploration();
                 break;
