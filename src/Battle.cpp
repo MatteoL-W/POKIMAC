@@ -8,6 +8,10 @@
 #include "../include/Colors.hpp"
 #include "../include/Game.hpp"
 
+int Battle::damagePokemon = 0;
+int Battle::damageEnemy = 0;
+
+
 std::string Battle::state = "inactive";
 
 Text *enemyTextHP = new Text();
@@ -184,7 +188,8 @@ void Battle::drawDialogAttackChoice() {
  * @brief Draw the Post Attack Dialog
  */
 void Battle::drawDialogPostAttack() {
-    std::string damageHP = enemyPokemon->getName() + " a perdu " + std::to_string(12) + "PV";
+    //std::string damageHP = enemyPokemon->getName() + " a perdu " + std::to_string(12) + "PV";
+    std::string damageHP = enemyPokemon->getName() + " a perdu " + std::to_string(damageEnemy) + "PV";
     dialogText->changeText(damageHP);
 }
 
@@ -192,7 +197,7 @@ void Battle::drawDialogPostAttack() {
  * @brief Draw the Enemy turn Dialog
  */
 void Battle::drawDialogEnemyTurn() {
-    std::string damageHP = enemyPokemon->getName() + " vous attaque et vous perdez " + std::to_string(12) + "PV";
+    std::string damageHP = enemyPokemon->getName() + " vous attaque et vous perdez " + std::to_string(damagePokemon) + "PV";
     dialogText->changeText(damageHP);
 }
 

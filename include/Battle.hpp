@@ -91,6 +91,11 @@ public:
     void lose();
 
     static std::string state;
+    
+
+    static int damagePokemon;
+    static int damageEnemy;
+
 
 private:
     Game *game;

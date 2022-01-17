@@ -42,6 +42,8 @@ public:
 
     void updateSprite();
 
+    float getDamageCoeff(int attacker_type, int attacked_type);
+
 
 private:
     std::string name;

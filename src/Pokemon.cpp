@@ -5,8 +5,7 @@
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
 #include "../include/Pokemon.hpp"
-//§§§
-#include "../include/AttackInterface.hpp"
+
 
 /**
  * @brief Initialize a new pokemon set from the txt database
@@ -72,4 +71,65 @@ void Pokemon::updateSprite() {
     int speed = 200;
     int frames = 3;
     sprite_x = getOriginalXSpriteCoordinate() + (32 * static_cast<int>((SDL_GetTicks() / speed) % frames));
+}
+
+
+float Pokemon::getDamageCoeff(int attacker_type, int attacked_type) {
+    float coefficient = 1;
+    if (attacker_type == attacked_type) {
+        coefficient = 0.5;
+    }
+    if (attacker_type == 1) { //plante
+        if (attacked_type == 3) { 
+            coefficient = 0.5;
+        }
+        if (attacked_type == 4) {
+            coefficient = 2;
+        }     
+    }
+    if (attacker_type == 2) { //eau
+        if (attacked_type == 1) { 
+            coefficient = 0.5;
+        }
+        if (attacked_type == 3) {
+            coefficient = 2;
+        }
+        if (attacked_type == 4) {
+            coefficient = 2;
+        }     
+    }
+    if (attacker_type == 3) { //feu
+        if (attacked_type == 1) { 
+            coefficient = 2;
+        }
+        if (attacked_type == 2) {
+            coefficient = 0.5;
+        }
+        if (attacked_type == 5) {
+            coefficient = 2;
+        }     
+    }
+    if (attacker_type == 4) { //roche
+        if (attacked_type == 1) { 
+            coefficient = 0.5;
+        }
+        if (attacked_type == 3) {
+            coefficient = 2;
+        }
+        if (attacked_type == 5) {
+            coefficient = 2;
+        }     
+    }
+    if (attacker_type == 2) { //glace
+        if (attacked_type == 1) { 
+            coefficient = 2;
+        }
+        if (attacked_type == 2) {
+            coefficient = 0.5;
+        }
+        if (attacked_type == 3) {
+            coefficient = 0.5;
+        }     
+    }           
+    return coefficient;
 }

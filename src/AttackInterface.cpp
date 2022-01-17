@@ -67,11 +67,15 @@ void AttackInterface::handleEvents() {
                     //<<<<faire une méthode pour retirer sur l'objet le nombre d'hp du dessus (genre pokemon->removeHealthPoints(int hp) où ça enlève les PV voulus)
                     // afficher les dégats de l'attaque dans le texte informatif
                     // battle->enemysTurn();
-                    enemy->removeHealthPoint(12);
+                    Battle::damageEnemy = attack_0; 
+                    enemy->removeHealthPoint(Battle::damageEnemy); 
                     Battle::state = "postAttack";
                     break;
                 case SDLK_g:
                     // TODO: attack N°1
+                    Battle::damageEnemy = attack_0 * enemy->getDamageCoeff(pokemon->Pokemon::getType(), enemy->Pokemon::getType());
+                    enemy->removeHealthPoint(Battle::damageEnemy);
+                    Battle::state = "postAttack";
                     break;
 
                     //cheatcodes
@@ -106,6 +110,8 @@ void AttackInterface::handleEvents() {
 
     if (battle->isWaitingForEnemyTurn() && event.type == SDL_KEYDOWN) {
         if (!keyIsAlreadyPressed) {
+            Battle::damagePokemon = attack_0 * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
+            pokemon->removeHealthPoint(Battle::damagePokemon);            
             Battle::state = "waitingForAttack";
         }
         keyIsAlreadyPressed = true;
