@@ -9,8 +9,10 @@
 
 Pokemon *newPokemon = nullptr;
 
+int startingI = 0;
 int *health_center_coordinates = nullptr;
 int pokemonCounter = 20;
+// 20 because dynamic value (cf. MapTileFlag.hpp)
 
 /**
  * @brief Constructor of the Map object
@@ -19,7 +21,6 @@ Map::Map(bool isCameraCentered) {
     //tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset_map_texture.png");
     tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/all_tileset_map_texture.png");
     playerMapTexture = IMG_LoadTexture(Game::renderer, "assets/ethan_sprite.png");
-    pokemonMapTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
     HealthCenterMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset1.png");
 
     srcTexture.x = srcTexture.y = 0;
@@ -32,8 +33,8 @@ Map::Map(bool isCameraCentered) {
     srcHealthCenter.w = srcHealthCenter.h = 80;
 
     if (isCameraCentered) {
-        MAP_CELL_WIDTH = 32 * 5;
-        MAP_CELL_HEIGHT = 32 * 5;
+        MAP_CELL_WIDTH = Game::SCALE_CAMERA * 32 * 5;
+        MAP_CELL_HEIGHT = Game::SCALE_CAMERA * 32 * 5;
     }
 
     dest1by1.w = MAP_CELL_WIDTH;
@@ -71,9 +72,9 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
  * @brief Load the Pokemons
  */
 void Map::loadPokemons() {
-    for (int i = 0; i < 3; i++) {
-
-        newPokemon = new Pokemon(i);
+    startingI = Game::level * 6;
+    for (int i = startingI; i < startingI + 6; i++) {
+        newPokemon = new Pokemon(pokemonsFromMaps[Game::level][i]);
         int randomX = getRandomNumberTo(MAP_WIDTH);
         int randomY = getRandomNumberTo(MAP_HEIGHT);
 
@@ -146,10 +147,14 @@ void Map::drawMap() {
                         srcTexture.y = Game::level * 32;
                         break;
                     case MAP_GRASS:
+                    case MAP_GRASS_NO_POKEMON:
+                    case MAP_GRASS_NOT_WALKABLE:
                         srcTexture.x = 32;
                         srcTexture.y = Game::level * 32;
                         break;
                     case MAP_DIRT:
+                    case MAP_DIRT_NO_POKEMON:
+                    case MAP_DIRT_NOT_WALKABLE:
                         srcTexture.x = 0;
                         srcTexture.y = Game::level * 32;
                         break;
@@ -172,13 +177,11 @@ void Map::drawMap() {
  * @brief Draw decors and pokemons
  */
 void Map::drawExtras() {
-    // Drawing all the pokemons
-    // pokemonCounter-20 because the pokemonCounter start at 20 (according to MapTileFlag.hpp)
     Map::canAttack = nullptr;
-    Map::canBeCured = false;
+    startingI = Game::level * 6;
 
-    for (int i = 0; i < pokemonCounter - 20; i++) {
-        //TODO: fix the drawing of former pokemons
+    // Drawing all the pokemons
+    for (int i = startingI; i < startingI + 6; i++) {
         int row = pokemon[i].getRow();
         int column = pokemon[i].getColumn();
 
@@ -194,13 +197,12 @@ void Map::drawExtras() {
 
         srcPokemon.x = pokemon[i].getXSpriteCoordinate();
         srcPokemon.y = pokemon[i].getYSpriteCoordinate();
-        SDL_RenderCopy(Game::renderer, pokemonMapTexture, &srcPokemon, &dest1by1);
+        SDL_RenderCopy(Game::renderer, Game::pokemonsTexture, &srcPokemon, &dest1by1);
     }
 
     health_center_coordinates = findTiles(allMaps[Game::level], MAP_HEALTH_CENTER);
     if (health_center_coordinates != nullptr) {
         drawHealthCenter();
-
     }
 }
 
@@ -210,12 +212,10 @@ void Map::drawExtras() {
 void Map::toggleCamera() {
     if (centeredCamera) {
         centeredCamera = false;
-        MAP_CELL_WIDTH = 32;
-        MAP_CELL_HEIGHT = 32;
+        MAP_CELL_WIDTH = MAP_CELL_HEIGHT = 32 * Game::SCALE_CAMERA;
     } else {
         centeredCamera = true;
-        MAP_CELL_WIDTH = 32 * 5;
-        MAP_CELL_HEIGHT = 32 * 5;
+        MAP_CELL_WIDTH = MAP_CELL_HEIGHT = 32 * Game::SCALE_CAMERA * 5;
     }
 
     dest1by1.w = MAP_CELL_WIDTH;
@@ -261,7 +261,7 @@ void Map::updatePlayerPosition(int direction) {
     // On vérifie que le nouvel endroit où le joueur va marcher est bien une "walkable texture [1-10] dans MapTileFlag.hpp"
     int futurePlayerCellTexture = mapArray[MAP_PLAYER_Y + yOperator][MAP_PLAYER_X + xOperator];
 
-    if (futurePlayerCellTexture >= 1 && futurePlayerCellTexture <= 10) {
+    if (futurePlayerCellTexture >= 1 && futurePlayerCellTexture <= 13) {
         mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = allMaps[Game::level][MAP_PLAYER_Y][MAP_PLAYER_X];
         MAP_PLAYER_Y = MAP_PLAYER_Y + yOperator;
         MAP_PLAYER_X = MAP_PLAYER_X + xOperator;
@@ -319,6 +319,8 @@ int *Map::findTiles(const int level[Map::MAP_HEIGHT][Map::MAP_WIDTH], int map_nb
  * @brief Draw the Health Center
  */
 void Map::drawHealthCenter() {
+    Map::canBeCured = false;
+
     int column = health_center_coordinates[0];
     int row = health_center_coordinates[1];
 

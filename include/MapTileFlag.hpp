@@ -4,24 +4,31 @@
 // Non-walkable texture [0]
 const int MAP_WATER = 0;
 
-// Walkable textures [1-10]
+// Walkable textures [1-18]
 const int MAP_GRASS = 1;
 const int MAP_DIRT = 2;
 
-// _____________________________________________________
-// Player [10]
-const int MAP_PLAYER = 10;
+// Walkable textures but pokemons not allowed to spawn on
+const int MAP_GRASS_NO_POKEMON = 11;
+const int MAP_DIRT_NO_POKEMON = 12;
 
-// _____________________________________________________
-// Pokemon [20 - 40]
+// Non-walkable texture [14-17]
+const int MAP_GRASS_NOT_WALKABLE = 14;
+const int MAP_DIRT_NOT_WALKABLE = 15;
+
+// *****************************************************
+// Player [19]
+const int MAP_PLAYER = 19;
+
+// *****************************************************
+// Pokemon [20 - 70]
 // Dynamic value
 
-// _____________________________________________________
+// *****************************************************
 // Decors [70 - ??]
-const int EMPTY_CASE = 70;
 const int MAP_HEALTH_CENTER = 71;
 
-// _____________________________________________________
+// *****************************************************
 // Direction [100 - 103]
 const int MOVE_RIGHT = 100;
 const int MOVE_LEFT = 101;

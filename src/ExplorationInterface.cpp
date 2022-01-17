@@ -34,7 +34,7 @@ void ExplorationInterface::handleEvents() {
             case SDLK_e:
                 for (int i = 0; i < Game::inventoryLength; i++) {
                     if (Game::inventory[i]->getHealthPoint() != Game::inventory[i]->getMaxHealthPoint()) {
-                        Game::inventory[i]->updateHealthPoint(Game::inventory[i]->getMaxHealthPoint());
+                        Game::inventory[i]->heal();
                     }
                 }
                 break;
@@ -66,6 +66,10 @@ void ExplorationInterface::handleEvents() {
                 break;
             case SDLK_m:
                 map->toggleCamera();
+                break;
+            case SDLK_i:
+                game->changeInterfaceToInventory();
+                break;
             default:
                 break;
         }

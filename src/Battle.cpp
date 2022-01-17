@@ -31,6 +31,8 @@ Text *pokemonListsTexts[6] = {
         sixPokemonText
 };
 
+int maxWidthBar = 240, dynamicRed, dynamicGreen;
+
 // (cf. AttackFlags.hpp)
 // Charge is the attack for TYPE_NORMAL (0)
 // Tranch'Herbe is the attack for TYPE_PLANT (1)
@@ -39,7 +41,9 @@ std::string attacks[TYPES_LENGTHS] = {
         "Charge",
         "Tranch'Herbe",
         "Vibraqua",
-        "Rebondifeu"
+        "Rebondifeu",
+        "Lame de Roc",
+        "Laser Glace"
 };
 
 Battle::Battle(Pokemon *enemy, Pokemon *myPokemon, Game *game) {
@@ -68,7 +72,6 @@ void Battle::load() {
     dialogText->create("", WhiteColor, "Press");
 
     sceneBackgroundTexture = IMG_LoadTexture(Game::renderer, "assets/attack_scene.png");
-    pokemonsTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
     pokemonPlatformTexture = IMG_LoadTexture(Game::renderer, "assets/attack_platform.png");
 }
 
@@ -93,6 +96,7 @@ void Battle::draw() {
  */
 void Battle::drawBackground() {
     SDL_SetRenderDrawColor(Game::renderer, 51, 57, 58, 255);
+    SDL_RenderClear(Game::renderer);
 
     SDL_Rect destBackground;
     destBackground.w = Game::WINDOW_WIDTH;
@@ -214,7 +218,7 @@ void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
     destPlatform.y = destPokemon.y + 30;
 
     SDL_RenderCopy(Game::renderer, pokemonPlatformTexture, NULL, &destPlatform);
-    SDL_RenderCopy(Game::renderer, pokemonsTexture, &srcPokemon, &destPokemon);
+    SDL_RenderCopy(Game::renderer, Game::pokemonsTexture, &srcPokemon, &destPokemon);
 }
 
 /**
@@ -224,11 +228,42 @@ void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
  * @param y
  */
 void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
-    std::string enemyHP =
+    // Health Points
+    std::string pokemonHP =
             std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
-    enemyTextHP->create(enemyHP, WhiteColor, "Press");
+    enemyTextHP->create(pokemonHP, WhiteColor, "Press");
+
     enemyTextHP->changeDestRect(x - 55, y + 140);
     enemyTextHP->draw();
+    //________________________________________________________________________
+
+    // Health Bar Max
+    SDL_SetRenderDrawColor(Game::renderer, 255, 255, 255, 255);
+
+    SDL_Rect healthBarMax;
+    healthBarMax.x = x - 90;
+    healthBarMax.y = y + 90;
+    healthBarMax.w = maxWidthBar;
+    healthBarMax.h = 25;
+
+    SDL_RenderFillRect(Game::renderer, &healthBarMax);
+    //________________________________________________________________________
+
+    // Dynamic Health Bar
+    int healthPercent = pokemon->getHealthPercent();
+    // Green(0,255,0); Yellow(255,255,0); Red(255,0,0)
+    dynamicGreen = (healthPercent < 50) ? healthPercent * 255 / 50 : 255;
+    dynamicRed = (healthPercent < 50) ? 255 : 255 - (healthPercent * 255 / 50);
+    SDL_SetRenderDrawColor(Game::renderer, dynamicRed, dynamicGreen, 0, 255);
+
+    SDL_Rect healthBar;
+    healthBar.x = x - 90;
+    healthBar.y = y + 95;
+    healthBar.w = maxWidthBar * healthPercent / 100;
+    healthBar.h = 15;
+
+    SDL_RenderFillRect(Game::renderer, &healthBar);
+    //________________________________________________________________________
 }
 
 /**
@@ -253,6 +288,7 @@ void Battle::enemysTurn() {
  */
 void Battle::win() {
     Game::inventory[Game::inventoryLength] = getEnemy();
+    Game::inventory[Game::inventoryLength]->heal();
     Game::inventoryLength++;
     game->changeInterfaceToExplorationAndLevelUp();
 }

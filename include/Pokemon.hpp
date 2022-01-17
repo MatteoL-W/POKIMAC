@@ -16,6 +16,8 @@ public:
 
     void kill() { health_point = 0; };
 
+    int getOriginalXSpriteCoordinate() { return sprite_x_o; };
+
     int getXSpriteCoordinate() { return sprite_x; };
 
     int getYSpriteCoordinate() { return sprite_y; };
@@ -28,11 +30,18 @@ public:
 
     int getMaxHealthPoint() { return max_health_point; };
 
+    float getHealthPercent() { return (float)health_point / max_health_point * 100; };
+
     int getType() { return type; };
 
     void updateHealthPoint(int new_health_point) { Pokemon::health_point = new_health_point; };
 
     void removeHealthPoint(int health_point);
+    
+    void heal() { Pokemon::health_point = Pokemon::max_health_point; };
+
+    void updateSprite();
+
 
 private:
     std::string name;
@@ -41,6 +50,7 @@ private:
     int attack;
     int defense;
     int sprite_x;
+    int sprite_x_o;
     int sprite_y;
     int type;
 

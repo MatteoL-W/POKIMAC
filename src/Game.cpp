@@ -10,13 +10,16 @@
 #include "../include/Colors.hpp"
 #include "../include/AttackInterface.hpp"
 #include "../include/ExplorationInterface.hpp"
+#include "../include/InventoryInterface.hpp"
 #include "../include/MapsArray.hpp"
 
 SDL_Renderer *Game::renderer = nullptr;
+SDL_Texture *Game::pokemonsTexture = nullptr;
 int Game::level = 0;
 
 AttackInterface *attackInterface = nullptr;
 ExplorationInterface *explorationInterface = nullptr;
+InventoryInterface *inventoryInterface = nullptr;
 
 Pokemon *attackedPokemon = nullptr;
 Pokemon *attackerPokemon = nullptr;
@@ -24,6 +27,7 @@ Pokemon *attackerPokemon = nullptr;
 Battle *battle = nullptr;
 Map *map = nullptr;
 
+Pokemon *Game::pokedex[MAX_POKEMONS_POKEDEX];
 Pokemon *Game::inventory[MAX_POKEMON_INV];
 int Game::inventoryLength = 0;
 
@@ -41,9 +45,11 @@ void Game::init(const std::string title) {
         window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH,
                                   WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
         renderer = SDL_CreateRenderer(window, -1, 0);
+        Game::pokemonsTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
 
         explorationInterface = new ExplorationInterface(this);
         attackInterface = new AttackInterface(this, attackedPokemon, attackerPokemon);
+        inventoryInterface = new InventoryInterface(this);
         battle = attackInterface->getBattle();
         map = explorationInterface->getMap();
 
@@ -80,8 +86,14 @@ void Game::changeInterfaceToExplorationAndLevelUp() {
  * @brief Change the interface to exploration
  */
 void Game::changeInterfaceToExploration() {
-    Battle::state = "inactive";
     setActivity("inExploration");
+}
+
+/**
+ * @brief Change the interface to inventory
+ */
+void Game::changeInterfaceToInventory() {
+    setActivity("inInventory");
 }
 
 /**
@@ -102,5 +114,9 @@ void Game::refresh() {
         attackInterface->handleEvents();
         attackInterface->update();
         attackInterface->render();
+    } else if (displayingInventory()) {
+        inventoryInterface->handleEvents();
+        inventoryInterface->update();
+        inventoryInterface->render();
     }
 }

@@ -49,6 +49,7 @@ void AttackInterface::handleEvents() {
 
         switch (event.key.keysym.sym) {
             case SDLK_ESCAPE:
+                Battle::state = "inactive";
                 game->changeInterfaceToExploration();
                 break;
         }
@@ -73,19 +74,22 @@ void AttackInterface::handleEvents() {
                     // TODO: attack N°1
                     break;
 
-                    //cheatcodes
-                case SDLK_k:
-                    // appuyer sur K pour mettre les HP de l'adversaire à 0
-                    enemy->kill();
-                    break;
-                case SDLK_p:
-                    // appuyer sur P pour passer au tour de l'ennemi
-                    battle->enemysTurn();
-                    break;
-                case SDLK_l:
-                    battle->lose();
-                    break;
-            }
+                //cheatcodes
+            case SDLK_k:
+                // appuyer sur K pour mettre les HP de l'adversaire à 0
+                //enemy->kill();
+                enemy->kill();
+                break;
+            case SDLK_n:
+                enemy->updateHealthPoint(enemy->getHealthPoint()-10);
+                break;
+            case SDLK_p:
+                // appuyer sur P pour passer au tour de l'ennemi
+                battle->enemysTurn();
+                break;
+            case SDLK_l:
+                battle->lose();
+                break;
         }
         keyIsAlreadyPressed = true;
     }
@@ -111,7 +115,13 @@ void AttackInterface::handleEvents() {
  * @brief Update objects in the exploration part
  */
 void AttackInterface::update() {
+    Pokemon *pokemon = battle->getPokemon();
+    Pokemon *enemy = battle->getEnemy();
 
+    enemy->updateSprite();
+    if (pokemon != nullptr) {
+        pokemon->updateSprite();
+    }
 }
 
 /**
