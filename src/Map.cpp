@@ -62,6 +62,11 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     // Copy of mapArray from level's map
     SDL_memmove(mapArray, array, sizeof(mapArray));
 
+    if (Game::level == BOSS_LEVEL) {
+        MAP_PLAYER_Y = 22;
+        MAP_PLAYER_X = 12;
+    }
+
     // define the player emplacement
     mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
 
@@ -73,8 +78,16 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
  */
 void Map::loadPokemons() {
     startingI = Game::level * 6;
+
+    if (Game::level == BOSS_LEVEL) {
+        Pokemon *mewTwo = new Pokemon(POKEMON_MEWTWO);
+        placePokemon(mewTwo, 12, 2);
+        pokemon[startingI + 1] = *mewTwo;
+        return;
+    }
+
     for (int i = startingI; i < startingI + 6; i++) {
-        newPokemon = new Pokemon(pokemonsFromMaps[Game::level][i]);
+        newPokemon = new Pokemon(pokemonsFromMaps[Game::level][i - startingI]);
         int randomX = getRandomNumberTo(MAP_WIDTH);
         int randomY = getRandomNumberTo(MAP_HEIGHT);
 
@@ -179,6 +192,27 @@ void Map::drawMap() {
 void Map::drawExtras() {
     Map::canAttack = nullptr;
     startingI = Game::level * 6;
+
+    if (Game::level == BOSS_LEVEL) {
+        int row = pokemon[startingI + 1].getRow();
+        int column = pokemon[startingI + 1].getColumn();
+
+        dest1by1.x = (-startingX + column) * MAP_CELL_WIDTH;
+        dest1by1.y = (-startingY + row) * MAP_CELL_HEIGHT;
+
+        if ((row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
+            (row + 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
+            (column - 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y) ||
+            (column + 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y)) {
+            Map::canAttack = &(pokemon[startingI + 1]);
+        }
+
+        srcPokemon.x = pokemon[startingI + 1].getXSpriteCoordinate();
+        srcPokemon.y = pokemon[startingI + 1].getYSpriteCoordinate();
+        SDL_RenderCopy(Game::renderer, Game::pokemonsTexture, &srcPokemon, &dest1by1);
+
+        return;
+    }
 
     // Drawing all the pokemons
     for (int i = startingI; i < startingI + 6; i++) {

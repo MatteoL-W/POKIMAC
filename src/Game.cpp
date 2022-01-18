@@ -11,6 +11,7 @@
 #include "../include/AttackInterface.hpp"
 #include "../include/ExplorationInterface.hpp"
 #include "../include/InventoryInterface.hpp"
+#include "../include/EndingInterface.hpp"
 #include "../include/MapsArray.hpp"
 
 SDL_Renderer *Game::renderer = nullptr;
@@ -20,6 +21,7 @@ int Game::level = 0;
 AttackInterface *attackInterface = nullptr;
 ExplorationInterface *explorationInterface = nullptr;
 InventoryInterface *inventoryInterface = nullptr;
+EndingInterface *endingInterface = nullptr;
 
 Pokemon *attackedPokemon = nullptr;
 Pokemon *attackerPokemon = nullptr;
@@ -50,6 +52,7 @@ void Game::init(const std::string title) {
         explorationInterface = new ExplorationInterface(this);
         attackInterface = new AttackInterface(this, attackedPokemon, attackerPokemon);
         inventoryInterface = new InventoryInterface(this);
+        endingInterface = new EndingInterface(this);
         battle = attackInterface->getBattle();
         map = explorationInterface->getMap();
 
@@ -75,11 +78,11 @@ void Game::changeInterfaceToAttack(Pokemon *enemy) {
  * @brief Change the interface to exploration and level up
  */
 void Game::changeInterfaceToExplorationAndLevelUp() {
-    if (level + 1 < MAX_MAPS)
+    if (level-1 < MAX_MAPS)
         level++;
     Battle::state = "inactive";
     map->loadMap(allMaps[Game::level]);
-    setActivity("inExploration");
+    changeInterfaceToExploration();
 }
 
 /**
@@ -94,6 +97,10 @@ void Game::changeInterfaceToExploration() {
  */
 void Game::changeInterfaceToInventory() {
     setActivity("inInventory");
+}
+
+void Game::changeInterfaceToEnding() {
+    setActivity("inEnd");
 }
 
 /**
@@ -118,5 +125,9 @@ void Game::refresh() {
         inventoryInterface->handleEvents();
         inventoryInterface->update();
         inventoryInterface->render();
+    } else if (ending()) {
+        endingInterface->handleEvents();
+        endingInterface->update();
+        endingInterface->render();
     }
 }

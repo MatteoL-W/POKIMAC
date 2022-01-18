@@ -87,7 +87,7 @@ void Battle::reload() {
 }
 
 /**
- * @brief Draw the battle secne
+ * @brief Draw the battle scene
  */
 void Battle::draw() {
     drawBackground();
@@ -152,17 +152,20 @@ void Battle::drawDialogPokemonChoice() {
     Battle::state = "pokemonChoice";
     dialogText->changeText("Choisissez votre pokemon");
 
-    for (int i = 0; i < Game::inventoryLength; i++) {
-        pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + Game::inventory[i]->getName());
+        for (int i = 0; i < Game::inventoryLength; i++) {
+            pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + Game::inventory[i]->getName() + " - " +
+                                             std::to_string(Game::inventory[i]->getHealthPoint()) + "pv");
 
-        if (Game::inventory[i]->getHealthPoint() == 0) {
-            pokemonListsTexts[i]->changeColor(GreyColor);
+            if (Game::inventory[i]->getHealthPoint() == 0) {
+                pokemonListsTexts[i]->changeColor(GreyColor);
+            }
+            pokemonListsTexts[i]->changeDestRect(86, 550 + 30 * i);
+            pokemonListsTexts[i]->changeFont("Press", 22);
+            pokemonListsTexts[i]->draw();
         }
-        pokemonListsTexts[i]->changeDestRect(86, 550 + 30 * i);
-        pokemonListsTexts[i]->draw();
-    }
 
     exitText->changeText("[EXIT] Annuler");
+    exitText->changeFont("Press", 22);
     exitText->changeDestRect(86, 550 + 30 * Game::inventoryLength);
     exitText->draw();
 }
@@ -276,6 +279,10 @@ void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
  */
 void Battle::enemysTurn() {
     if (enemyPokemon->getHealthPoint() == 0) {
+        if (Game::level == 5) {
+            game->changeInterfaceToEnding();
+            return;
+        }
         win();
         return;
     }
@@ -304,14 +311,3 @@ void Battle::win() {
 void Battle::lose() {
     std::cout << "lose";
 }
-
-
-/**
- * @brief Draw the comments of the battle
- */
-
-/*void Battle::drawComments(int health_point) {
-    std::string damageHP = enemyPokemon->getName() + " a perdu " + std::to_string(health_point) + "PV";
-    dialogText->changeText(damageHP);
-    dialogText->draw();
-}*/
