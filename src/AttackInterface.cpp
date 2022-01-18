@@ -38,7 +38,7 @@ void AttackInterface::handleEvents() {
     if (battle->isWaitingForPokemon() && event.type == SDL_KEYDOWN) {
         if (!keyIsAlreadyPressed) {
             for (int i = 0; i < Game::inventoryLength; i++) {
-                if (event.key.keysym.sym == SDL_KeysFrom1To6[i] && Game::inventory[i]->getHealthPoint() != 0) {
+                if (event.key.keysym.sym == SDL_KeysFrom1To6[i] && Game::inventory[i]->getHealthPoint() > 0) {
                     battle->setPokemon(Game::inventory[i]);
                     Battle::state = "waitingForAttack";
                 }
@@ -60,6 +60,7 @@ void AttackInterface::handleEvents() {
         if (!keyIsAlreadyPressed) {
             pokemon = battle->getPokemon();
             enemy = battle->getEnemy();
+
             switch (event.key.keysym.sym) {
                 case SDLK_e:
                     // TODO: attack N°0
@@ -111,14 +112,20 @@ void AttackInterface::handleEvents() {
 
             //------------------Test pour que l'ennemi nous tue pas trop vite :
             if (pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType()) <= 1) {
-                Battle::damagePokemon =
-                        attack_0 * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
-            } else {
+                Battle::damagePokemon = attack_0 * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
+            }
+            else {
                 Battle::damagePokemon = attack_0;
             } //--------------------------
 
             //Battle::damagePokemon = attack_0 * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
             pokemon->removeHealthPoint(Battle::damagePokemon);
+
+            if (pokemon->getHealthPoint() <= 0) {
+                battle->lose();
+                return;
+            }
+
             Battle::state = "waitingForAttack";
             keyIsAlreadyPressed = true;
         }
@@ -145,7 +152,6 @@ void AttackInterface::render() {
     SDL_RenderClear(Game::renderer);
 
     battle->draw();
-
 
     SDL_RenderPresent(Game::renderer);
 }

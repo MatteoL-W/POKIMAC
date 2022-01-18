@@ -156,7 +156,7 @@ void Battle::drawDialogPokemonChoice() {
             pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + Game::inventory[i]->getName() + " - " +
                                              std::to_string(Game::inventory[i]->getHealthPoint()) + "pv");
 
-            if (Game::inventory[i]->getHealthPoint() == 0) {
+            if (Game::inventory[i]->getHealthPoint() <= 0) {
                 pokemonListsTexts[i]->changeColor(GreyColor);
             }
             pokemonListsTexts[i]->changeDestRect(86, 550 + 30 * i);
@@ -194,14 +194,24 @@ void Battle::drawDialogPostAttack() {
     //std::string damageHP = enemyPokemon->getName() + " a perdu " + std::to_string(12) + "PV";
     std::string damageHP = enemyPokemon->getName() + " a perdu " + std::to_string(damageEnemy) + "PV";
     dialogText->changeText(damageHP);
+    if (enemyPokemon->getHealthPoint() <= 0) {
+        secondAttackText->changeText("Vous avez gagné !");
+        secondAttackText->changeDestRect(86, 515);
+        secondAttackText->draw();
+    }
 }
 
 /**
  * @brief Draw the Enemy turn Dialog
  */
 void Battle::drawDialogEnemyTurn() {
-    std::string damageHP = enemyPokemon->getName() + " vous attaque et vous perdez " + std::to_string(damagePokemon) + "PV";
+    std::string damageHP = enemyPokemon->getName() + " vous retire " + std::to_string(damagePokemon) + "PV";
     dialogText->changeText(damageHP);
+    if (pokemon->getHealthPoint() - damagePokemon <= 0) {
+        secondAttackText->changeText("Vous avez perdu !");
+        secondAttackText->changeDestRect(86, 515);
+        secondAttackText->draw();
+    }
 }
 
 /**
@@ -278,7 +288,7 @@ void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
  * @brief Let the enemy attack
  */
 void Battle::enemysTurn() {
-    if (enemyPokemon->getHealthPoint() < 0) {
+    if (enemyPokemon->getHealthPoint() <= 0) {
         if (Game::level == 5) {
             game->changeInterfaceToEnding();
             return;
@@ -290,10 +300,6 @@ void Battle::enemysTurn() {
 
     Battle::state = "enemysTurn";
     // TODO: générer l'attaque de l'ennemie, la répercuter puis l'afficher
-
-    if (pokemon->getHealthPoint() == 0) {
-        lose();
-    }
 }
 
 /**
@@ -310,5 +316,6 @@ void Battle::win() {
  * @brief The player loses the battle
  */
 void Battle::lose() {
-    std::cout << "lose";
+    getEnemy()->heal();
+    game->changeInterfaceToExploration();
 }
