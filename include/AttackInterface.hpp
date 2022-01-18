@@ -27,7 +27,7 @@ public:
 
     Battle *getBattle() { return battle; };
 
-    int attack_0 = 12;
+    //int attack_0 = 12;
 
 
 

@@ -67,16 +67,17 @@ void AttackInterface::handleEvents() {
                     //<<<<faire une méthode pour retirer sur l'objet le nombre d'hp du dessus (genre pokemon->removeHealthPoints(int hp) où ça enlève les PV voulus)
                     // afficher les dégats de l'attaque dans le texte informatif
                     // battle->enemysTurn();
-                    Battle::damageEnemy = attack_0;
+                    Battle::damageEnemy = pokemon->getAttackZero();
                     enemy->removeHealthPoint(Battle::damageEnemy);
                     Battle::state = "postAttack";
                     break;
                 case SDLK_g:
                     // TODO: attack N°1
-                    Battle::damageEnemy = attack_0 * enemy->getDamageCoeff(pokemon->Pokemon::getType(), enemy->Pokemon::getType());
+                    Battle::damageEnemy = pokemon->getAttackZero() * enemy->getDamageCoeff(pokemon->Pokemon::getType(), enemy->Pokemon::getType());
                     enemy->removeHealthPoint(Battle::damageEnemy);
                     Battle::state = "postAttack";
                     break;
+
 
                     //cheatcodes
                 case SDLK_k:
@@ -95,6 +96,9 @@ void AttackInterface::handleEvents() {
                     battle->lose();
                     break;
             }
+            if (enemy->getHealthPoint() < 0) {
+                enemy->updateHealthPoint(0);
+            }
         }
         keyIsAlreadyPressed = true;
     }
@@ -112,17 +116,24 @@ void AttackInterface::handleEvents() {
     if (battle->isWaitingForEnemyTurn() && event.type == SDL_KEYDOWN) {
 
         if (!keyIsAlreadyPressed) {
-            
             //------------------Test pour que l'ennemi nous tue pas trop vite :
+            
+            //SOIT attaque exactement comme notre pokemon : 
+            //Battle::damagePokemon = enemy->getAttackZero() * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
+            
+            //SOIT attaque comme nous si il est moins fort, et attaque normale si il est trop fort
             if (pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType()) <= 1) {
-                Battle::damagePokemon = attack_0 * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
+                Battle::damagePokemon = enemy->getAttackZero() * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
             }
             else {
-                Battle::damagePokemon = attack_0;
-            } //--------------------------
+                Battle::damagePokemon = enemy->getAttackZero();
+            }
 
-            //Battle::damagePokemon = attack_0 * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
-            pokemon->removeHealthPoint(Battle::damagePokemon);            
+
+            pokemon->removeHealthPoint(Battle::damagePokemon);
+            if (pokemon->getHealthPoint() < 0) {
+                pokemon->updateHealthPoint(0);
+            }            
             Battle::state = "waitingForAttack";
         }
         keyIsAlreadyPressed = true;
