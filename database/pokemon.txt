@@ -34,3 +34,5 @@ Lokhlass   135 85  80  1249 0  5
 Kokiyas    30  65  100 96   64 5
 Crustabri  50  95  180 96   0  5
 Artikodin  90  85  100 1247 64 5
+Mewtwo     106 110 90  1631 64 5
+Mew        100 100 100 1631 0  5

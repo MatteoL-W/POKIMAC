@@ -240,6 +240,10 @@ void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
  */
 void Battle::enemysTurn() {
     if (enemyPokemon->getHealthPoint() == 0) {
+        if (Game::level == 5) {
+            game->changeInterfaceToEnding();
+            return;
+        }
         win();
         return;
     }

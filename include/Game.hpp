@@ -5,7 +5,7 @@
 #include "Pokemon.hpp"
 
 const int MAX_POKEMON_INV = 6;
-const int MAX_POKEMONS_POKEDEX = 36;
+const int MAX_POKEMONS_POKEDEX = 38;
 
 class Game {
 public:
@@ -22,6 +22,8 @@ public:
     void changeInterfaceToExploration();
 
     void changeInterfaceToInventory();
+
+    void changeInterfaceToEnding();
 
     void clean();
 
@@ -51,6 +53,13 @@ public:
         }
         return false;
     };
+
+    bool ending() {
+        if (activity == "inEnd") {
+            return true;
+        }
+        return false;
+    }
 
     void setActivity(std::string newActivity) { activity = newActivity; };
 
