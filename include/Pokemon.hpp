@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <cmath>
 
 const int POKEMON_AVAILABLE = 3;
 
@@ -43,6 +44,8 @@ public:
     void updateSprite();
 
     float getDamageCoeff(int attacker_type, int attacked_type);
+
+    int getAttackZero() { return floor(Pokemon::attack * 0.25); };
 
 
 private:
