@@ -283,6 +283,7 @@ void Battle::enemysTurn() {
             game->changeInterfaceToEnding();
             return;
         }
+
         win();
         return;
     }

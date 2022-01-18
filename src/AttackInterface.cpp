@@ -71,6 +71,7 @@ void AttackInterface::handleEvents() {
                     enemy->removeHealthPoint(Battle::damageEnemy);
                     Battle::state = "postAttack";
                     break;
+
                 case SDLK_g:
                     // TODO: attack N°1
                     Battle::damageEnemy = attack_0 * enemy->getDamageCoeff(pokemon->Pokemon::getType(), enemy->Pokemon::getType());
@@ -85,18 +86,15 @@ void AttackInterface::handleEvents() {
                     enemy->kill();
                     break;
                 case SDLK_n:
-                    enemy->updateHealthPoint(enemy->getHealthPoint()-10);
+                    enemy->updateHealthPoint(enemy->getHealthPoint() - 10);
                     break;
                 case SDLK_p:
                     // appuyer sur P pour passer au tour de l'ennemi
                     battle->enemysTurn();
                     break;
-                case SDLK_l:
-                    battle->lose();
-                    break;
             }
+            keyIsAlreadyPressed = true;
         }
-        keyIsAlreadyPressed = true;
     }
 
     // enemy's turn
@@ -104,28 +102,26 @@ void AttackInterface::handleEvents() {
     if (battle->isWaitingForActionPostAttack() && event.type == SDL_KEYDOWN) {
         if (!keyIsAlreadyPressed) {
             battle->enemysTurn();
-           //Battle::state = "enemysTurn";
+            keyIsAlreadyPressed = true;
         }
-        keyIsAlreadyPressed = true;
     }
 
     if (battle->isWaitingForEnemyTurn() && event.type == SDL_KEYDOWN) {
-
         if (!keyIsAlreadyPressed) {
-            
+
             //------------------Test pour que l'ennemi nous tue pas trop vite :
             if (pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType()) <= 1) {
-                Battle::damagePokemon = attack_0 * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
-            }
-            else {
+                Battle::damagePokemon =
+                        attack_0 * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
+            } else {
                 Battle::damagePokemon = attack_0;
             } //--------------------------
 
             //Battle::damagePokemon = attack_0 * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
-            pokemon->removeHealthPoint(Battle::damagePokemon);            
+            pokemon->removeHealthPoint(Battle::damagePokemon);
             Battle::state = "waitingForAttack";
+            keyIsAlreadyPressed = true;
         }
-        keyIsAlreadyPressed = true;
     }
 }
 
@@ -149,6 +145,7 @@ void AttackInterface::render() {
     SDL_RenderClear(Game::renderer);
 
     battle->draw();
+
 
     SDL_RenderPresent(Game::renderer);
 }
