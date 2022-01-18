@@ -278,7 +278,7 @@ void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
  * @brief Let the enemy attack
  */
 void Battle::enemysTurn() {
-    if (enemyPokemon->getHealthPoint() == 0) {
+    if (enemyPokemon->getHealthPoint() < 0) {
         if (Game::level == 5) {
             game->changeInterfaceToEnding();
             return;

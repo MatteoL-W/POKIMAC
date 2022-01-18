@@ -67,8 +67,8 @@ void AttackInterface::handleEvents() {
                     //<<<<faire une méthode pour retirer sur l'objet le nombre d'hp du dessus (genre pokemon->removeHealthPoints(int hp) où ça enlève les PV voulus)
                     // afficher les dégats de l'attaque dans le texte informatif
                     // battle->enemysTurn();
-                    Battle::damageEnemy = attack_0; 
-                    enemy->removeHealthPoint(Battle::damageEnemy); 
+                    Battle::damageEnemy = attack_0;
+                    enemy->removeHealthPoint(Battle::damageEnemy);
                     Battle::state = "postAttack";
                     break;
                 case SDLK_g:
@@ -103,12 +103,14 @@ void AttackInterface::handleEvents() {
 
     if (battle->isWaitingForActionPostAttack() && event.type == SDL_KEYDOWN) {
         if (!keyIsAlreadyPressed) {
-            Battle::state = "enemysTurn";
+            battle->enemysTurn();
+           //Battle::state = "enemysTurn";
         }
         keyIsAlreadyPressed = true;
     }
 
     if (battle->isWaitingForEnemyTurn() && event.type == SDL_KEYDOWN) {
+
         if (!keyIsAlreadyPressed) {
             
             //------------------Test pour que l'ennemi nous tue pas trop vite :
