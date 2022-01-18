@@ -110,7 +110,16 @@ void AttackInterface::handleEvents() {
 
     if (battle->isWaitingForEnemyTurn() && event.type == SDL_KEYDOWN) {
         if (!keyIsAlreadyPressed) {
-            Battle::damagePokemon = attack_0 * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
+            
+            //------------------Test pour que l'ennemi nous tue pas trop vite :
+            if (pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType()) <= 1) {
+                Battle::damagePokemon = attack_0 * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
+            }
+            else {
+                Battle::damagePokemon = attack_0;
+            } //--------------------------
+
+            //Battle::damagePokemon = attack_0 * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
             pokemon->removeHealthPoint(Battle::damagePokemon);            
             Battle::state = "waitingForAttack";
         }

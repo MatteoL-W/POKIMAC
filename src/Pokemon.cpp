@@ -5,7 +5,7 @@
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
 #include "../include/Pokemon.hpp"
-
+#include "../include/AttacksFlag.hpp"
 
 /**
  * @brief Initialize a new pokemon set from the txt database
@@ -79,55 +79,55 @@ float Pokemon::getDamageCoeff(int attacker_type, int attacked_type) {
     if (attacker_type == attacked_type) {
         coefficient = 0.5;
     }
-    if (attacker_type == 1) { //plante
-        if (attacked_type == 3) { 
+    if (attacker_type == TYPE_PLANT) { 
+        if (attacked_type == TYPE_FIRE) { 
             coefficient = 0.5;
         }
-        if (attacked_type == 4) {
+        if (attacked_type == TYPE_ROCK) {
             coefficient = 2;
         }     
     }
-    if (attacker_type == 2) { //eau
-        if (attacked_type == 1) { 
+    if (attacker_type == TYPE_WATER) { 
+        if (attacked_type == TYPE_PLANT) { 
             coefficient = 0.5;
         }
-        if (attacked_type == 3) {
+        if (attacked_type == TYPE_FIRE) {
             coefficient = 2;
         }
-        if (attacked_type == 4) {
+        if (attacked_type == TYPE_ROCK) {
             coefficient = 2;
         }     
     }
-    if (attacker_type == 3) { //feu
-        if (attacked_type == 1) { 
+    if (attacker_type == TYPE_FIRE) { 
+        if (attacked_type == TYPE_PLANT) { 
             coefficient = 2;
         }
-        if (attacked_type == 2) {
+        if (attacked_type == TYPE_WATER) {
             coefficient = 0.5;
         }
-        if (attacked_type == 5) {
+        if (attacked_type == TYPE_ICE) {
             coefficient = 2;
         }     
     }
-    if (attacker_type == 4) { //roche
-        if (attacked_type == 1) { 
+    if (attacker_type == TYPE_ROCK) { 
+        if (attacked_type == TYPE_PLANT) { 
             coefficient = 0.5;
         }
-        if (attacked_type == 3) {
+        if (attacked_type == TYPE_FIRE) {
             coefficient = 2;
         }
-        if (attacked_type == 5) {
+        if (attacked_type == TYPE_ICE) {
             coefficient = 2;
         }     
     }
-    if (attacker_type == 2) { //glace
-        if (attacked_type == 1) { 
+    if (attacker_type == TYPE_ICE) { 
+        if (attacked_type == TYPE_PLANT) { 
             coefficient = 2;
         }
-        if (attacked_type == 2) {
+        if (attacked_type == TYPE_WATER) {
             coefficient = 0.5;
         }
-        if (attacked_type == 3) {
+        if (attacked_type == TYPE_FIRE) {
             coefficient = 0.5;
         }     
     }           
