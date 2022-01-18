@@ -111,3 +111,9 @@ void AttackInterface::render() {
 
     SDL_RenderPresent(Game::renderer);
 }
+
+bool AttackInterface::isActive() {
+    if (game->attacking())
+        return true;
+    return false;
+}

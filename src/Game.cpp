@@ -2,17 +2,21 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include <string>
+#include <vector>
 #include "../include/Pokemon.hpp"
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
 #include "../include/MapsArray.hpp"
 #include "../include/Text.hpp"
 #include "../include/Colors.hpp"
+#include "../include/Interface.hpp"
 #include "../include/AttackInterface.hpp"
 #include "../include/ExplorationInterface.hpp"
 #include "../include/InventoryInterface.hpp"
 #include "../include/EndingInterface.hpp"
 #include "../include/MapsArray.hpp"
+
+std::vector < Interface * > interfaces;
 
 SDL_Renderer *Game::renderer = nullptr;
 SDL_Texture *Game::pokemonsTexture = nullptr;
@@ -60,6 +64,11 @@ void Game::init(const std::string title) {
         Game::inventory[0] = starter;
         Game::inventoryLength++;
 
+        interfaces.push_back(explorationInterface);
+        interfaces.push_back(attackInterface);
+        interfaces.push_back(inventoryInterface);
+        interfaces.push_back(endingInterface);
+
         isRunning = true;
         level = 0;
     }
@@ -78,7 +87,7 @@ void Game::changeInterfaceToAttack(Pokemon *enemy) {
  * @brief Change the interface to exploration and level up
  */
 void Game::changeInterfaceToExplorationAndLevelUp() {
-    if (level-1 < MAX_MAPS)
+    if (level - 1 < MAX_MAPS)
         level++;
     Battle::state = "inactive";
     map->loadMap(allMaps[Game::level]);
@@ -112,22 +121,15 @@ void Game::clean() {
     SDL_Quit();
 }
 
+/**
+ * @brief Refresh the game
+ */
 void Game::refresh() {
-    if (exploring()) {
-        explorationInterface->handleEvents();
-        explorationInterface->update();
-        explorationInterface->render();
-    } else if (attacking()) {
-        attackInterface->handleEvents();
-        attackInterface->update();
-        attackInterface->render();
-    } else if (displayingInventory()) {
-        inventoryInterface->handleEvents();
-        inventoryInterface->update();
-        inventoryInterface->render();
-    } else if (ending()) {
-        endingInterface->handleEvents();
-        endingInterface->update();
-        endingInterface->render();
+    for (size_t i = 0; i < interfaces.size(); i++) {
+        if (interfaces[i]->isActive()) {
+            interfaces[i]->handleEvents();
+            interfaces[i]->update();
+            interfaces[i]->render();
+        }
     }
 }
