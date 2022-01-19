@@ -60,6 +60,10 @@ void AttackInterface::handleEvents() {
         if (!keyIsAlreadyPressed) {
             pokemon = battle->getPokemon();
             enemy = battle->getEnemy();
+            if (pokemon->getHealthPoint() <= 0) {
+                battle->lose();
+                return;
+            }
 
             switch (event.key.keysym.sym) {
                 case SDLK_e:
@@ -111,27 +115,6 @@ void AttackInterface::handleEvents() {
 
     if (battle->isWaitingForEnemyTurn() && event.type == SDL_KEYDOWN) {
         if (!keyIsAlreadyPressed) {
-
-            //------------------Test pour que l'ennemi nous tue pas trop vite :
-
-            //SOIT attaque exactement comme notre pokemon :
-            //Battle::damagePokemon = enemy->getAttackZero() * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
-
-            //SOIT attaque comme nous si il est moins fort, et attaque normale si il est trop fort
-            if (pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType()) <= 1) {
-                Battle::damagePokemon = enemy->getAttackZero() * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
-            }
-            else {
-                Battle::damagePokemon = enemy->getAttackZero();
-            }
-
-            pokemon->removeHealthPoint(Battle::damagePokemon);
-
-            if (pokemon->getHealthPoint() <= 0) {
-                battle->lose();
-                return;
-            }
-
             Battle::state = "waitingForAttack";
             keyIsAlreadyPressed = true;
         }

@@ -152,17 +152,17 @@ void Battle::drawDialogPokemonChoice() {
     Battle::state = "pokemonChoice";
     dialogText->changeText("Choisissez votre pokemon");
 
-        for (int i = 0; i < Game::inventoryLength; i++) {
-            pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + Game::inventory[i]->getName() + " - " +
-                                             std::to_string(Game::inventory[i]->getHealthPoint()) + "pv");
+    for (int i = 0; i < Game::inventoryLength; i++) {
+        pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + Game::inventory[i]->getName() + " - " +
+                                         std::to_string(Game::inventory[i]->getHealthPoint()) + "pv");
 
-            if (Game::inventory[i]->getHealthPoint() <= 0) {
-                pokemonListsTexts[i]->changeColor(GreyColor);
-            }
-            pokemonListsTexts[i]->changeDestRect(86, 550 + 30 * i);
-            pokemonListsTexts[i]->changeFont("Press", 22);
-            pokemonListsTexts[i]->draw();
+        if (Game::inventory[i]->getHealthPoint() <= 0) {
+            pokemonListsTexts[i]->changeColor(GreyColor);
         }
+        pokemonListsTexts[i]->changeDestRect(86, 550 + 30 * i);
+        pokemonListsTexts[i]->changeFont("Press", 22);
+        pokemonListsTexts[i]->draw();
+    }
 
     exitText->changeText("[EXIT] Annuler");
     exitText->changeFont("Press", 22);
@@ -207,7 +207,7 @@ void Battle::drawDialogPostAttack() {
 void Battle::drawDialogEnemyTurn() {
     std::string damageHP = enemyPokemon->getName() + " vous retire " + std::to_string(damagePokemon) + "PV";
     dialogText->changeText(damageHP);
-    if (pokemon->getHealthPoint() - damagePokemon <= 0) {
+    if (pokemon->getHealthPoint() <= 0) {
         secondAttackText->changeText("Vous avez perdu !");
         secondAttackText->changeDestRect(86, 515);
         secondAttackText->draw();
@@ -298,8 +298,22 @@ void Battle::enemysTurn() {
         return;
     }
 
+    //SOIT attaque exactement comme notre pokemon :
+    //Battle::damagePokemon = enemy->getAttackZero() * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
+
+    //SOIT attaque comme nous si il est moins fort, et attaque normale si il est trop fort
+    if (pokemon->getDamageCoeff(enemyPokemon->getType(), pokemon->Pokemon::getType()) <= 1) {
+        Battle::damagePokemon = enemyPokemon->getAttackZero() * pokemon->getDamageCoeff(
+                enemyPokemon->Pokemon::getType(),
+                pokemon->Pokemon::getType()
+        );
+    } else {
+        Battle::damagePokemon = enemyPokemon->getAttackZero();
+    }
+
+    pokemon->removeHealthPoint(Battle::damagePokemon);
+
     Battle::state = "enemysTurn";
-    // TODO: générer l'attaque de l'ennemie, la répercuter puis l'afficher
 }
 
 /**
