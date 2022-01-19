@@ -21,6 +21,7 @@ int SDL_KeysFrom1To6[6] = {
  * @brief Handle SDL Events in the exploration part
  */
 void AttackInterface::handleEvents() {
+    bool keyIsAlreadyPressed = false;
     SDL_Event event = game->event;
     SDL_PollEvent(&event);
 
@@ -28,13 +29,20 @@ void AttackInterface::handleEvents() {
         game->setRunning(false);
     }
 
+    if (event.type == SDL_KEYUP) {
+        keyIsAlreadyPressed = false;
+    }
+
     // Choice of pokemon
     if (battle->isWaitingForPokemon() && event.type == SDL_KEYDOWN) {
-        for (int i = 0; i < Game::inventoryLength; i++) {
-            if (event.key.keysym.sym == SDL_KeysFrom1To6[i] && Game::inventory[i]->getHealthPoint() != 0) {
-                battle->setPokemon(Game::inventory[i]);
-                Battle::state = "waitingForAttack";
+        if (!keyIsAlreadyPressed) {
+            for (int i = 0; i < Game::inventoryLength; i++) {
+                if (event.key.keysym.sym == SDL_KeysFrom1To6[i] && Game::inventory[i]->getHealthPoint() > 0) {
+                    battle->setPokemon(Game::inventory[i]);
+                    Battle::state = "waitingForAttack";
+                }
             }
+            keyIsAlreadyPressed = true;
         }
 
         switch (event.key.keysym.sym) {
@@ -47,43 +55,56 @@ void AttackInterface::handleEvents() {
 
     // Choice of attack
     if (battle->isWaitingForAttack() && event.type == SDL_KEYDOWN) {
-        pokemon = battle->getPokemon();
-        enemy = battle->getEnemy();
-        switch (event.key.keysym.sym) {
-            case SDLK_e:
-                // TODO: attack N°0
-                // faire une méthode pour calculer le nb de hp enlevé (en enlevant des HP fixes dans un premier temps puis prendre en compte le type par la suite)
-                // faire une méthode pour retirer sur l'objet le nombre d'hp du dessus (genre pokemon->removeHealthPoints(int hp) où ça enlève les PV voulus)
-                // afficher les dégats de l'attaque dans le texte informatif
-                // battle->enemysTurn();
-                break;
-            case SDLK_g:
-                // TODO: attack N°1
-                break;
-
-                //cheatcodes
-            case SDLK_k:
-                // appuyer sur K pour mettre les HP de l'adversaire à 0
-                //enemy->kill();
-                enemy->kill();
-                break;
-            case SDLK_n:
-                enemy->updateHealthPoint(enemy->getHealthPoint()-10);
-                break;
-            case SDLK_p:
-                // appuyer sur P pour passer au tour de l'ennemi
-                battle->enemysTurn();
-                break;
-            case SDLK_l:
+        if (!keyIsAlreadyPressed) {
+            pokemon = battle->getPokemon();
+            enemy = battle->getEnemy();
+            if (pokemon->getHealthPoint() <= 0) {
                 battle->lose();
-                break;
+                return;
+            }
+
+            switch (event.key.keysym.sym) {
+                case SDLK_e:
+                    Battle::damageEnemy = pokemon->getAttackZero();
+                    enemy->removeHealthPoint(Battle::damageEnemy);
+                    Battle::state = "postAttack";
+                    break;
+
+                case SDLK_g:
+                    Battle::damageEnemy = pokemon->getAttackZero() *
+                                          enemy->getDamageCoeff(pokemon->Pokemon::getType(), enemy->Pokemon::getType());
+                    enemy->removeHealthPoint(Battle::damageEnemy);
+                    Battle::state = "postAttack";
+                    break;
+
+
+                    //cheatcodes
+                case SDLK_k:
+                    enemy->kill();
+                    break;
+                case SDLK_n:
+                    enemy->updateHealthPoint(enemy->getHealthPoint() - 10);
+                    break;
+                case SDLK_p:
+                    battle->enemysTurn();
+                    break;
+            }
+
+            keyIsAlreadyPressed = true;
         }
     }
 
-    // enemy's turn
-    if (battle->isWaitingForAction() && event.type == SDL_KEYDOWN) {
-        switch (event.key.keysym.sym) {
-            //TODO: faire bouton pour poursuivre (je pense le faire)
+    if (battle->isWaitingForActionPostAttack() && event.type == SDL_KEYDOWN) {
+        if (!keyIsAlreadyPressed) {
+            battle->enemysTurn();
+            keyIsAlreadyPressed = true;
+        }
+    }
+
+    if (battle->isWaitingForEnemyTurn() && event.type == SDL_KEYDOWN) {
+        if (!keyIsAlreadyPressed) {
+            Battle::state = "waitingForAttack";
+            keyIsAlreadyPressed = true;
         }
     }
 }

@@ -16,7 +16,7 @@
 #include "../include/EndingInterface.hpp"
 #include "../include/MapsArray.hpp"
 
-std::vector < Interface * > interfaces;
+std::vector<Interface *> interfaces;
 
 SDL_Renderer *Game::renderer = nullptr;
 SDL_Texture *Game::pokemonsTexture = nullptr;

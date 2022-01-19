@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <cmath>
 
 const int POKEMON_AVAILABLE = 3;
 
@@ -30,15 +31,21 @@ public:
 
     int getMaxHealthPoint() { return max_health_point; };
 
-    float getHealthPercent() { return (float)health_point / max_health_point * 100; };
+    float getHealthPercent() { return (float) health_point / max_health_point * 100; };
 
     int getType() { return type; };
 
     void updateHealthPoint(int new_health_point) { Pokemon::health_point = new_health_point; };
 
+    void removeHealthPoint(int health_point);
+
     void heal() { Pokemon::health_point = Pokemon::max_health_point; };
 
     void updateSprite();
+
+    float getDamageCoeff(int attacker_type, int attacked_type);
+
+    int getAttackZero() { return floor(Pokemon::attack * 0.25); };
 
 
 private:

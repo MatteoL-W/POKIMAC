@@ -8,6 +8,9 @@
 #include "../include/Colors.hpp"
 #include "../include/Game.hpp"
 
+int Battle::damagePokemon = 0;
+int Battle::damageEnemy = 0;
+
 std::string Battle::state = "inactive";
 
 Text *enemyTextHP = new Text();
@@ -83,7 +86,7 @@ void Battle::reload() {
 }
 
 /**
- * @brief Draw the battle secne
+ * @brief Draw the battle scene
  */
 void Battle::draw() {
     drawBackground();
@@ -124,45 +127,90 @@ void Battle::drawPokemonGraphics() {
 }
 
 /**
- * @brief Draw the dialog (pokemon choice / attack)
+ * @brief Draw the dialog
  */
 void Battle::drawDialog() {
     if (pokemon == nullptr) {
-        Battle::state = "pokemonChoice";
-        dialogText->changeText("Choisissez votre pokemon");
-
-        for (int i = 0; i < Game::inventoryLength; i++) {
-            pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + Game::inventory[i]->getName() + " - " +
-                                             std::to_string(Game::inventory[i]->getHealthPoint()) + "pv");
-
-            if (Game::inventory[i]->getHealthPoint() == 0) {
-                pokemonListsTexts[i]->changeColor(GreyColor);
-            }
-            pokemonListsTexts[i]->changeDestRect(86, 550 + 30 * i);
-            pokemonListsTexts[i]->changeFont("Press", 22);
-            pokemonListsTexts[i]->draw();
-        }
-
-        exitText->changeText("[EXIT] Annuler");
-        exitText->changeFont("Press", 22);
-        exitText->changeDestRect(86, 550 + 30 * Game::inventoryLength);
-        exitText->draw();
-    } else {
-        dialogText->changeText("Choisissez votre attaque");
-
-        firstAttackText->changeFont("Press", 32);
-        firstAttackText->changeText("[E] " + attacks[0]);
-        firstAttackText->changeDestRect(86, 580);
-        firstAttackText->draw();
-
-        secondAttackText->changeFont("Press", 32);
-        secondAttackText->changeText("[G] " + attacks[pokemon->getType()]);
-        secondAttackText->changeDestRect(86, 630);
-        secondAttackText->draw();
+        drawDialogPokemonChoice();
+    } else if (isWaitingForAttack()) {
+        drawDialogAttackChoice();
+    } else if (isWaitingForActionPostAttack()) {
+        drawDialogPostAttack();
+    } else if (isWaitingForEnemyTurn()) {
+        drawDialogEnemyTurn();
     }
 
     dialogText->changeDestRect(86, 485);
     dialogText->draw();
+}
+
+/**
+ * @brief Draw the Pokemon Choice Dialog
+ */
+void Battle::drawDialogPokemonChoice() {
+    Battle::state = "pokemonChoice";
+    dialogText->changeText("Choisissez votre pokemon");
+
+    for (int i = 0; i < Game::inventoryLength; i++) {
+        pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + Game::inventory[i]->getName() + " - " +
+                                         std::to_string(Game::inventory[i]->getHealthPoint()) + "pv");
+
+        if (Game::inventory[i]->getHealthPoint() <= 0) {
+            pokemonListsTexts[i]->changeColor(GreyColor);
+        }
+        pokemonListsTexts[i]->changeDestRect(86, 550 + 30 * i);
+        pokemonListsTexts[i]->changeFont("Press", 22);
+        pokemonListsTexts[i]->draw();
+    }
+
+    exitText->changeText("[EXIT] Annuler");
+    exitText->changeFont("Press", 22);
+    exitText->changeDestRect(86, 550 + 30 * Game::inventoryLength);
+    exitText->draw();
+}
+
+/**
+ * @brief Draw the Attack Choice Dialog
+ */
+void Battle::drawDialogAttackChoice() {
+    dialogText->changeText("Choisissez votre attaque");
+
+    firstAttackText->changeFont("Press", 32);
+    firstAttackText->changeText("[E] " + attacks[0]);
+    firstAttackText->changeDestRect(86, 580);
+    firstAttackText->draw();
+
+    secondAttackText->changeFont("Press", 32);
+    secondAttackText->changeText("[G] " + attacks[pokemon->getType()]);
+    secondAttackText->changeDestRect(86, 630);
+    secondAttackText->draw();
+}
+
+/**
+ * @brief Draw the Post Attack Dialog
+ */
+void Battle::drawDialogPostAttack() {
+    //std::string damageHP = enemyPokemon->getName() + " a perdu " + std::to_string(12) + "PV";
+    std::string damageHP = enemyPokemon->getName() + " a perdu " + std::to_string(damageEnemy) + "PV";
+    dialogText->changeText(damageHP);
+    if (enemyPokemon->getHealthPoint() <= 0) {
+        secondAttackText->changeText("Vous avez gagné !");
+        secondAttackText->changeDestRect(86, 515);
+        secondAttackText->draw();
+    }
+}
+
+/**
+ * @brief Draw the Enemy turn Dialog
+ */
+void Battle::drawDialogEnemyTurn() {
+    std::string damageHP = enemyPokemon->getName() + " vous retire " + std::to_string(damagePokemon) + "PV";
+    dialogText->changeText(damageHP);
+    if (pokemon->getHealthPoint() <= 0) {
+        secondAttackText->changeText("Vous avez perdu !");
+        secondAttackText->changeDestRect(86, 515);
+        secondAttackText->draw();
+    }
 }
 
 /**
@@ -239,21 +287,32 @@ void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
  * @brief Let the enemy attack
  */
 void Battle::enemysTurn() {
-    if (enemyPokemon->getHealthPoint() == 0) {
+    if (enemyPokemon->getHealthPoint() <= 0) {
         if (Game::level == 5) {
             game->changeInterfaceToEnding();
             return;
         }
+
         win();
         return;
     }
 
-    // TODO: générer l'attaque de l'ennemie, la répercuter puis l'afficher
-    Battle::state = "enemysTurn";
+    //SOIT attaque exactement comme notre pokemon :
+    //Battle::damagePokemon = enemy->getAttackZero() * pokemon->getDamageCoeff(enemy->Pokemon::getType(), pokemon->Pokemon::getType());
 
-    if (pokemon->getHealthPoint() == 0) {
-        lose();
+    //SOIT attaque comme nous si il est moins fort, et attaque normale si il est trop fort
+    if (pokemon->getDamageCoeff(enemyPokemon->getType(), pokemon->Pokemon::getType()) <= 1) {
+        Battle::damagePokemon = enemyPokemon->getAttackZero() * pokemon->getDamageCoeff(
+                enemyPokemon->Pokemon::getType(),
+                pokemon->Pokemon::getType()
+        );
+    } else {
+        Battle::damagePokemon = enemyPokemon->getAttackZero();
     }
+
+    pokemon->removeHealthPoint(Battle::damagePokemon);
+
+    Battle::state = "enemysTurn";
 }
 
 /**
@@ -270,5 +329,6 @@ void Battle::win() {
  * @brief The player loses the battle
  */
 void Battle::lose() {
-    std::cout << "lose";
+    getEnemy()->heal();
+    game->changeInterfaceToExploration();
 }

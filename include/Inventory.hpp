@@ -23,10 +23,14 @@ public:
     ~Inventory() {};
 
     void draw();
+
     void drawBlock(int xOperator, int yOperator);
-    void drawPokemon(Pokemon* pokemon, int xOperator, int yOperator);
+
+    void drawPokemon(Pokemon *pokemon, int xOperator, int yOperator);
+
     void drawPokemonSprite(int xOperator, int yOperator, SDL_Rect *srcPokemon, SDL_Rect *dstPokemon);
-    void drawPokemonInfo(int xOperator, int yOperator, Pokemon* pokemon, SDL_Rect dstPokemon);
+
+    void drawPokemonInfo(int xOperator, int yOperator, Pokemon *pokemon, SDL_Rect dstPokemon);
 
 private:
     SDL_Texture *backgroundTexture;

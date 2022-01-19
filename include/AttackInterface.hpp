@@ -36,4 +36,5 @@ private:
     Pokemon *pokemon;
 
     Battle *battle;
+
 };
