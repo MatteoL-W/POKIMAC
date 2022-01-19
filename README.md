@@ -11,16 +11,20 @@ Library needed:
 - SDL2_TTF
 
 When you have cloned the repo, you can build:
+
 ```
 make init
 make
 make st
 ```
+
 You can change the window size by changeing these values (Game.hpp):
+
 ```
 static const int WINDOW_WIDTH = 750;
 static const int WINDOW_HEIGHT = 750;
 ```
+
 Please maintain a square format.
 
 ## How to play ?
@@ -29,9 +33,7 @@ Just have fun !
 
 ## Commands
 
-You can move with Z,S,Q,D or with arrows.
-You can swap the camera with M.
-You can access the inventory by pressing I.
+You can move with Z,S,Q,D or with arrows. You can swap the camera with M. You can access the inventory by pressing I.
 
 ## Thanks
 

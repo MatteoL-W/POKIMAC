@@ -39,7 +39,7 @@ void ExplorationInterface::handleEvents() {
                 }
                 break;
         }
-        
+
     }
 
 

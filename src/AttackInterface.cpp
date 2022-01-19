@@ -71,7 +71,8 @@ void AttackInterface::handleEvents() {
                     break;
 
                 case SDLK_g:
-                    Battle::damageEnemy = pokemon->getAttackZero() * enemy->getDamageCoeff(pokemon->Pokemon::getType(), enemy->Pokemon::getType());
+                    Battle::damageEnemy = pokemon->getAttackZero() *
+                                          enemy->getDamageCoeff(pokemon->Pokemon::getType(), enemy->Pokemon::getType());
                     enemy->removeHealthPoint(Battle::damageEnemy);
                     Battle::state = "postAttack";
                     break;
@@ -92,8 +93,6 @@ void AttackInterface::handleEvents() {
             keyIsAlreadyPressed = true;
         }
     }
-
-    // enemy's turn
 
     if (battle->isWaitingForActionPostAttack() && event.type == SDL_KEYDOWN) {
         if (!keyIsAlreadyPressed) {

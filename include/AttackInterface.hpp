@@ -7,7 +7,6 @@
 #include "Pokemon.hpp"
 #include "AttacksFlag.hpp"
 
-
 class AttackInterface : public Interface {
 public:
     AttackInterface(Game *game, Pokemon *attackedPokemon, Pokemon *attackerPokemon) {
@@ -28,10 +27,6 @@ public:
     bool isActive();
 
     Battle *getBattle() { return battle; };
-
-    //int attack_0 = 12;
-
-
 
 private:
     Game *game;

@@ -11,7 +11,6 @@
 int Battle::damagePokemon = 0;
 int Battle::damageEnemy = 0;
 
-
 std::string Battle::state = "inactive";
 
 Text *enemyTextHP = new Text();

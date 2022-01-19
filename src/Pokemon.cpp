@@ -61,7 +61,7 @@ void Pokemon::setCoordinates(int x, int y) {
 }
 
 void Pokemon::removeHealthPoint(int health_point) {
-    Pokemon::health_point = (Pokemon::health_point - health_point < 0 ) ? 0 : Pokemon::health_point - health_point;
+    Pokemon::health_point = (Pokemon::health_point - health_point < 0) ? 0 : Pokemon::health_point - health_point;
 }
 
 /**
@@ -79,16 +79,16 @@ float Pokemon::getDamageCoeff(int attacker_type, int attacked_type) {
     if (attacker_type == attacked_type) {
         coefficient = 0.5;
     }
-    if (attacker_type == TYPE_PLANT) { 
-        if (attacked_type == TYPE_FIRE) { 
+    if (attacker_type == TYPE_PLANT) {
+        if (attacked_type == TYPE_FIRE) {
             coefficient = 0.5;
         }
         if (attacked_type == TYPE_ROCK) {
             coefficient = 2;
-        }     
+        }
     }
-    if (attacker_type == TYPE_WATER) { 
-        if (attacked_type == TYPE_PLANT) { 
+    if (attacker_type == TYPE_WATER) {
+        if (attacked_type == TYPE_PLANT) {
             coefficient = 0.5;
         }
         if (attacked_type == TYPE_FIRE) {
@@ -96,10 +96,10 @@ float Pokemon::getDamageCoeff(int attacker_type, int attacked_type) {
         }
         if (attacked_type == TYPE_ROCK) {
             coefficient = 2;
-        }     
+        }
     }
-    if (attacker_type == TYPE_FIRE) { 
-        if (attacked_type == TYPE_PLANT) { 
+    if (attacker_type == TYPE_FIRE) {
+        if (attacked_type == TYPE_PLANT) {
             coefficient = 2;
         }
         if (attacked_type == TYPE_WATER) {
@@ -107,10 +107,10 @@ float Pokemon::getDamageCoeff(int attacker_type, int attacked_type) {
         }
         if (attacked_type == TYPE_ICE) {
             coefficient = 2;
-        }     
+        }
     }
-    if (attacker_type == TYPE_ROCK) { 
-        if (attacked_type == TYPE_PLANT) { 
+    if (attacker_type == TYPE_ROCK) {
+        if (attacked_type == TYPE_PLANT) {
             coefficient = 0.5;
         }
         if (attacked_type == TYPE_FIRE) {
@@ -118,10 +118,10 @@ float Pokemon::getDamageCoeff(int attacker_type, int attacked_type) {
         }
         if (attacked_type == TYPE_ICE) {
             coefficient = 2;
-        }     
+        }
     }
-    if (attacker_type == TYPE_ICE) { 
-        if (attacked_type == TYPE_PLANT) { 
+    if (attacker_type == TYPE_ICE) {
+        if (attacked_type == TYPE_PLANT) {
             coefficient = 2;
         }
         if (attacked_type == TYPE_WATER) {
@@ -129,7 +129,7 @@ float Pokemon::getDamageCoeff(int attacker_type, int attacked_type) {
         }
         if (attacked_type == TYPE_FIRE) {
             coefficient = 0.5;
-        }     
-    }           
+        }
+    }
     return coefficient;
 }

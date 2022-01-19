@@ -27,9 +27,13 @@ public:
     void drawHealthPoint(Pokemon *pokemon, int x, int y);
 
     void drawDialog();
+
     void drawDialogPokemonChoice();
+
     void drawDialogAttackChoice();
+
     void drawDialogPostAttack();
+
     void drawDialogEnemyTurn();
 
     void setPokemon(Pokemon *pokemon) { Battle::pokemon = pokemon; };
@@ -91,11 +95,10 @@ public:
     void lose();
 
     static std::string state;
-    
 
     static int damagePokemon;
-    static int damageEnemy;
 
+    static int damageEnemy;
 
 private:
     Game *game;

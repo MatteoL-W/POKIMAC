@@ -58,12 +58,14 @@ void Inventory::drawPokemonSprite(int xOperator, int yOperator, SDL_Rect *srcPok
     SDL_RenderCopy(Game::renderer, Game::pokemonsTexture, srcPokemon, dstPokemon);
 }
 
-void Inventory::drawPokemonInfo(int xOperator, int yOperator, Pokemon* pokemon, SDL_Rect dstPokemon) {
+void Inventory::drawPokemonInfo(int xOperator, int yOperator, Pokemon *pokemon, SDL_Rect dstPokemon) {
     nameText->create(pokemon->getName(), BlackColor, "Press");
-    nameText->changeDestRect(getPadding(dstPokemon.w, nameText->getDestRect()) + dstPokemon.x, yOperator * (dstPokemon.y - 20) + dstPokemon.h + 25);
+    nameText->changeDestRect(getPadding(dstPokemon.w, nameText->getDestRect()) + dstPokemon.x,
+                             yOperator * (dstPokemon.y - 20) + dstPokemon.h + 25);
 
     typeText->create(types[pokemon->getType()], BlackColor, "Press");
-    typeText->changeDestRect(getPadding(dstPokemon.w, typeText->getDestRect()) + dstPokemon.x, yOperator * (dstPokemon.y - 20) + dstPokemon.h + 25 + 30);
+    typeText->changeDestRect(getPadding(dstPokemon.w, typeText->getDestRect()) + dstPokemon.x,
+                             yOperator * (dstPokemon.y - 20) + dstPokemon.h + 25 + 30);
 
     std::string pokemonHP =
             std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
