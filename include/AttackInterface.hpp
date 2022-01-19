@@ -25,6 +25,8 @@ public:
 
     void render();
 
+    bool isActive();
+
     Battle *getBattle() { return battle; };
 
     //int attack_0 = 12;

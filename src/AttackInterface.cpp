@@ -2,7 +2,6 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include <string>
-#include <time.h>
 #include "../include/AttacksFlag.hpp"
 #include "../include/AttackInterface.hpp"
 #include "../include/Colors.hpp"
@@ -46,7 +45,6 @@ void AttackInterface::handleEvents() {
             keyIsAlreadyPressed = true;
         }
 
-
         switch (event.key.keysym.sym) {
             case SDLK_ESCAPE:
                 Battle::state = "inactive";
@@ -67,18 +65,12 @@ void AttackInterface::handleEvents() {
 
             switch (event.key.keysym.sym) {
                 case SDLK_e:
-                    // TODO: attack N°0
-                    // faire une méthode pour calculer le nb de hp enlevé (en enlevant des HP fixes dans un premier temps puis prendre en compte le type par la suite)
-                    //<<<<faire une méthode pour retirer sur l'objet le nombre d'hp du dessus (genre pokemon->removeHealthPoints(int hp) où ça enlève les PV voulus)
-                    // afficher les dégats de l'attaque dans le texte informatif
-                    // battle->enemysTurn();
                     Battle::damageEnemy = pokemon->getAttackZero();
                     enemy->removeHealthPoint(Battle::damageEnemy);
                     Battle::state = "postAttack";
                     break;
 
                 case SDLK_g:
-                    // TODO: attack N°1
                     Battle::damageEnemy = pokemon->getAttackZero() * enemy->getDamageCoeff(pokemon->Pokemon::getType(), enemy->Pokemon::getType());
                     enemy->removeHealthPoint(Battle::damageEnemy);
                     Battle::state = "postAttack";
@@ -87,15 +79,12 @@ void AttackInterface::handleEvents() {
 
                     //cheatcodes
                 case SDLK_k:
-                    // appuyer sur K pour mettre les HP de l'adversaire à 0
-                    //enemy->kill();
                     enemy->kill();
                     break;
                 case SDLK_n:
                     enemy->updateHealthPoint(enemy->getHealthPoint() - 10);
                     break;
                 case SDLK_p:
-                    // appuyer sur P pour passer au tour de l'ennemi
                     battle->enemysTurn();
                     break;
             }
@@ -145,3 +134,8 @@ void AttackInterface::render() {
     SDL_RenderPresent(Game::renderer);
 }
 
+bool AttackInterface::isActive() {
+    if (game->attacking())
+        return true;
+    return false;
+}

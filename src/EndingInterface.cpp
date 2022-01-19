@@ -29,3 +29,9 @@ void EndingInterface::render() {
 
     SDL_RenderPresent(Game::renderer);
 }
+
+bool EndingInterface::isActive() {
+    if (game->ending())
+        return true;
+    return false;
+}

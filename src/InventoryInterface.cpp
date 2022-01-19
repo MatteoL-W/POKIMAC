@@ -42,3 +42,9 @@ void InventoryInterface::render() {
 
     SDL_RenderPresent(Game::renderer);
 }
+
+bool InventoryInterface::isActive() {
+    if (game->displayingInventory())
+        return true;
+    return false;
+}
