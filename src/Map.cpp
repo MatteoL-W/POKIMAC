@@ -19,7 +19,7 @@ int pokemonCounter = 20;
  */
 Map::Map(bool isCameraCentered) {
     tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/all_tileset_map_texture.png");
-    playerMapTexture = IMG_LoadTexture(Game::renderer, "assets/ethan_sprite.png");
+    playerMapTexture = IMG_LoadTexture(Game::renderer, "assets/characters/ethan_sprite.png");
     HealthCenterMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset1.png");
 
     srcTexture.x = srcTexture.y = 0;

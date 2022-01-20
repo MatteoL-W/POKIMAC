@@ -26,12 +26,22 @@ void StarterInterface::handleEvents() {
         for (int i = 0; i < 3; i++) {
             if (event.key.keysym.sym == SDL_KeysFrom1To3[i]) {
                 starter = new Pokemon(i);
+            }
+        }
+
+        switch(event.key.keysym.sym) {
+            case SDLK_RETURN:
+                if (starter == nullptr)
+                    starter = new Pokemon(0);
+
                 Game::inventory[0] = starter;
                 Game::inventoryLength++;
                 game->changeInterfaceToExploration();
-            }
+                break;
         }
+
     }
+
 }
 
 /**
