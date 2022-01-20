@@ -28,6 +28,14 @@ public:
 
     void drawDialog();
 
+    void drawDialogPokemonChoice();
+
+    void drawDialogAttackChoice();
+
+    void drawDialogPostAttack();
+
+    void drawDialogEnemyTurn();
+
     void setPokemon(Pokemon *pokemon) { Battle::pokemon = pokemon; };
 
     void setEnemy(Pokemon *enemy) { Battle::enemyPokemon = enemy; };
@@ -36,6 +44,10 @@ public:
 
     Pokemon *getEnemy() { return enemyPokemon; };
 
+    /**
+     * @brief When the state is 'pokemonChoice'
+     * @return
+     */
     bool isWaitingForPokemon() {
         if (state == "pokemonChoice") {
             return true;
@@ -43,6 +55,10 @@ public:
         return false;
     }
 
+    /**
+     * @brief When the state is 'waitingForAttack'
+     * @return
+     */
     bool isWaitingForAttack() {
         if (state == "waitingForAttack") {
             return true;
@@ -50,7 +66,22 @@ public:
         return false;
     }
 
-    bool isWaitingForAction() {
+    /**
+     * @brief When the state is 'postAttack'
+     * @return
+     */
+    bool isWaitingForActionPostAttack() {
+        if (state == "postAttack") {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @brief When the state is 'enemysTurn'
+     * @return
+     */
+    bool isWaitingForEnemyTurn() {
         if (state == "enemysTurn") {
             return true;
         }
@@ -65,6 +96,10 @@ public:
 
     static std::string state;
 
+    static int damagePokemon;
+
+    static int damageEnemy;
+
 private:
     Game *game;
 
@@ -73,6 +108,5 @@ private:
     Pokemon *pokemon;
 
     SDL_Texture *sceneBackgroundTexture;
-    SDL_Texture *pokemonsTexture;
     SDL_Texture *pokemonPlatformTexture;
 };

@@ -19,6 +19,8 @@ public:
 
     void render();
 
+    bool isActive();
+
     Map *getMap() { return map; };
 
 private:

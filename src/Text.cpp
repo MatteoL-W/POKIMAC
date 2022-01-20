@@ -25,6 +25,8 @@ void Text::create(std::string text, SDL_Color color, std::string fontName) {
     Text::surface = TTF_RenderText_Solid(Text::font, Text::message.c_str(), Text::color);
     Text::texture = SDL_CreateTextureFromSurface(Game::renderer, Text::surface);
     Text::destRect = createDestRect(Text::font, Text::message, 0, 0);
+
+    SDL_ClearError();
 }
 
 /**
@@ -32,8 +34,8 @@ void Text::create(std::string text, SDL_Color color, std::string fontName) {
  */
 void Text::draw() {
     SDL_RenderCopy(Game::renderer, Text::texture, NULL, &(Text::destRect));
-    SDL_FreeSurface(Text::surface);
-    SDL_DestroyTexture(Text::texture);
+    //SDL_FreeSurface(Text::surface);
+    //SDL_DestroyTexture(Text::texture);
 }
 
 /**

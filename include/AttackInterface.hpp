@@ -24,6 +24,8 @@ public:
 
     void render();
 
+    bool isActive();
+
     Battle *getBattle() { return battle; };
 
 private:
@@ -34,4 +36,5 @@ private:
     Pokemon *pokemon;
 
     Battle *battle;
+
 };

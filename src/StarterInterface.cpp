@@ -49,3 +49,9 @@ void StarterInterface::render() {
 
     SDL_RenderPresent(Game::renderer);
 }
+
+bool StarterInterface::isActive() {
+    if (game->starting())
+        return true;
+    return false;
+}

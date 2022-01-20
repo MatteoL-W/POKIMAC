@@ -5,6 +5,7 @@
 #include "Pokemon.hpp"
 
 const int MAX_POKEMON_INV = 6;
+const int MAX_POKEMONS_POKEDEX = 38;
 
 class Game {
 public:
@@ -19,6 +20,10 @@ public:
     void changeInterfaceToExplorationAndLevelUp();
 
     void changeInterfaceToExploration();
+
+    void changeInterfaceToInventory();
+
+    void changeInterfaceToEnding();
 
     void clean();
 
@@ -49,9 +54,25 @@ public:
         return false;
     };
 
+    bool displayingInventory() {
+        if (activity == "inInventory") {
+            return true;
+        }
+        return false;
+    };
+
+    bool ending() {
+        if (activity == "inEnd") {
+            return true;
+        }
+        return false;
+    }
+
     void setActivity(std::string newActivity) { activity = newActivity; };
 
     static SDL_Renderer *renderer;
+
+    static Pokemon *pokedex[MAX_POKEMONS_POKEDEX];
 
     static Pokemon *inventory[MAX_POKEMON_INV];
 
@@ -59,9 +80,11 @@ public:
 
     static int level;
 
-    static const int WINDOW_WIDTH = 800;
+    static SDL_Texture *pokemonsTexture;
 
-    static const int WINDOW_HEIGHT = 800;
+    static const int WINDOW_WIDTH = 750;
+    static const int WINDOW_HEIGHT = 750;
+    static constexpr float SCALE_CAMERA = WINDOW_WIDTH / (float) 800;
 
     SDL_Event event;
 

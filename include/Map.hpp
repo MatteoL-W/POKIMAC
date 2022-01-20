@@ -2,6 +2,7 @@
 
 #include "MapTileFlag.hpp"
 #include "Pokemon.hpp"
+#include "Game.hpp"
 
 int getStartingPos(int playerPosition, int mapWidth, int centeredScale);
 
@@ -11,14 +12,14 @@ int getRandomNumberTo(int max);
 
 class Map {
 public:
+    static const int BOSS_LEVEL = 5;
     static const int MAP_WIDTH = 25;
     static const int MAP_HEIGHT = 25;
-    int MAP_CELL_WIDTH = 32;
-    int MAP_CELL_HEIGHT = 32;
+    float MAP_CELL_WIDTH = 32 * Game::SCALE_CAMERA;
+    float MAP_CELL_HEIGHT = 32 * Game::SCALE_CAMERA;
 
     int MAP_PLAYER_X = 8;
     int MAP_PLAYER_Y = 3;
-
 
     Map(bool isCameraCentered);
 
@@ -53,14 +54,13 @@ public:
     bool getInteractingHealthCenter() { return canBeCured; }
 
 private:
-    Pokemon pokemon[20];
+    Pokemon pokemon[50];
     //TODO alloc dynamique
     SDL_Rect srcTexture, srcPlayer, srcPokemon, srcHealthCenter;
     SDL_Rect dest1by1, dest2by2;
 
     SDL_Texture *tilesetMapTexture;
     SDL_Texture *playerMapTexture;
-    SDL_Texture *pokemonMapTexture;
     SDL_Texture *HealthCenterMapTexture;
 
     int mapArray[MAP_HEIGHT][MAP_WIDTH];

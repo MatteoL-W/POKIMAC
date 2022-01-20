@@ -26,6 +26,8 @@ public:
 
     int getSize() { return size; };
 
+    int getDestRect() { return destRect.w; };
+
 private:
     std::string message;
 

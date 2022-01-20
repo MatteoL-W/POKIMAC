@@ -34,7 +34,7 @@ void ExplorationInterface::handleEvents() {
             case SDLK_e:
                 for (int i = 0; i < Game::inventoryLength; i++) {
                     if (Game::inventory[i]->getHealthPoint() != Game::inventory[i]->getMaxHealthPoint()) {
-                        Game::inventory[i]->updateHealthPoint(Game::inventory[i]->getMaxHealthPoint());
+                        Game::inventory[i]->heal();
                     }
                 }
                 break;
@@ -66,6 +66,10 @@ void ExplorationInterface::handleEvents() {
                 break;
             case SDLK_m:
                 map->toggleCamera();
+                break;
+            case SDLK_i:
+                game->changeInterfaceToInventory();
+                break;
             default:
                 break;
         }
@@ -88,7 +92,7 @@ void ExplorationInterface::update() {
     }
 
     if (map->getInteractingHealthCenter()) {
-        text->changeText("Appuyer sur [E] pour soigner les Pokemons");
+        text->changeText("Appuyer sur [E] pour soigner");
         text->changeDestRect(40, Game::WINDOW_HEIGHT - 100);
     }
 }
@@ -110,4 +114,10 @@ void ExplorationInterface::render() {
     }
 
     SDL_RenderPresent(Game::renderer);
+}
+
+bool ExplorationInterface::isActive() {
+    if (game->exploring())
+        return true;
+    return false;
 }
