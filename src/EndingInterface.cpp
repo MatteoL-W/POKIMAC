@@ -30,6 +30,10 @@ void EndingInterface::render() {
     SDL_RenderPresent(Game::renderer);
 }
 
+/**
+ * @brief Return true if the ending interface is active
+ * @return
+ */
 bool EndingInterface::isActive() {
     if (game->ending())
         return true;

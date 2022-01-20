@@ -22,7 +22,6 @@ void InventoryInterface::handleEvents() {
                 break;
         }
     }
-
 }
 
 /**
@@ -43,6 +42,10 @@ void InventoryInterface::render() {
     SDL_RenderPresent(Game::renderer);
 }
 
+/**
+ * @brief Return true if the inventory interface is active
+ * @return
+ */
 bool InventoryInterface::isActive() {
     if (game->displayingInventory())
         return true;
