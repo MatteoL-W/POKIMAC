@@ -7,6 +7,7 @@
 #include "../include/Text.hpp"
 #include "../include/Colors.hpp"
 #include "../include/Game.hpp"
+#include "../include/Utils.hpp"
 
 int Battle::damagePokemon = 0;
 int Battle::damageEnemy = 0;
@@ -113,15 +114,16 @@ void Battle::drawBackground() {
  * @brief Order the draw of enemy and pokemon graphics
  */
 void Battle::drawPokemonGraphics() {
+    int padding = getPadding(Game::WINDOW_WIDTH, maxWidthBar / 2);
     // Drawing enemy pokemon
-    drawPokemon(enemyPokemon, 175, 180);
-    drawHealthPoint(enemyPokemon, 175, 180);
+    drawPokemon(enemyPokemon, padding, 0, 1);
+    drawHealthPoint(enemyPokemon, padding, -30, 1);
     //________________________________________________________________________
 
     // Drawing friend pokemon
     if (pokemon != nullptr) {
-        drawPokemon(pokemon, Game::WINDOW_WIDTH - 250, 180);
-        drawHealthPoint(pokemon, Game::WINDOW_HEIGHT - 250, 180);
+        drawPokemon(pokemon, padding, 280, 0);
+        drawHealthPoint(pokemon, padding, 140, 0);
     }
     //________________________________________________________________________
 }
@@ -219,7 +221,7 @@ void Battle::drawDialogEnemyTurn() {
  * @param x
  * @param y
  */
-void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
+void Battle::drawPokemon(Pokemon *pokemon, int x, int y, bool enemy) {
     SDL_Rect destPokemon, srcPokemon, destPlatform;
     destPokemon.w = destPokemon.h = 64;
     destPokemon.x = x;
@@ -227,7 +229,7 @@ void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
 
     srcPokemon.w = srcPokemon.h = 32;
     srcPokemon.x = pokemon->getXSpriteCoordinate();
-    srcPokemon.y = pokemon->getYSpriteCoordinate();
+    srcPokemon.y = (enemy == false) ? (pokemon->getYSpriteCoordinate() + 32) : pokemon->getYSpriteCoordinate();
 
     destPlatform.w = 137;
     destPlatform.h = 46;
@@ -244,22 +246,26 @@ void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
  * @param x
  * @param y
  */
-void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
+void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y, bool enemy) {
     // Health Points
-    std::string pokemonHP =
-            std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
+    std::string pokemonName = enemy ? pokemon->getName() : "You";
+    std::string pokemonHP = "(" + pokemonName + ") " + std::to_string(pokemon->getHealthPoint()) + " / "
+            + std::to_string(pokemon->getMaxHealthPoint());
     enemyTextHP->create(pokemonHP, WhiteColor, "Press");
 
-    enemyTextHP->changeDestRect(x - 55, y + 140);
+    int rectY = enemy ? y + 155 : y + 70;
+    int rectW = enemyTextHP->getDestRect();
+    enemyTextHP->changeDestRect(getPadding(Game::WINDOW_WIDTH, rectW) - 30, rectY);
     enemyTextHP->draw();
     //________________________________________________________________________
 
+    int healthBarY = y + 110;
     // Health Bar Max
     SDL_SetRenderDrawColor(Game::renderer, 255, 255, 255, 255);
 
     SDL_Rect healthBarMax;
     healthBarMax.x = x - 90;
-    healthBarMax.y = y + 90;
+    healthBarMax.y = healthBarY;
     healthBarMax.w = maxWidthBar;
     healthBarMax.h = 25;
 
@@ -275,7 +281,7 @@ void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
 
     SDL_Rect healthBar;
     healthBar.x = x - 90;
-    healthBar.y = y + 95;
+    healthBar.y = healthBarY + 5;
     healthBar.w = maxWidthBar * healthPercent / 100;
     healthBar.h = 15;
 
