@@ -116,6 +116,10 @@ void ExplorationInterface::render() {
     SDL_RenderPresent(Game::renderer);
 }
 
+/**
+ * @brief Return true if the exploration interface is active
+ * @return
+ */
 bool ExplorationInterface::isActive() {
     if (game->exploring())
         return true;

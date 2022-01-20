@@ -133,6 +133,10 @@ void AttackInterface::render() {
     SDL_RenderPresent(Game::renderer);
 }
 
+/**
+ * @brief Return true if the attack interface is active
+ * @return
+ */
 bool AttackInterface::isActive() {
     if (game->attacking())
         return true;

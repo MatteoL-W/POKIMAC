@@ -80,6 +80,10 @@ void StarterInterface::render() {
     SDL_RenderPresent(Game::renderer);
 }
 
+/**
+ * @brief Return true if the starter interface is active
+ * @return
+ */
 bool StarterInterface::isActive() {
     if (game->starting())
         return true;

@@ -59,10 +59,10 @@ void Game::init(const std::string title) {
         starterInterface = new StarterInterface(this);
         explorationInterface = new ExplorationInterface(this);
         attackInterface = new AttackInterface(this, attackedPokemon, attackerPokemon);
-        battle = attackInterface->getBattle();
         inventoryInterface = new InventoryInterface(this);
         endingInterface = new EndingInterface(this);
         map = explorationInterface->getMap();
+        battle = attackInterface->getBattle();
 
         interfaces.push_back(starterInterface);
         interfaces.push_back(explorationInterface);
