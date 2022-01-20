@@ -19,7 +19,6 @@ int pokemonCounter = 20;
  */
 Map::Map(bool isCameraCentered) {
     tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/all_tileset_map_texture.png");
-    playerMapTexture = IMG_LoadTexture(Game::renderer, "assets/characters/ethan_sprite.png");
     HealthCenterMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset1.png");
 
     srcTexture.x = srcTexture.y = 0;
@@ -163,7 +162,7 @@ void Map::drawMap() {
 
             // If the cell is also the player emplacement
             if (mapArray[row][column] == MAP_PLAYER) {
-                SDL_RenderCopy(Game::renderer, playerMapTexture, &srcPlayer, &dest1by1);
+                SDL_RenderCopy(Game::renderer, Game::characterTexture, &srcPlayer, &dest1by1);
             }
         }
     }

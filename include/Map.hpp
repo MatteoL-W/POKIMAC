@@ -60,7 +60,6 @@ private:
     SDL_Rect dest1by1, dest2by2;
 
     SDL_Texture *tilesetMapTexture;
-    SDL_Texture *playerMapTexture;
     SDL_Texture *HealthCenterMapTexture;
 
     int mapArray[MAP_HEIGHT][MAP_WIDTH];

@@ -21,6 +21,7 @@ std::vector<Interface *> interfaces;
 
 SDL_Renderer *Game::renderer = nullptr;
 SDL_Texture *Game::pokemonsTexture = nullptr;
+SDL_Texture *Game::characterTexture = nullptr;
 int Game::level = 0;
 
 StarterInterface *starterInterface = nullptr;

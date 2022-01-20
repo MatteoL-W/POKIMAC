@@ -82,6 +82,8 @@ public:
 
     static SDL_Texture *pokemonsTexture;
 
+    static SDL_Texture *characterTexture;
+
     static const int WINDOW_WIDTH = 750;
     static const int WINDOW_HEIGHT = 750;
     static constexpr float SCALE_CAMERA = WINDOW_WIDTH / (float) 800;
