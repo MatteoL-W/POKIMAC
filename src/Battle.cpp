@@ -72,8 +72,14 @@ void Battle::load() {
     fourthPokemonText->create("", WhiteColor, "Press");
     fifthPokemonText->create("", WhiteColor, "Press");
     sixPokemonText->create("", WhiteColor, "Press");
-    exitText->create("", WhiteColor, "Press");
+    exitText->create("[EXIT] Annuler", WhiteColor, "Press");
     dialogText->create("", WhiteColor, "Press");
+    enemyTextHP->create("", WhiteColor, "Press");
+
+    destPokemon.w = destPokemon.h = 64;
+    srcPokemon.w = srcPokemon.h = 32;
+    destPlatform.w = 137;
+    destPlatform.h = 46;
 
     sceneBackgroundTexture = IMG_LoadTexture(Game::renderer, "assets/attack_scene.png");
     pokemonPlatformTexture = IMG_LoadTexture(Game::renderer, "assets/attack_platform.png");
@@ -154,19 +160,22 @@ void Battle::drawDialogPokemonChoice() {
     dialogText->changeText("Choisissez votre pokemon");
 
     for (int i = 0; i < Game::inventoryLength; i++) {
-        pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + Game::inventory[i]->getName() + " - " +
-                                         std::to_string(Game::inventory[i]->getHealthPoint()) + "pv");
+        std::string pokemonId = "[" + std::to_string(i) + "] ";
+        std::string pokemonInfo = Game::inventory[i]->getName() + " - " + std::to_string(Game::inventory[i]->getHealthPoint()) + "pv";
+        pokemonListsTexts[i]->changeText( pokemonId + pokemonInfo );
 
         if (Game::inventory[i]->getHealthPoint() <= 0) {
             pokemonListsTexts[i]->changeColor(GreyColor);
+        } else {
+            pokemonListsTexts[i]->changeColor(WhiteColor);
         }
         pokemonListsTexts[i]->changeDestRect(86, 550 + 30 * i);
-        pokemonListsTexts[i]->changeFont("Press", 22);
+        //pokemonListsTexts[i]->changeFont("Press", 22);
         pokemonListsTexts[i]->draw();
     }
 
-    exitText->changeText("[EXIT] Annuler");
-    exitText->changeFont("Press", 22);
+    //exitText->changeText("[EXIT] Annuler");
+    //exitText->changeFont("Press", 22);
     exitText->changeDestRect(86, 550 + 30 * Game::inventoryLength);
     exitText->draw();
 }
@@ -177,13 +186,15 @@ void Battle::drawDialogPokemonChoice() {
 void Battle::drawDialogAttackChoice() {
     dialogText->changeText("Choisissez votre attaque");
 
-    firstAttackText->changeFont("Press", 32);
+    //firstAttackText->changeFont("Press", 32);
     firstAttackText->changeText("[E] " + attacks[0]);
+    firstAttackText->changeColor(WhiteColor);
     firstAttackText->changeDestRect(86, 580);
     firstAttackText->draw();
 
-    secondAttackText->changeFont("Press", 32);
+    //secondAttackText->changeFont("Press", 32);
     secondAttackText->changeText("[G] " + attacks[pokemon->getType()]);
+    secondAttackText->changeColor(WhiteColor);
     secondAttackText->changeDestRect(86, 630);
     secondAttackText->draw();
 }
@@ -221,17 +232,16 @@ void Battle::drawDialogEnemyTurn() {
  * @param y
  */
 void Battle::drawPokemon(Pokemon *pokemon, int x, int y, bool enemy) {
-    SDL_Rect destPokemon, srcPokemon, destPlatform;
-    destPokemon.w = destPokemon.h = 64;
+    //destPokemon.w = destPokemon.h = 64;
     destPokemon.x = x;
     destPokemon.y = y;
 
-    srcPokemon.w = srcPokemon.h = 32;
+    //srcPokemon.w = srcPokemon.h = 32;
     srcPokemon.x = pokemon->getXSpriteCoordinate();
     srcPokemon.y = (enemy == false) ? (pokemon->getYSpriteCoordinate() + 32) : pokemon->getYSpriteCoordinate();
 
-    destPlatform.w = 137;
-    destPlatform.h = 46;
+    //destPlatform.w = 137;
+    //destPlatform.h = 46;
     destPlatform.x = destPokemon.x - 40;
     destPlatform.y = destPokemon.y + 30;
 
@@ -250,7 +260,7 @@ void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y, bool enemy) {
     std::string pokemonName = enemy ? pokemon->getName() : "You";
     std::string pokemonHP = "(" + pokemonName + ") " + std::to_string(pokemon->getHealthPoint()) + " / "
             + std::to_string(pokemon->getMaxHealthPoint());
-    enemyTextHP->create(pokemonHP, WhiteColor, "Press");
+    enemyTextHP->changeText(pokemonHP);
 
     int rectY = enemy ? y + 155 : y + 70;
     int rectW = enemyTextHP->getDestRect();

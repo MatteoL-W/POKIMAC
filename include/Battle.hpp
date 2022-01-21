@@ -108,5 +108,8 @@ private:
     Pokemon *pokemon;
 
     SDL_Texture *sceneBackgroundTexture;
+
     SDL_Texture *pokemonPlatformTexture;
+
+    SDL_Rect destPokemon, srcPokemon, destPlatform;
 };

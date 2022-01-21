@@ -43,6 +43,8 @@ void Text::draw() {
  * @param newText
  */
 void Text::changeText(std::string newText) {
+    SDL_FreeSurface(Text::surface);
+    SDL_DestroyTexture(Text::texture);
     Text::message = newText.c_str();
     Text::surface = TTF_RenderText_Solid(Text::font, Text::message.c_str(), Text::color);
     Text::texture = SDL_CreateTextureFromSurface(Game::renderer, Text::surface);
@@ -54,6 +56,8 @@ void Text::changeText(std::string newText) {
  * @param newText
  */
 void Text::changeColor(SDL_Color newColor) {
+    SDL_FreeSurface(Text::surface);
+    SDL_DestroyTexture(Text::texture);
     Text::color = newColor;
     Text::surface = TTF_RenderText_Solid(Text::font, Text::message.c_str(), Text::color);
     Text::texture = SDL_CreateTextureFromSurface(Game::renderer, Text::surface);
