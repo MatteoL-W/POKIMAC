@@ -7,6 +7,7 @@
 #include "../include/Text.hpp"
 #include "../include/Colors.hpp"
 #include "../include/Game.hpp"
+#include "../include/Utils.hpp"
 #include "../include/PokemonsFromId.hpp"
 
 int Battle::damagePokemon = 0;
@@ -35,8 +36,6 @@ Text *pokemonListsTexts[6] = {
         fifthPokemonText,
         sixPokemonText
 };
-
-//Text *inventoryText = new Text();
 
 int maxWidthBar = 240, dynamicRed, dynamicGreen;
 
@@ -75,9 +74,14 @@ void Battle::load() {
     fourthPokemonText->create("", WhiteColor, "Press");
     fifthPokemonText->create("", WhiteColor, "Press");
     sixPokemonText->create("", WhiteColor, "Press");
-    exitText->create("", WhiteColor, "Press");
+    exitText->create("[EXIT] Annuler", WhiteColor, "Press");
     dialogText->create("", WhiteColor, "Press");
-    //inventoryText->create("", WhiteColor, "Press");
+    enemyTextHP->create("", WhiteColor, "Press");
+
+    destPokemon.w = destPokemon.h = 64;
+    srcPokemon.w = srcPokemon.h = 32;
+    destPlatform.w = 137;
+    destPlatform.h = 46;
 
     sceneBackgroundTexture = IMG_LoadTexture(Game::renderer, "assets/attack_scene.png");
     pokemonPlatformTexture = IMG_LoadTexture(Game::renderer, "assets/attack_platform.png");
@@ -118,15 +122,16 @@ void Battle::drawBackground() {
  * @brief Order the draw of enemy and pokemon graphics
  */
 void Battle::drawPokemonGraphics() {
+    int padding = getPadding(Game::WINDOW_WIDTH, maxWidthBar / 2);
     // Drawing enemy pokemon
-    drawPokemon(enemyPokemon, 175, 180);
-    drawHealthPoint(enemyPokemon, 175, 180);
+    drawPokemon(enemyPokemon, padding, 0, 1);
+    drawHealthPoint(enemyPokemon, padding, -30, 1);
     //________________________________________________________________________
 
     // Drawing friend pokemon
     if (pokemon != nullptr) {
-        drawPokemon(pokemon, Game::WINDOW_WIDTH - 250, 180);
-        drawHealthPoint(pokemon, Game::WINDOW_HEIGHT - 250, 180);
+        drawPokemon(pokemon, padding, 280, 0);
+        drawHealthPoint(pokemon, padding, 140, 0);
     }
     //________________________________________________________________________
 }
@@ -157,19 +162,20 @@ void Battle::drawDialogPokemonChoice() {
     dialogText->changeText("Choisissez votre pokemon");
 
     for (int i = 0; i < Game::inventoryLength; i++) {
-        pokemonListsTexts[i]->changeText("[" + std::to_string(i) + "] " + Game::inventory[i]->getName() + " - " +
-                                         std::to_string(Game::inventory[i]->getHealthPoint()) + "pv");
+        std::string pokemonId = "[" + std::to_string(i) + "] ";
+        std::string pokemonInfo = Game::inventory[i]->getName() + " - " + std::to_string(Game::inventory[i]->getHealthPoint()) + "pv";
+        pokemonListsTexts[i]->changeText( pokemonId + pokemonInfo );
 
         if (Game::inventory[i]->getHealthPoint() <= 0) {
             pokemonListsTexts[i]->changeColor(GreyColor);
+        } else {
+            pokemonListsTexts[i]->changeColor(WhiteColor);
         }
         pokemonListsTexts[i]->changeDestRect(86, 550 + 30 * i);
-        pokemonListsTexts[i]->changeFont("Press", 22);
         pokemonListsTexts[i]->draw();
     }
 
     exitText->changeText("[EXIT] Annuler");
-    exitText->changeFont("Press", 22);
     exitText->changeDestRect(86, 550 + 30 * Game::inventoryLength);
     exitText->draw();
 }
@@ -180,13 +186,13 @@ void Battle::drawDialogPokemonChoice() {
 void Battle::drawDialogAttackChoice() {
     dialogText->changeText("Choisissez votre attaque");
 
-    firstAttackText->changeFont("Press", 32);
     firstAttackText->changeText("[E] " + attacks[0]);
+    firstAttackText->changeColor(WhiteColor);
     firstAttackText->changeDestRect(86, 580);
     firstAttackText->draw();
 
-    secondAttackText->changeFont("Press", 32);
     secondAttackText->changeText("[G] " + attacks[pokemon->getType()]);
+    secondAttackText->changeColor(WhiteColor);
     secondAttackText->changeDestRect(86, 630);
     secondAttackText->draw();
 }
@@ -223,18 +229,13 @@ void Battle::drawDialogEnemyTurn() {
  * @param x
  * @param y
  */
-void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
-    SDL_Rect destPokemon, srcPokemon, destPlatform;
-    destPokemon.w = destPokemon.h = 64;
+void Battle::drawPokemon(Pokemon *pokemon, int x, int y, bool enemy) {
     destPokemon.x = x;
     destPokemon.y = y;
 
-    srcPokemon.w = srcPokemon.h = 32;
     srcPokemon.x = pokemon->getXSpriteCoordinate();
-    srcPokemon.y = pokemon->getYSpriteCoordinate();
+    srcPokemon.y = (enemy == false) ? (pokemon->getYSpriteCoordinate() + 32) : pokemon->getYSpriteCoordinate();
 
-    destPlatform.w = 137;
-    destPlatform.h = 46;
     destPlatform.x = destPokemon.x - 40;
     destPlatform.y = destPokemon.y + 30;
 
@@ -248,22 +249,26 @@ void Battle::drawPokemon(Pokemon *pokemon, int x, int y) {
  * @param x
  * @param y
  */
-void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
+void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y, bool enemy) {
     // Health Points
-    std::string pokemonHP =
-            std::to_string(pokemon->getHealthPoint()) + " / " + std::to_string(pokemon->getMaxHealthPoint());
-    enemyTextHP->create(pokemonHP, WhiteColor, "Press");
+    std::string pokemonName = enemy ? pokemon->getName() : "You";
+    std::string pokemonHP = "(" + pokemonName + ") " + std::to_string(pokemon->getHealthPoint()) + " / "
+            + std::to_string(pokemon->getMaxHealthPoint());
+    enemyTextHP->changeText(pokemonHP);
 
-    enemyTextHP->changeDestRect(x - 55, y + 140);
+    int rectY = enemy ? y + 155 : y + 70;
+    int rectW = enemyTextHP->getDestRect();
+    enemyTextHP->changeDestRect(getPadding(Game::WINDOW_WIDTH, rectW) - 30, rectY);
     enemyTextHP->draw();
     //________________________________________________________________________
 
+    int healthBarY = y + 110;
     // Health Bar Max
     SDL_SetRenderDrawColor(Game::renderer, 255, 255, 255, 255);
 
     SDL_Rect healthBarMax;
     healthBarMax.x = x - 90;
-    healthBarMax.y = y + 90;
+    healthBarMax.y = healthBarY;
     healthBarMax.w = maxWidthBar;
     healthBarMax.h = 25;
 
@@ -279,7 +284,7 @@ void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y) {
 
     SDL_Rect healthBar;
     healthBar.x = x - 90;
-    healthBar.y = y + 95;
+    healthBar.y = healthBarY + 5;
     healthBar.w = maxWidthBar * healthPercent / 100;
     healthBar.h = 15;
 

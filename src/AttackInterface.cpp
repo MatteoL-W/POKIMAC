@@ -61,7 +61,7 @@ void AttackInterface::handleEvents() {
         if (!keyIsAlreadyPressed) {
             pokemon = battle->getPokemon();
             enemy = battle->getEnemy();
-            if (pokemon->getHealthPoint() <= 0) {
+            /*if (pokemon->getHealthPoint() <= 0) {
                 battle->lose();
                 if (Game::level == 5 ) {
                     if (Battle::state == "waitingForMew") {
@@ -76,7 +76,7 @@ void AttackInterface::handleEvents() {
                     }
                 }
                 return;
-            }
+            }*/
 
             switch (event.key.keysym.sym) {
                 case SDLK_e:
@@ -118,22 +118,14 @@ void AttackInterface::handleEvents() {
 
     if (battle->isWaitingForEnemyTurn() && event.type == SDL_KEYDOWN) {
         if (!keyIsAlreadyPressed) {
+            if (pokemon->getHealthPoint() <= 0) {
+                battle->lose();
+                return;
+            }
             Battle::state = "waitingForAttack";
             keyIsAlreadyPressed = true;
         }
     }
-    // if (Game::level == 5 ) {
-    //     if (Battle::state == "waitingForMew") {
-    //         inventoryText->create("Vous avez debloque un Pokemon !", WhiteColor, "Press");
-    //         newPokemonText->create("Appuyer sur [I]", WhiteColor, "Press");
-    //         // newPokemonText->changeText("Vous avez debloque un Pokemon !");
-    //         // inventoryText->changeText("Appuyer sur [I]");
-    //         newPokemonText->changeDestRect(86, 485);
-    //         newPokemonText->draw();
-    //         inventoryText->changeDestRect(86, 580);
-    //         inventoryText->draw();
-    //     }
-    // }
 }
 
 /**

@@ -8,6 +8,7 @@
 #include "../include/Pokemon.hpp"
 #include "../include/Text.hpp"
 #include "../include/Colors.hpp"
+#include "../include/Utils.hpp"
 
 /**
  * @brief Draw the inventory
@@ -78,8 +79,4 @@ void Inventory::drawPokemonInfo(int xOperator, int yOperator, Pokemon *pokemon, 
     nameText->draw();
     typeText->draw();
     healthPointText->draw();
-}
-
-int getPadding(int blockWidth, int textWidth) {
-    return (blockWidth - textWidth) / 2;
 }

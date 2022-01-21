@@ -12,7 +12,8 @@ public:
         Starter::chosenCharacter = new Text();
         Starter::chosenStarter = new Text();
 
-        Starter::background = IMG_LoadTexture(Game::renderer, "assets/starter.png");
+        Starter::backgroundStarter = IMG_LoadTexture(Game::renderer, "assets/starter.png");
+        Starter::rules = IMG_LoadTexture(Game::renderer, "assets/rules.png");
         chosenCharacter->create("x", GreyColor, "Press");
         chosenStarter->create("x", GreyColor, "Press");
     };
@@ -21,7 +22,9 @@ public:
 
     void update();
 
-    void draw();
+    void drawRules();
+
+    void drawStarter();
 
     static const int MAX_KEYS_FROM_1_TO_3 = 3;
 
@@ -36,6 +39,8 @@ private:
 
     Text *chosenStarter;
 
-    SDL_Texture *background;
+    SDL_Texture *backgroundStarter;
+
+    SDL_Texture *rules;
 
 };
