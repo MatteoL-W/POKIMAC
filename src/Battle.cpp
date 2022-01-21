@@ -36,7 +36,7 @@ Text *pokemonListsTexts[6] = {
         sixPokemonText
 };
 
-Text *inventoryText = new Text();
+//Text *inventoryText = new Text();
 
 int maxWidthBar = 240, dynamicRed, dynamicGreen;
 
@@ -77,7 +77,7 @@ void Battle::load() {
     sixPokemonText->create("", WhiteColor, "Press");
     exitText->create("", WhiteColor, "Press");
     dialogText->create("", WhiteColor, "Press");
-    inventoryText->create("", WhiteColor, "Press");
+    //inventoryText->create("", WhiteColor, "Press");
 
     sceneBackgroundTexture = IMG_LoadTexture(Game::renderer, "assets/attack_scene.png");
     pokemonPlatformTexture = IMG_LoadTexture(Game::renderer, "assets/attack_platform.png");
@@ -195,7 +195,6 @@ void Battle::drawDialogAttackChoice() {
  * @brief Draw the Post Attack Dialog
  */
 void Battle::drawDialogPostAttack() {
-    //std::string damageHP = enemyPokemon->getName() + " a perdu " + std::to_string(12) + "PV";
     std::string damageHP = enemyPokemon->getName() + " a perdu " + std::to_string(damageEnemy) + "PV";
     dialogText->changeText(damageHP);
     if (enemyPokemon->getHealthPoint() <= 0) {
@@ -342,10 +341,7 @@ void Battle::lose() {
 
 
     if (Game::level == 5) {
-        dialogText->changeText("Vous avez debloque un Pokemon !");
-        inventoryText->changeText("Appuyer sur [I]");
-        inventoryText->changeDestRect(86, 580);
-        inventoryText->draw();
+        Battle::state = "waitingForMew";
         Pokemon *mew = new Pokemon(POKEMON_MEW);
         Game::inventory[0] = mew;
     }

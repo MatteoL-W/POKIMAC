@@ -15,6 +15,8 @@ void Ending::draw() {
     // Draw the background
     SDL_RenderCopy(Game::renderer, backgroundTexture, NULL, NULL);
 
+    drawSprite();
+
     // Draw the pokemons
     int xOperator = 0;
     for (int i = 0; i < Game::inventoryLength; i++) {
@@ -23,19 +25,18 @@ void Ending::draw() {
         xOperator++;
     }
 
-    drawSprite();
-    //drawText();
-
 }
 
 
 void Ending::drawSprite() {
     srcPlayer.x = srcPlayer.y = 0;
+    srcPlayer.h = srcPlayer.w = 64;
     destPlayer.w = destPlayer.h = (Game::WINDOW_WIDTH / 4);
+    //destPlayer.w = destPlayer.h = 32 * Game::SCALE_CAMERA;
     destPlayer.x = (Game::WINDOW_WIDTH / 2) - (destPlayer.w / 2);
-    destPlayer.y = Game::WINDOW_WIDTH * 2/5;
+    destPlayer.y = Game::WINDOW_WIDTH * 3/10;
 
-    SDL_RenderCopy(Game::renderer, playerTexture, &srcPlayer, &destPlayer);
+    SDL_RenderCopy(Game::renderer, Game::characterTexture, &srcPlayer, &destPlayer);
 }
 
 void Ending::drawPokemons(Pokemon *pokemon, int xOperator) {
@@ -50,14 +51,3 @@ void Ending::drawPokemons(Pokemon *pokemon, int xOperator) {
 
     SDL_RenderCopy(Game::renderer, Game::pokemonsTexture, &srcPokemon, &destPokemon);
 }
-
-// void Ending::drawText() {
-//     congratsText->create("Bravo !", WhiteColor, "Press");
-//     congratsText->changeDestRect(86, Game::WINDOW_WIDTH * 1/6);
-
-//     creditsText->create("Matteo Leclercq, Emily-Rose Strich", WhiteColor, "Press");
-//     creditsText->changeDestRect(86, Game::WINDOW_WIDTH * 5/6);
-
-//     congratsText->draw();
-//     creditsText->draw();
-// }

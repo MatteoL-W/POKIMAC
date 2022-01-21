@@ -10,6 +10,7 @@
 #include "../include/Text.hpp"
 #include "../include/Colors.hpp"
 #include "../include/Interface.hpp"
+#include "../include/StarterInterface.hpp"
 #include "../include/AttackInterface.hpp"
 #include "../include/ExplorationInterface.hpp"
 #include "../include/InventoryInterface.hpp"
@@ -20,8 +21,10 @@ std::vector<Interface *> interfaces;
 
 SDL_Renderer *Game::renderer = nullptr;
 SDL_Texture *Game::pokemonsTexture = nullptr;
+SDL_Texture *Game::characterTexture = nullptr;
 int Game::level = 0;
 
+StarterInterface *starterInterface = nullptr;
 AttackInterface *attackInterface = nullptr;
 ExplorationInterface *explorationInterface = nullptr;
 InventoryInterface *inventoryInterface = nullptr;
@@ -53,17 +56,15 @@ void Game::init(const std::string title) {
         renderer = SDL_CreateRenderer(window, -1, 0);
         Game::pokemonsTexture = IMG_LoadTexture(Game::renderer, "assets/pokemon_sprite.png");
 
+        starterInterface = new StarterInterface(this);
         explorationInterface = new ExplorationInterface(this);
         attackInterface = new AttackInterface(this, attackedPokemon, attackerPokemon);
         inventoryInterface = new InventoryInterface(this);
         endingInterface = new EndingInterface(this);
-        battle = attackInterface->getBattle();
         map = explorationInterface->getMap();
+        battle = attackInterface->getBattle();
 
-        Pokemon *starter = new Pokemon(0);
-        Game::inventory[0] = starter;
-        Game::inventoryLength++;
-
+        interfaces.push_back(starterInterface);
         interfaces.push_back(explorationInterface);
         interfaces.push_back(attackInterface);
         interfaces.push_back(inventoryInterface);
@@ -108,6 +109,9 @@ void Game::changeInterfaceToInventory() {
     setActivity("inInventory");
 }
 
+/**
+ * @brief Change the interface to ending
+ */
 void Game::changeInterfaceToEnding() {
     setActivity("inEnd");
 }

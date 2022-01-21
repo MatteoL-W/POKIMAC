@@ -73,7 +73,12 @@ void Pokemon::updateSprite() {
     sprite_x = getOriginalXSpriteCoordinate() + (32 * static_cast<int>((SDL_GetTicks() / speed) % frames));
 }
 
-
+/**
+ * @brief Calculate the damage coefficient
+ * @param attacker_type
+ * @param attacked_type
+ * @return
+ */
 float Pokemon::getDamageCoeff(int attacker_type, int attacked_type) {
     float coefficient = 1;
     if (attacker_type == attacked_type) {

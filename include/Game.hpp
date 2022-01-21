@@ -33,6 +33,13 @@ public:
 
     bool running() { return isRunning; };
 
+    bool starting() {
+        if (activity == "inStarter") {
+            return true;
+        }
+        return false;
+    };
+
     bool exploring() {
         if (activity == "inExploration") {
             return true;
@@ -75,8 +82,12 @@ public:
 
     static SDL_Texture *pokemonsTexture;
 
+    static SDL_Texture *characterTexture;
+
     static const int WINDOW_WIDTH = 750;
+
     static const int WINDOW_HEIGHT = 750;
+
     static constexpr float SCALE_CAMERA = WINDOW_WIDTH / (float) 800;
 
     SDL_Event event;
@@ -84,7 +95,7 @@ public:
 private:
     bool isRunning = false;
 
-    std::string activity = "inExploration";
+    std::string activity = "inStarter";
 
     SDL_Window *window;
 };

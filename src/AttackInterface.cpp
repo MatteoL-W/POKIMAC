@@ -13,6 +13,9 @@
 Pokemon *pokemon = nullptr;
 Pokemon *enemy = nullptr;
 
+Text *inventoryText = new Text();
+Text *newPokemonText = new Text();
+
 int SDL_KeysFrom1To6[6] = {
         SDLK_0, SDLK_1, SDLK_2, SDLK_3, SDLK_4, SDLK_5,
 };
@@ -60,6 +63,18 @@ void AttackInterface::handleEvents() {
             enemy = battle->getEnemy();
             if (pokemon->getHealthPoint() <= 0) {
                 battle->lose();
+                if (Game::level == 5 ) {
+                    if (Battle::state == "waitingForMew") {
+                        inventoryText->create("Vous avez debloque un Pokemon !", WhiteColor, "Press");
+                        newPokemonText->create("Appuyer sur [I]", WhiteColor, "Press");
+                        // newPokemonText->changeText("Vous avez debloque un Pokemon !");
+                        // inventoryText->changeText("Appuyer sur [I]");
+                        newPokemonText->changeDestRect(86, 485);
+                        newPokemonText->draw();
+                        inventoryText->changeDestRect(86, 580);
+                        inventoryText->draw();
+                    }
+                }
                 return;
             }
 
@@ -107,6 +122,18 @@ void AttackInterface::handleEvents() {
             keyIsAlreadyPressed = true;
         }
     }
+    // if (Game::level == 5 ) {
+    //     if (Battle::state == "waitingForMew") {
+    //         inventoryText->create("Vous avez debloque un Pokemon !", WhiteColor, "Press");
+    //         newPokemonText->create("Appuyer sur [I]", WhiteColor, "Press");
+    //         // newPokemonText->changeText("Vous avez debloque un Pokemon !");
+    //         // inventoryText->changeText("Appuyer sur [I]");
+    //         newPokemonText->changeDestRect(86, 485);
+    //         newPokemonText->draw();
+    //         inventoryText->changeDestRect(86, 580);
+    //         inventoryText->draw();
+    //     }
+    // }
 }
 
 /**
@@ -133,6 +160,10 @@ void AttackInterface::render() {
     SDL_RenderPresent(Game::renderer);
 }
 
+/**
+ * @brief Return true if the attack interface is active
+ * @return
+ */
 bool AttackInterface::isActive() {
     if (game->attacking())
         return true;
