@@ -192,11 +192,10 @@ void Battle::drawDialogAttackChoice() {
  * @brief Draw the Post Attack Dialog
  */
 void Battle::drawDialogPostAttack() {
-    //std::string damageHP = enemyPokemon->getName() + " a perdu " + std::to_string(12) + "PV";
     std::string damageHP = enemyPokemon->getName() + " a perdu " + std::to_string(damageEnemy) + "PV";
     dialogText->changeText(damageHP);
     if (enemyPokemon->getHealthPoint() <= 0) {
-        secondAttackText->changeText("Vous avez gagné !");
+        secondAttackText->changeText("Vous avez gagne !");
         secondAttackText->changeDestRect(86, 515);
         secondAttackText->draw();
     }

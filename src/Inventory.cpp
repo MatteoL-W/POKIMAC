@@ -10,7 +10,9 @@
 #include "../include/Colors.hpp"
 #include "../include/Utils.hpp"
 
-
+/**
+ * @brief Draw the inventory
+ */
 void Inventory::draw() {
     // Draw the background
     SDL_RenderCopy(Game::renderer, backgroundTexture, NULL, NULL);

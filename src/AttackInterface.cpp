@@ -58,10 +58,6 @@ void AttackInterface::handleEvents() {
         if (!keyIsAlreadyPressed) {
             pokemon = battle->getPokemon();
             enemy = battle->getEnemy();
-            if (pokemon->getHealthPoint() <= 0) {
-                battle->lose();
-                return;
-            }
 
             switch (event.key.keysym.sym) {
                 case SDLK_e:
@@ -103,6 +99,10 @@ void AttackInterface::handleEvents() {
 
     if (battle->isWaitingForEnemyTurn() && event.type == SDL_KEYDOWN) {
         if (!keyIsAlreadyPressed) {
+            if (pokemon->getHealthPoint() <= 0) {
+                battle->lose();
+                return;
+            }
             Battle::state = "waitingForAttack";
             keyIsAlreadyPressed = true;
         }
@@ -133,6 +133,10 @@ void AttackInterface::render() {
     SDL_RenderPresent(Game::renderer);
 }
 
+/**
+ * @brief Return true if the attack interface is active
+ * @return
+ */
 bool AttackInterface::isActive() {
     if (game->attacking())
         return true;
