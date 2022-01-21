@@ -23,6 +23,8 @@ public:
     bool isActive();
 
 private:
+    bool readingRules = true;
+
     Game *game;
 
     Starter *starter;

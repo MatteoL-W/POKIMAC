@@ -37,11 +37,18 @@ void Starter::update() {
 }
 
 /**
+ * @brief Draw the rules
+ */
+void Starter::drawRules() {
+    SDL_RenderCopy(Game::renderer, rules, NULL, NULL);
+}
+
+/**
  * @brief Draw the starter
  * @return
  */
-void Starter::draw() {
-    SDL_RenderCopy(Game::renderer, background, NULL, NULL);
+void Starter::drawStarter() {
+    SDL_RenderCopy(Game::renderer, backgroundStarter, NULL, NULL);
 
     chosenCharacter->draw();
     chosenStarter->draw();

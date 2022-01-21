@@ -35,7 +35,7 @@ void StarterInterface::handleEvents() {
         game->setRunning(false);
     }
 
-    if (event.type == SDL_KEYDOWN) {
+    if (event.type == SDL_KEYDOWN && !readingRules) {
         for (int i = 0; i < Starter::MAX_KEYS_FROM_1_TO_3; i++) {
             if (event.key.keysym.sym == SDL_KeysFrom1To3[i]) {
                 Starter::starterPokemon = i;
@@ -60,7 +60,12 @@ void StarterInterface::handleEvents() {
                 break;
         }
     }
+
+    if (event.type == SDL_KEYDOWN && readingRules) {
+        readingRules = false;
+    }
 }
+
 
 /**
  * @brief Update objects in the exploration part
@@ -75,7 +80,11 @@ void StarterInterface::update() {
 void StarterInterface::render() {
     SDL_RenderClear(Game::renderer);
 
-    starter->draw();
+    if (readingRules) {
+        starter->drawRules();
+    } else {
+        starter->drawStarter();
+    }
 
     SDL_RenderPresent(Game::renderer);
 }
