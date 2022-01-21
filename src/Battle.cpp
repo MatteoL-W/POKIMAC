@@ -170,12 +170,10 @@ void Battle::drawDialogPokemonChoice() {
             pokemonListsTexts[i]->changeColor(WhiteColor);
         }
         pokemonListsTexts[i]->changeDestRect(86, 550 + 30 * i);
-        //pokemonListsTexts[i]->changeFont("Press", 22);
         pokemonListsTexts[i]->draw();
     }
 
-    //exitText->changeText("[EXIT] Annuler");
-    //exitText->changeFont("Press", 22);
+    exitText->changeText("[EXIT] Annuler");
     exitText->changeDestRect(86, 550 + 30 * Game::inventoryLength);
     exitText->draw();
 }
@@ -186,13 +184,11 @@ void Battle::drawDialogPokemonChoice() {
 void Battle::drawDialogAttackChoice() {
     dialogText->changeText("Choisissez votre attaque");
 
-    //firstAttackText->changeFont("Press", 32);
     firstAttackText->changeText("[E] " + attacks[0]);
     firstAttackText->changeColor(WhiteColor);
     firstAttackText->changeDestRect(86, 580);
     firstAttackText->draw();
 
-    //secondAttackText->changeFont("Press", 32);
     secondAttackText->changeText("[G] " + attacks[pokemon->getType()]);
     secondAttackText->changeColor(WhiteColor);
     secondAttackText->changeDestRect(86, 630);
@@ -232,16 +228,12 @@ void Battle::drawDialogEnemyTurn() {
  * @param y
  */
 void Battle::drawPokemon(Pokemon *pokemon, int x, int y, bool enemy) {
-    //destPokemon.w = destPokemon.h = 64;
     destPokemon.x = x;
     destPokemon.y = y;
 
-    //srcPokemon.w = srcPokemon.h = 32;
     srcPokemon.x = pokemon->getXSpriteCoordinate();
     srcPokemon.y = (enemy == false) ? (pokemon->getYSpriteCoordinate() + 32) : pokemon->getYSpriteCoordinate();
 
-    //destPlatform.w = 137;
-    //destPlatform.h = 46;
     destPlatform.x = destPokemon.x - 40;
     destPlatform.y = destPokemon.y + 30;
 

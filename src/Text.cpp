@@ -34,8 +34,6 @@ void Text::create(std::string text, SDL_Color color, std::string fontName) {
  */
 void Text::draw() {
     SDL_RenderCopy(Game::renderer, Text::texture, NULL, &(Text::destRect));
-    //SDL_FreeSurface(Text::surface);
-    //SDL_DestroyTexture(Text::texture);
 }
 
 /**
