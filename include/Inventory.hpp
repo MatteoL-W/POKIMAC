@@ -4,8 +4,6 @@
 #include "Pokemon.hpp"
 #include "Text.hpp"
 
-int getPadding(int blockWidth, int textWidth);
-
 class Inventory {
 public:
     Inventory() {

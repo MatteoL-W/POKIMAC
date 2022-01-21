@@ -22,9 +22,9 @@ public:
 
     void drawPokemonGraphics();
 
-    void drawPokemon(Pokemon *pokemon, int x, int y);
+    void drawPokemon(Pokemon *pokemon, int x, int y, bool enemy);
 
-    void drawHealthPoint(Pokemon *pokemon, int x, int y);
+    void drawHealthPoint(Pokemon *pokemon, int x, int y, bool enemy);
 
     void drawDialog();
 
@@ -108,5 +108,8 @@ private:
     Pokemon *pokemon;
 
     SDL_Texture *sceneBackgroundTexture;
+
     SDL_Texture *pokemonPlatformTexture;
+
+    SDL_Rect destPokemon, srcPokemon, destPlatform;
 };
