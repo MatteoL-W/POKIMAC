@@ -53,6 +53,8 @@ public:
 
     bool getInteractingHealthCenter() { return canBeCured; }
 
+
+
 private:
     Pokemon pokemon[50];
     //TODO alloc dynamique
