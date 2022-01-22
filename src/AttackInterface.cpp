@@ -13,9 +13,6 @@
 Pokemon *pokemon = nullptr;
 Pokemon *enemy = nullptr;
 
-Text *inventoryText = new Text();
-Text *newPokemonText = new Text();
-
 int SDL_KeysFrom1To6[6] = {
         SDLK_0, SDLK_1, SDLK_2, SDLK_3, SDLK_4, SDLK_5,
 };

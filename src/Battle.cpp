@@ -13,7 +13,6 @@
 int Battle::damagePokemon = 0;
 int Battle::damageEnemy = 0;
 
-
 std::string Battle::state = "inactive";
 
 Text *enemyTextHP = new Text();
@@ -25,6 +24,7 @@ Text *fourthPokemonText = new Text();
 Text *fifthPokemonText = new Text();
 Text *sixPokemonText = new Text();
 Text *exitText = new Text();
+Text *inventoryText = new Text();
 
 Text *dialogText = new Text();
 
@@ -77,6 +77,7 @@ void Battle::load() {
     exitText->create("[EXIT] Annuler", WhiteColor, "Press");
     dialogText->create("", WhiteColor, "Press");
     enemyTextHP->create("", WhiteColor, "Press");
+    inventoryText->create("Vous avez debloque un Pokemon !", WhiteColor, "Press");
 
     destPokemon.w = destPokemon.h = 64;
     srcPokemon.w = srcPokemon.h = 32;
@@ -219,6 +220,10 @@ void Battle::drawDialogEnemyTurn() {
     if (pokemon->getHealthPoint() <= 0) {
         secondAttackText->changeText("Vous avez perdu !");
         secondAttackText->changeDestRect(86, 515);
+        if (Game::level == 5) {
+            inventoryText->changeDestRect(86, 565);
+            inventoryText->draw();
+        }
         secondAttackText->draw();
     }
 }
@@ -344,9 +349,7 @@ void Battle::win() {
 void Battle::lose() {
     getEnemy()->heal();
 
-
     if (Game::level == 5) {
-        Battle::state = "waitingForMew";
         Pokemon *mew = new Pokemon(POKEMON_MEW);
         Game::inventory[0] = mew;
     }
