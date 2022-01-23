@@ -64,6 +64,25 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
         MAP_PLAYER_Y = 22;
         MAP_PLAYER_X = 12;
     }
+    if (Game::level == 1) {
+        MAP_PLAYER_Y = 4;
+        MAP_PLAYER_X = 9;
+    }
+
+    if (Game::level == 2) {
+        MAP_PLAYER_Y = 2;
+        MAP_PLAYER_X = 19;
+    }
+
+    if (Game::level == 3) {
+        MAP_PLAYER_Y = 23;
+        MAP_PLAYER_X = 20;
+    }
+
+    if (Game::level == 4) {
+        MAP_PLAYER_Y = 1;
+        MAP_PLAYER_X = 1;
+    }
 
     // define the player emplacement
     mapArray[MAP_PLAYER_Y][MAP_PLAYER_X] = MAP_PLAYER;
