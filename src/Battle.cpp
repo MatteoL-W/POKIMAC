@@ -49,7 +49,8 @@ std::string attacks[TYPES_LENGTHS] = {
         "Vibraqua",
         "Rebondifeu",
         "Lame de Roc",
-        "Laser Glace"
+        "Laser Glace",
+        "Psyko"
 };
 
 Battle::Battle(Pokemon *enemy, Pokemon *myPokemon, Game *game) {
@@ -77,7 +78,7 @@ void Battle::load() {
     exitText->create("[EXIT] Annuler", WhiteColor, "Press");
     dialogText->create("", WhiteColor, "Press");
     enemyTextHP->create("", WhiteColor, "Press");
-    inventoryText->create("Vous avez debloque un Pokemon !", WhiteColor, "Press");
+    inventoryText->create("Un Pokemon a ete debloque !", WhiteColor, "Press");
 
     destPokemon.w = destPokemon.h = 64;
     srcPokemon.w = srcPokemon.h = 32;

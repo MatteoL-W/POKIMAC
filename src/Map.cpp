@@ -108,7 +108,10 @@ void Map::loadPokemons() {
         int randomX = getRandomNumberTo(MAP_WIDTH);
         int randomY = getRandomNumberTo(MAP_HEIGHT);
 
-        while (mapArray[randomY][randomX] < 1 || mapArray[randomY][randomX] > 10) {
+        int startingTexture = (Game::level == 1) ? 14 : 1;
+        int endingTexture = (Game::level == 1) ? 14 : 10;
+
+        while (mapArray[randomY][randomX] < startingTexture || mapArray[randomY][randomX] > endingTexture) {
             randomX = getRandomNumberTo(MAP_WIDTH);
             randomY = getRandomNumberTo(MAP_HEIGHT);
         }
