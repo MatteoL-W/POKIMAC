@@ -58,22 +58,6 @@ void AttackInterface::handleEvents() {
         if (!keyIsAlreadyPressed) {
             pokemon = battle->getPokemon();
             enemy = battle->getEnemy();
-            /*if (pokemon->getHealthPoint() <= 0) {
-                battle->lose();
-                if (Game::level == 5 ) {
-                    if (Battle::state == "waitingForMew") {
-                        inventoryText->create("Vous avez debloque un Pokemon !", WhiteColor, "Press");
-                        newPokemonText->create("Appuyer sur [I]", WhiteColor, "Press");
-                        // newPokemonText->changeText("Vous avez debloque un Pokemon !");
-                        // inventoryText->changeText("Appuyer sur [I]");
-                        newPokemonText->changeDestRect(86, 485);
-                        newPokemonText->draw();
-                        inventoryText->changeDestRect(86, 580);
-                        inventoryText->draw();
-                    }
-                }
-                return;
-            }*/
 
             switch (event.key.keysym.sym) {
                 case SDLK_e:

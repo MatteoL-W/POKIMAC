@@ -354,6 +354,6 @@ void Battle::lose() {
         Pokemon *mew = new Pokemon(POKEMON_MEW);
         Game::inventory[0] = mew;
     }
-    game->changeInterfaceToExploration();
 
+    game->changeInterfaceToExploration();
 }

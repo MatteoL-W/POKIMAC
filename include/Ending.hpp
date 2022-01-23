@@ -10,7 +10,6 @@ class Ending {
 public:
     Ending() {
         Ending::backgroundTexture = IMG_LoadTexture(Game::renderer, "assets/endingBackground.png");
-
     }
 
     ~Ending() {};

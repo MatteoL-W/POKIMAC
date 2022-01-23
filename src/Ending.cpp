@@ -32,7 +32,6 @@ void Ending::drawSprite() {
     srcPlayer.x = srcPlayer.y = 0;
     srcPlayer.h = srcPlayer.w = 64;
     destPlayer.w = destPlayer.h = (Game::WINDOW_WIDTH / 4);
-    //destPlayer.w = destPlayer.h = 32 * Game::SCALE_CAMERA;
     destPlayer.x = (Game::WINDOW_WIDTH / 2) - (destPlayer.w / 2);
     destPlayer.y = Game::WINDOW_WIDTH * 3/10;
 
@@ -45,7 +44,6 @@ void Ending::drawPokemons(Pokemon *pokemon, int xOperator) {
     srcPokemon.w = srcPokemon.h = 32; 
 
     destPokemon.w = destPokemon.h = (Game::WINDOW_WIDTH / 6) - 40;
-    //destPokemon.x = 20 + destPokemon.w * xOperator;
     destPokemon.x = (Game::WINDOW_WIDTH / 6) * xOperator + 20;
     destPokemon.y = Game::WINDOW_WIDTH * 3/5; 
 

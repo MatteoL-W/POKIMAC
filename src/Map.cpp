@@ -60,28 +60,31 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     // Copy of mapArray from level's map
     SDL_memmove(mapArray, array, sizeof(mapArray));
 
-    if (Game::level == BOSS_LEVEL) {
-        MAP_PLAYER_Y = 22;
-        MAP_PLAYER_X = 12;
-    }
-    if (Game::level == 1) {
-        MAP_PLAYER_Y = 4;
-        MAP_PLAYER_X = 9;
-    }
+    switch (Game::level) {
+        case BOSS_LEVEL:
+            MAP_PLAYER_Y = 22;
+            MAP_PLAYER_X = 12;
+            break;
 
-    if (Game::level == 2) {
-        MAP_PLAYER_Y = 2;
-        MAP_PLAYER_X = 19;
-    }
+        case 1:
+            MAP_PLAYER_Y = 4;
+            MAP_PLAYER_X = 9;
+            break;
 
-    if (Game::level == 3) {
-        MAP_PLAYER_Y = 23;
-        MAP_PLAYER_X = 20;
-    }
+        case 2:
+            MAP_PLAYER_Y = 2;
+            MAP_PLAYER_X = 19;
+            break;
 
-    if (Game::level == 4) {
-        MAP_PLAYER_Y = 1;
-        MAP_PLAYER_X = 1;
+        case 3:
+            MAP_PLAYER_Y = 23;
+            MAP_PLAYER_X = 20;
+            break;
+
+        case 4:
+            MAP_PLAYER_Y = 1;
+            MAP_PLAYER_X = 1;
+            break;
     }
 
     // define the player emplacement

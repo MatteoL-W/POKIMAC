@@ -136,7 +136,7 @@ float Pokemon::getDamageCoeff(int attacker_type, int attacked_type) {
             coefficient = 0.5;
         }
     }
-    if (attacker_type == TYPE_BOSS) {
+    if (attacker_type == TYPE_PSY) {
         coefficient = 2.25;
     }
     return coefficient;

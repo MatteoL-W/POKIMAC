@@ -17,4 +17,4 @@ const int TYPE_WATER = 2;
 const int TYPE_FIRE = 3;
 const int TYPE_ROCK = 4;
 const int TYPE_ICE = 5;
-const int TYPE_BOSS = 6;
+const int TYPE_PSY = 6;
