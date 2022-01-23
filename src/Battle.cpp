@@ -8,6 +8,7 @@
 #include "../include/Colors.hpp"
 #include "../include/Game.hpp"
 #include "../include/Utils.hpp"
+#include "../include/PokemonsFromId.hpp"
 
 int Battle::damagePokemon = 0;
 int Battle::damageEnemy = 0;
@@ -23,6 +24,7 @@ Text *fourthPokemonText = new Text();
 Text *fifthPokemonText = new Text();
 Text *sixPokemonText = new Text();
 Text *exitText = new Text();
+Text *inventoryText = new Text();
 
 Text *dialogText = new Text();
 
@@ -47,7 +49,8 @@ std::string attacks[TYPES_LENGTHS] = {
         "Vibraqua",
         "Rebondifeu",
         "Lame de Roc",
-        "Laser Glace"
+        "Laser Glace",
+        "Psyko"
 };
 
 Battle::Battle(Pokemon *enemy, Pokemon *myPokemon, Game *game) {
@@ -75,6 +78,7 @@ void Battle::load() {
     exitText->create("[EXIT] Annuler", WhiteColor, "Press");
     dialogText->create("", WhiteColor, "Press");
     enemyTextHP->create("", WhiteColor, "Press");
+    inventoryText->create("Un Pokemon a ete debloque !", WhiteColor, "Press");
 
     destPokemon.w = destPokemon.h = 64;
     srcPokemon.w = srcPokemon.h = 32;
@@ -217,6 +221,10 @@ void Battle::drawDialogEnemyTurn() {
     if (pokemon->getHealthPoint() <= 0) {
         secondAttackText->changeText("Vous avez perdu !");
         secondAttackText->changeDestRect(86, 515);
+        if (Game::level == 5) {
+            inventoryText->changeDestRect(86, 565);
+            inventoryText->draw();
+        }
         secondAttackText->draw();
     }
 }
@@ -330,6 +338,10 @@ void Battle::win() {
     Game::inventory[Game::inventoryLength]->heal();
     Game::inventoryLength++;
     game->changeInterfaceToExplorationAndLevelUp();
+
+    if (Game::level == 6) {
+        game->changeInterfaceToEnding();
+    }
 }
 
 /**
@@ -337,5 +349,11 @@ void Battle::win() {
  */
 void Battle::lose() {
     getEnemy()->heal();
+
+    if (Game::level == 5) {
+        Pokemon *mew = new Pokemon(POKEMON_MEW);
+        Game::inventory[0] = mew;
+    }
+
     game->changeInterfaceToExploration();
 }

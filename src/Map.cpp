@@ -18,7 +18,7 @@ int pokemonCounter = 20;
  * @brief Constructor of the Map object
  */
 Map::Map(bool isCameraCentered) {
-    tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/all_tileset_map_texture.png");
+    tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/all2_tileset_map_texture.png");
     HealthCenterMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset1.png");
 
     srcTexture.x = srcTexture.y = 0;
@@ -60,9 +60,31 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
     // Copy of mapArray from level's map
     SDL_memmove(mapArray, array, sizeof(mapArray));
 
-    if (Game::level == BOSS_LEVEL) {
-        MAP_PLAYER_Y = 22;
-        MAP_PLAYER_X = 12;
+    switch (Game::level) {
+        case BOSS_LEVEL:
+            MAP_PLAYER_Y = 22;
+            MAP_PLAYER_X = 12;
+            break;
+
+        case 1:
+            MAP_PLAYER_Y = 4;
+            MAP_PLAYER_X = 9;
+            break;
+
+        case 2:
+            MAP_PLAYER_Y = 2;
+            MAP_PLAYER_X = 19;
+            break;
+
+        case 3:
+            MAP_PLAYER_Y = 23;
+            MAP_PLAYER_X = 20;
+            break;
+
+        case 4:
+            MAP_PLAYER_Y = 1;
+            MAP_PLAYER_X = 1;
+            break;
     }
 
     // define the player emplacement
@@ -89,7 +111,10 @@ void Map::loadPokemons() {
         int randomX = getRandomNumberTo(MAP_WIDTH);
         int randomY = getRandomNumberTo(MAP_HEIGHT);
 
-        while (mapArray[randomY][randomX] < 1 || mapArray[randomY][randomX] > 10) {
+        int startingTexture = (Game::level == 1) ? 14 : 1;
+        int endingTexture = (Game::level == 1) ? 14 : 10;
+
+        while (mapArray[randomY][randomX] < startingTexture || mapArray[randomY][randomX] > endingTexture) {
             randomX = getRandomNumberTo(MAP_WIDTH);
             randomY = getRandomNumberTo(MAP_HEIGHT);
         }

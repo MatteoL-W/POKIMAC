@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "../include/EndingInterface.hpp"
+#include "../include/Game.hpp"
 
 /**
  * @brief Handle SDL Events in the ending part
@@ -26,6 +27,8 @@ void EndingInterface::update() {
  */
 void EndingInterface::render() {
     SDL_RenderClear(Game::renderer);
+
+    ending->draw();
 
     SDL_RenderPresent(Game::renderer);
 }
