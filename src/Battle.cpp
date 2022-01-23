@@ -165,8 +165,9 @@ void Battle::drawDialogPokemonChoice() {
 
     for (int i = 0; i < Game::inventoryLength; i++) {
         std::string pokemonId = "[" + std::to_string(i) + "] ";
-        std::string pokemonInfo = Game::inventory[i]->getName() + " - " + std::to_string(Game::inventory[i]->getHealthPoint()) + "pv";
-        pokemonListsTexts[i]->changeText( pokemonId + pokemonInfo );
+        std::string pokemonInfo =
+                Game::inventory[i]->getName() + " - " + std::to_string(Game::inventory[i]->getHealthPoint()) + "pv";
+        pokemonListsTexts[i]->changeText(pokemonId + pokemonInfo);
 
         if (Game::inventory[i]->getHealthPoint() <= 0) {
             pokemonListsTexts[i]->changeColor(GreyColor);
@@ -234,6 +235,7 @@ void Battle::drawDialogEnemyTurn() {
  * @param pokemon
  * @param x
  * @param y
+ * @param enemy
  */
 void Battle::drawPokemon(Pokemon *pokemon, int x, int y, bool enemy) {
     destPokemon.x = x;
@@ -259,7 +261,7 @@ void Battle::drawHealthPoint(Pokemon *pokemon, int x, int y, bool enemy) {
     // Health Points
     std::string pokemonName = enemy ? pokemon->getName() : "You";
     std::string pokemonHP = "(" + pokemonName + ") " + std::to_string(pokemon->getHealthPoint()) + " / "
-            + std::to_string(pokemon->getMaxHealthPoint());
+                            + std::to_string(pokemon->getMaxHealthPoint());
     enemyTextHP->changeText(pokemonHP);
 
     int rectY = enemy ? y + 155 : y + 70;

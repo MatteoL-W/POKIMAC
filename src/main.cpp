@@ -9,8 +9,7 @@
 Game *game = nullptr;
 
 int main(int argc, char *argv[]) {
-    game = new Game();
-    game->init("POKIMAC");
+    game = new Game("POKIMAC");
 
     while (game->running()) {
         frameStart = SDL_GetTicks();

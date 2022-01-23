@@ -46,7 +46,7 @@ clean:
 	$(RM) build$(SEP)*.o
 
 st:
-	./bin/render.exe
+	./bin/render
 
 init:
 	mkdir build;

@@ -73,13 +73,9 @@ void AttackInterface::handleEvents() {
                     Battle::state = "postAttack";
                     break;
 
-
                     //cheatcodes
                 case SDLK_k:
                     enemy->kill();
-                    break;
-                case SDLK_n:
-                    enemy->updateHealthPoint(enemy->getHealthPoint() - 10);
                     break;
                 case SDLK_p:
                     battle->enemysTurn();

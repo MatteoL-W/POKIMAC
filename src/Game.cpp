@@ -40,15 +40,11 @@ Pokemon *Game::pokedex[MAX_POKEMONS_POKEDEX];
 Pokemon *Game::inventory[MAX_POKEMON_INV];
 int Game::inventoryLength = 0;
 
-Game::Game() {}
-
-Game::~Game() {}
-
 /**
  * @brief Initialize the game (assign the window, renderer, define the game as running)
  * @param title
  */
-void Game::init(const std::string title) {
+Game::Game(const std::string title) {
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
         TTF_Init();
         window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH,
@@ -75,6 +71,8 @@ void Game::init(const std::string title) {
     }
 }
 
+Game::~Game() {}
+
 /**
  * @brief Change the interface to attack
  */
@@ -88,8 +86,7 @@ void Game::changeInterfaceToAttack(Pokemon *enemy) {
  * @brief Change the interface to exploration and level up
  */
 void Game::changeInterfaceToExplorationAndLevelUp() {
-    if (level - 1 < MAX_MAPS)
-        level++;
+    level++;
     Battle::state = "inactive";
     map->loadMap(allMaps[Game::level]);
     changeInterfaceToExploration();

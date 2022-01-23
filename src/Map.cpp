@@ -6,6 +6,7 @@
 #include "../include/Map.hpp"
 #include "../include/MapsArray.hpp"
 #include "../include/Pokemon.hpp"
+#include "../include/Utils.hpp"
 
 Pokemon *newPokemon = nullptr;
 
@@ -21,27 +22,14 @@ Map::Map(bool isCameraCentered) {
     tilesetMapTexture = IMG_LoadTexture(Game::renderer, "assets/all2_tileset_map_texture.png");
     HealthCenterMapTexture = IMG_LoadTexture(Game::renderer, "assets/tileset1.png");
 
-    srcTexture.x = srcTexture.y = 0;
-    srcPlayer.x = srcPlayer.y = 0;
-    srcTexture.w = srcTexture.h = 32;
-    srcPlayer.h = srcPlayer.w = 64;
-    srcPokemon = srcTexture;
-    srcHealthCenter.x = 0;
-    srcHealthCenter.y = 240;
-    srcHealthCenter.w = srcHealthCenter.h = 80;
+    defineSrcRectsValues();
 
     if (isCameraCentered) {
         MAP_CELL_WIDTH = Game::SCALE_CAMERA * 32 * 5;
         MAP_CELL_HEIGHT = Game::SCALE_CAMERA * 32 * 5;
     }
 
-    dest1by1.w = MAP_CELL_WIDTH;
-    dest1by1.h = MAP_CELL_HEIGHT;
-    dest1by1.x = dest1by1.y = 0;
-
-    dest2by2.w = MAP_CELL_WIDTH * 2;
-    dest2by2.h = MAP_CELL_HEIGHT * 2;
-    dest2by2.x = dest2by2.y = 0;
+    defineDestRectsValues();
 
     centeredCamera = isCameraCentered;
 
@@ -50,6 +38,36 @@ Map::Map(bool isCameraCentered) {
 
 Map::~Map() {
 
+}
+
+/**
+ * @brief Define the values of the SDL_Rect (src) objects
+ */
+void Map::defineSrcRectsValues() {
+    srcTexture.x = srcTexture.y = 0;
+    srcTexture.w = srcTexture.h = 32;
+
+    srcPlayer.x = srcPlayer.y = 0;
+    srcPlayer.h = srcPlayer.w = 64;
+
+    srcPokemon = srcTexture;
+
+    srcHealthCenter.x = 0;
+    srcHealthCenter.y = 240;
+    srcHealthCenter.w = srcHealthCenter.h = 80;
+}
+
+/**
+ * @brief Define the values of the SDL_Rect (dest) objects
+ */
+void Map::defineDestRectsValues() {
+    dest1by1.w = MAP_CELL_WIDTH;
+    dest1by1.h = MAP_CELL_HEIGHT;
+    dest1by1.x = dest1by1.y = 0;
+
+    dest2by2.w = MAP_CELL_WIDTH * 2;
+    dest2by2.h = MAP_CELL_HEIGHT * 2;
+    dest2by2.x = dest2by2.y = 0;
 }
 
 /**
@@ -99,6 +117,7 @@ void Map::loadMap(const int array[Map::MAP_HEIGHT][Map::MAP_WIDTH]) {
 void Map::loadPokemons() {
     startingI = Game::level * 6;
 
+    // Spawn MewTwo at last level
     if (Game::level == BOSS_LEVEL) {
         Pokemon *mewTwo = new Pokemon(POKEMON_MEWTWO);
         placePokemon(mewTwo, 12, 2);
@@ -106,11 +125,13 @@ void Map::loadPokemons() {
         return;
     }
 
+    // Place pokemons randomly and make them spawn on the walkable textures
     for (int i = startingI; i < startingI + 6; i++) {
         newPokemon = new Pokemon(pokemonsFromMaps[Game::level][i - startingI]);
         int randomX = getRandomNumberTo(MAP_WIDTH);
         int randomY = getRandomNumberTo(MAP_HEIGHT);
 
+        // Make pokemon spawn on water if level == 1
         int startingTexture = (Game::level == 1) ? 14 : 1;
         int endingTexture = (Game::level == 1) ? 14 : 10;
 
@@ -198,53 +219,47 @@ void Map::drawMap() {
  */
 void Map::drawExtras() {
     Map::canAttack = nullptr;
+    // Each map draw 6 pokemons
     startingI = Game::level * 6;
 
+    // Draw MewTwo
     if (Game::level == BOSS_LEVEL) {
-        int row = pokemon[startingI + 1].getRow();
-        int column = pokemon[startingI + 1].getColumn();
-
-        dest1by1.x = (-startingX + column) * MAP_CELL_WIDTH;
-        dest1by1.y = (-startingY + row) * MAP_CELL_HEIGHT;
-
-        if ((row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
-            (row + 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
-            (column - 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y) ||
-            (column + 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y)) {
-            Map::canAttack = &(pokemon[startingI + 1]);
-        }
-
-        srcPokemon.x = pokemon[startingI + 1].getXSpriteCoordinate();
-        srcPokemon.y = pokemon[startingI + 1].getYSpriteCoordinate();
-        SDL_RenderCopy(Game::renderer, Game::pokemonsTexture, &srcPokemon, &dest1by1);
-
+        drawPokemon(startingI + 1);
         return;
     }
 
     // Drawing all the pokemons
     for (int i = startingI; i < startingI + 6; i++) {
-        int row = pokemon[i].getRow();
-        int column = pokemon[i].getColumn();
-
-        dest1by1.x = (-startingX + column) * MAP_CELL_WIDTH;
-        dest1by1.y = (-startingY + row) * MAP_CELL_HEIGHT;
-
-        if ((row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
-            (row + 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
-            (column - 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y) ||
-            (column + 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y)) {
-            Map::canAttack = &(pokemon[i]);
-        }
-
-        srcPokemon.x = pokemon[i].getXSpriteCoordinate();
-        srcPokemon.y = pokemon[i].getYSpriteCoordinate();
-        SDL_RenderCopy(Game::renderer, Game::pokemonsTexture, &srcPokemon, &dest1by1);
+        drawPokemon(i);
     }
 
     health_center_coordinates = findTiles(allMaps[Game::level], MAP_HEALTH_CENTER);
     if (health_center_coordinates != nullptr) {
         drawHealthCenter();
     }
+}
+
+/**
+ * @brief Draw pokemon in the screen + get the interactivity
+ * @param i
+ */
+void Map::drawPokemon(int i) {
+    int row = pokemon[i].getRow();
+    int column = pokemon[i].getColumn();
+
+    dest1by1.x = (-startingX + column) * MAP_CELL_WIDTH;
+    dest1by1.y = (-startingY + row) * MAP_CELL_HEIGHT;
+
+    if ((row - 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
+        (row + 1 == MAP_PLAYER_Y && column == MAP_PLAYER_X) ||
+        (column - 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y) ||
+        (column + 1 == MAP_PLAYER_X && row == MAP_PLAYER_Y)) {
+        Map::canAttack = &(pokemon[i]);
+    }
+
+    srcPokemon.x = pokemon[i].getXSpriteCoordinate();
+    srcPokemon.y = pokemon[i].getYSpriteCoordinate();
+    SDL_RenderCopy(Game::renderer, Game::pokemonsTexture, &srcPokemon, &dest1by1);
 }
 
 /**
@@ -385,22 +400,4 @@ void Map::drawHealthCenter() {
             ) {
         Map::canBeCured = true;
     }
-}
-
-int getStartingPos(int playerPosition, int mapWidth, int centeredScale) {
-    int startingViewport = (playerPosition - centeredScale < 0) ? 0 : playerPosition - centeredScale;
-    int padding = (playerPosition + centeredScale > mapWidth - 1) ? (playerPosition + centeredScale - (mapWidth - 1))
-                                                                  : 0;
-    return startingViewport - padding;
-}
-
-int getEndingPos(int playerPosition, int mapWidth, int centeredScale) {
-    int endingViewport = (playerPosition + 2 >= mapWidth - 1) ? mapWidth - 1 : playerPosition + 2;
-    int padding = (playerPosition - 2 < 0) ? abs(mapWidth - 2) : 0;
-    return endingViewport + padding;
-}
-
-int getRandomNumberTo(int max) {
-    std::random_device rd;
-    return rand() % max;
 }

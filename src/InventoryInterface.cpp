@@ -25,13 +25,6 @@ void InventoryInterface::handleEvents() {
 }
 
 /**
- * @brief Update objects in the inventory part
- */
-void InventoryInterface::update() {
-
-}
-
-/**
  * @brief Render the inventory part (map and objects)
  */
 void InventoryInterface::render() {

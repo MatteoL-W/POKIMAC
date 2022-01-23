@@ -12,13 +12,17 @@ int getRandomNumberTo(int max);
 
 class Map {
 public:
+    Map(bool isCameraCentered);
+
+    ~Map();
+
     static const int MAP_WIDTH = 25;
 
     static const int MAP_HEIGHT = 25;
 
-    Map(bool isCameraCentered);
+    void defineSrcRectsValues();
 
-    ~Map();
+    void defineDestRectsValues();
 
     void loadMap(const int array[MAP_HEIGHT][MAP_WIDTH]);
 
@@ -29,6 +33,8 @@ public:
     void drawMap();
 
     void drawExtras();
+
+    void drawPokemon(int i);
 
     void toggleCamera();
 

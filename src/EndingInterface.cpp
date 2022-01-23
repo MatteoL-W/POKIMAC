@@ -16,13 +16,6 @@ void EndingInterface::handleEvents() {
 }
 
 /**
- * @brief Update objects in the ending part
- */
-void EndingInterface::update() {
-
-}
-
-/**
  * @brief Render the ending part
  */
 void EndingInterface::render() {

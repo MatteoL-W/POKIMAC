@@ -9,7 +9,7 @@ const int MAX_POKEMONS_POKEDEX = 38;
 
 class Game {
 public:
-    Game();
+    Game(const std::string title);
 
     ~Game();
 
