@@ -60,6 +60,9 @@ void Pokemon::setCoordinates(int x, int y) {
     row = y;
 }
 
+/**
+ * @brief Remove health point from a pokemon
+ */
 void Pokemon::removeHealthPoint(int health_point) {
     Pokemon::health_point = (Pokemon::health_point - health_point < 0) ? 0 : Pokemon::health_point - health_point;
 }
