@@ -25,7 +25,8 @@ static const int WINDOW_WIDTH = 750;
 static const int WINDOW_HEIGHT = 750;
 ```
 
-Please maintain a square format.
+The game is design to be 750x750.
+The makefile has the mingw32 compilation flag by default. You can remove it in the Makefile.
 
 ## How to play ?
 
