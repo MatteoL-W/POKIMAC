@@ -12,18 +12,18 @@ SFOLDER=src
 BFOLDER=build
 
 ifeq ($(OS),Windows_NT)
-	CXXFLAGS=-Wall
-	SDLFLAGS=-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
+    CXXFLAGS=-Wall
+    SDLFLAGS=-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
     RM = del
     MKDIR = -mkdir
-	SEP=\\
+    SEP=\\
 else
 	# BE AWARE ! WE COULDN'T CHECK IF THIS WORKS FOR LINUX / MAC ! SORRY
-	CXXFLAGS = -Wall -O2 -g
-	SDLFLAGS = -lSDL2 -lGLU -lGL -lm -lSDL2_image -lSDL2_ttf
+    CXXFLAGS = -Wall -O2 -g
+    SDLFLAGS = -lSDL2 -lGLU -lGL -lm -lSDL2_image -lSDL2_ttf
     RM = rm -rf 
     MKDIR = mkdir -p
-	SEP=\/
+    SEP=\/
 endif
 
 # _____________________________________________________

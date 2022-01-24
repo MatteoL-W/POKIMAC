@@ -27,6 +27,7 @@ static const int WINDOW_HEIGHT = 750;
 
 The game is design to be 750x750.
 The makefile has the mingw32 compilation flag by default. You can remove it in the Makefile.
+So far, the non-Windows part of the Makefile has not been tested. Sorry !
 
 ## How to play ?
 
