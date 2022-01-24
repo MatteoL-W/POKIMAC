@@ -67,7 +67,7 @@ public:
 private:
     Pokemon *canAttack;
 
-    Pokemon pokemon[50];
+    Pokemon pokemon[MAX_POKEMONS_POKEDEX];
 
     SDL_Rect srcTexture, srcPlayer, srcPokemon, srcHealthCenter;
 

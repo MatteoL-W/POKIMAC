@@ -10,6 +10,7 @@ CXXFLAGS=-Wall
 SDLFLAGS=-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
 IFOLDER=include
 SFOLDER=src
+BFOLDER=build
 
 ifeq ($(OS),Windows_NT)
     RM = del
@@ -28,12 +29,11 @@ endif
 # *****************************************************
 # Make
 
-#TODO: remplacez les build par $^
-render: main.o Utils.o Game.o StarterInterface.o ExplorationInterface.o AttackInterface.o InventoryInterface.o EndingInterface.o Starter.o Map.o Pokemon.o Text.o Battle.o Inventory.o Ending.o
-	$(CC) -o bin/$@ build/main.o build/Utils.o build/Game.o build/StarterInterface.o build/ExplorationInterface.o build/AttackInterface.o build/InventoryInterface.o build/EndingInterface.o build/Starter.o build/Map.o build/Pokemon.o build/Text.o build/Battle.o build/Inventory.o build/Ending.o  $(SDLFLAGS)
+render: build/main.o build/Utils.o build/Game.o build/StarterInterface.o build/ExplorationInterface.o build/AttackInterface.o build/InventoryInterface.o build/EndingInterface.o build/Starter.o build/Map.o build/Pokemon.o build/Text.o build/Battle.o build/Inventory.o build/Ending.o
+	$(CC) -o bin/$@ $^ $(SDLFLAGS)
 
-%.o: $(SFOLDER)/%.cpp $(IFOLDER)/%.hpp
-	$(CC) -o build/$@ -c $< $(CXXFLAGS)
+$(BFOLDER)/%.o: $(SFOLDER)/%.cpp $(IFOLDER)/%.hpp
+	$(CC) -o $@ -c $< $(CXXFLAGS)
 
 # _____________________________________________________
 
