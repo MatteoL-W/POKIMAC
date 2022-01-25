@@ -26,7 +26,6 @@ void Ending::draw() {
         drawPokemons(pokemon, xOperator);
         xOperator++;
     }
-
 }
 
 /**

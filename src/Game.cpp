@@ -23,22 +23,22 @@ SDL_Renderer *Game::renderer = nullptr;
 SDL_Texture *Game::pokemonsTexture = nullptr;
 SDL_Texture *Game::characterTexture = nullptr;
 int Game::level = 0;
+int Game::inventoryLength = 0;
 
 StarterInterface *starterInterface = nullptr;
 AttackInterface *attackInterface = nullptr;
 ExplorationInterface *explorationInterface = nullptr;
 InventoryInterface *inventoryInterface = nullptr;
+
 EndingInterface *endingInterface = nullptr;
-
 Pokemon *attackedPokemon = nullptr;
+
 Pokemon *attackerPokemon = nullptr;
-
 Battle *battle = nullptr;
-Map *map = nullptr;
 
+Map *map = nullptr;
 Pokemon *Game::pokedex[MAX_POKEMONS_POKEDEX];
 Pokemon *Game::inventory[MAX_POKEMON_INV];
-int Game::inventoryLength = 0;
 
 /**
  * @brief Initialize the game (assign the window, renderer, define the game as running)
