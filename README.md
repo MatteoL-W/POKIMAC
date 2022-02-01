@@ -18,7 +18,7 @@ make
 make st
 ```
 
-You can change the window size by changeing these values (Game.hpp):
+You can change the window size by modifying these values (Game.hpp):
 
 ```
 static const int WINDOW_WIDTH = 750;
@@ -27,11 +27,11 @@ static const int WINDOW_HEIGHT = 750;
 
 The game is design to be 750x750.
 The makefile has the mingw32 compilation flag by default. You can remove it in the Makefile.
-So far, the non-Windows part of the Makefile has not been tested. Sorry !
+So far, the non-Windows part of the Makefile has not been tested. Sorry!
 
-## How to play ?
+## How to play?
 
-Just have fun !
+Just have fun!
 
 ## Commands
 
