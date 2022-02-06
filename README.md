@@ -12,7 +12,7 @@ Library needed:
 
 How to install on Windows ?
 
-Move the content of SDL_MinGW into the C:/MinGW folder and [add C:/MinGW into your environment variable path](https://docs.microsoft.com/en-us/previous-versions/office/developer/sharepoint-2010/ee537574(v=office.14)#:~:text=To%20add%20a%20path%20to%20the%20PATH%20environment%20variable&text=In%20the%20System%20dialog%20box,to%20Path%20and%20select%20it.)
+Move the content of SDL_MinGW into the C:/MinGW folder and [add C:/MinGW/bin into your environment variable path](https://docs.microsoft.com/en-us/previous-versions/office/developer/sharepoint-2010/ee537574(v=office.14)#:~:text=To%20add%20a%20path%20to%20the%20PATH%20environment%20variable&text=In%20the%20System%20dialog%20box,to%20Path%20and%20select%20it.)
 
 When you have cloned the repo, you can build:
 
