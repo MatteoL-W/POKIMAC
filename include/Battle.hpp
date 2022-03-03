@@ -48,45 +48,25 @@ public:
      * @brief When the state is 'pokemonChoice'
      * @return
      */
-    bool isWaitingForPokemon() {
-        if (state == "pokemonChoice") {
-            return true;
-        }
-        return false;
-    }
+    static bool isWaitingForPokemon() { return state == "pokemonChoice"; };
 
     /**
      * @brief When the state is 'waitingForAttack'
      * @return
      */
-    bool isWaitingForAttack() {
-        if (state == "waitingForAttack") {
-            return true;
-        }
-        return false;
-    }
+    static bool isWaitingForAttack() { return state == "waitingForAttack"; };
 
     /**
      * @brief When the state is 'postAttack'
      * @return
      */
-    bool isWaitingForActionPostAttack() {
-        if (state == "postAttack") {
-            return true;
-        }
-        return false;
-    }
+    static bool isWaitingForActionPostAttack() { return state == "postAttack"; };
 
     /**
      * @brief When the state is 'enemysTurn'
      * @return
      */
-    bool isWaitingForEnemyTurn() {
-        if (state == "enemysTurn") {
-            return true;
-        }
-        return false;
-    }
+    static bool isWaitingForEnemyTurn() { return state == "enemysTurn"; };
 
     void enemysTurn();
 

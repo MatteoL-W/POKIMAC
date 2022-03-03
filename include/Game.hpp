@@ -13,8 +13,6 @@ public:
 
     ~Game();
 
-    void init(const std::string title);
-
     void changeInterfaceToAttack(Pokemon *enemy);
 
     void changeInterfaceToExplorationAndLevelUp();
@@ -33,40 +31,15 @@ public:
 
     bool running() { return isRunning; };
 
-    bool starting() {
-        if (activity == "inStarter") {
-            return true;
-        }
-        return false;
-    };
+    bool starting() { return activity == "inStarter"; };
 
-    bool exploring() {
-        if (activity == "inExploration") {
-            return true;
-        }
-        return false;
-    };
+    bool exploring() { return activity == "inExploration"; };
 
-    bool attacking() {
-        if (activity == "inAttack") {
-            return true;
-        }
-        return false;
-    };
+    bool attacking() { return activity == "inAttack"; };
 
-    bool displayingInventory() {
-        if (activity == "inInventory") {
-            return true;
-        }
-        return false;
-    };
+    bool displayingInventory() { return activity == "inInventory"; };
 
-    bool ending() {
-        if (activity == "inEnd") {
-            return true;
-        }
-        return false;
-    }
+    bool ending() { return activity == "inEnd"; };
 
     void setActivity(std::string newActivity) { activity = newActivity; };
 

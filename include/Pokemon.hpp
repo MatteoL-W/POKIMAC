@@ -17,23 +17,23 @@ public:
 
     std::string getName() { return name; };
 
-    int getOriginalXSpriteCoordinate() { return sprite_x_o; };
+    int getOriginalXSpriteCoordinate() const { return sprite_x_o; };
 
-    int getXSpriteCoordinate() { return sprite_x; };
+    int getXSpriteCoordinate() const { return sprite_x; };
 
-    int getYSpriteCoordinate() { return sprite_y; };
+    int getYSpriteCoordinate() const { return sprite_y; };
 
-    int getRow() { return row; };
+    int getRow() const { return row; };
 
-    int getColumn() { return column; };
+    int getColumn() const { return column; };
 
-    int getHealthPoint() { return health_point; };
+    int getHealthPoint() const { return health_point; };
 
-    int getMaxHealthPoint() { return max_health_point; };
+    int getMaxHealthPoint() const { return max_health_point; };
 
-    int getType() { return type; };
+    int getType() const { return type; };
 
-    float getHealthPercent() { return (float) health_point / max_health_point * 100; };
+    float getHealthPercent() const { return (float) health_point / max_health_point * 100; };
 
     void updateHealthPoint(int new_health_point) { Pokemon::health_point = new_health_point; };
 
@@ -45,7 +45,7 @@ public:
 
     float getDamageCoeff(int attacker_type, int attacked_type);
 
-    int getAttackZero() { return floor(Pokemon::attack * 0.25); };
+    int getAttackZero() const { return floor(Pokemon::attack * 0.25); };
 
 
 private:

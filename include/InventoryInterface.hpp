@@ -11,15 +11,15 @@ public:
         InventoryInterface::inventory = new Inventory();
     };
 
-    ~InventoryInterface();
+    ~InventoryInterface() = default;
 
-    void handleEvents();
+    void handleEvents() override;
 
-    void update() {};
+    void update() override {};
 
-    void render();
+    void render() override;
 
-    bool isActive();
+    bool isActive() override;
 
 private:
     Game *game;

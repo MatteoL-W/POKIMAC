@@ -24,9 +24,9 @@ public:
 
     std::string getText() { return message; };
 
-    int getSize() { return size; };
+    int getSize() const { return size; };
 
-    int getDestRect() { return destRect.w; };
+    int getDestRect() const { return destRect.w; };
 
 private:
     std::string message;

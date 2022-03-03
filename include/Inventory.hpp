@@ -18,7 +18,7 @@ public:
         healthPointText->changeFont("Press", 15);
     };
 
-    ~Inventory() {};
+    ~Inventory() = default;
 
     void draw();
 
@@ -34,6 +34,8 @@ private:
     SDL_Texture *backgroundTexture;
 
     Text *nameText;
+
     Text *typeText;
+
     Text *healthPointText;
 };

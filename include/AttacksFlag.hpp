@@ -2,6 +2,8 @@
 
 const int TYPES_LENGTHS = 7;
 
+// TODO: Check enum ?
+
 const std::string types[TYPES_LENGTHS] = {
         "Normal",
         "Plante",

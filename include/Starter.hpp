@@ -18,7 +18,7 @@ public:
         chosenStarter->create("x", GreyColor, "Press");
     };
 
-    ~Starter() {};
+    ~Starter() = default;
 
     void update();
 

@@ -12,7 +12,7 @@ public:
         Ending::backgroundTexture = IMG_LoadTexture(Game::renderer, "assets/endingBackground.png");
     }
 
-    ~Ending() {};
+    ~Ending() = default;
 
     void draw();
 
@@ -24,6 +24,7 @@ private:
     SDL_Texture *backgroundTexture;
 
     SDL_Rect srcPlayer, srcPokemon;
+
     SDL_Rect destPlayer, destPokemon;
 };
 
