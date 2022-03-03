@@ -1,7 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "../include/EndingInterface.hpp"
-#include "../include/Game.hpp"
 
 /**
  * @brief Handle SDL Events in the ending part
@@ -30,8 +29,4 @@ void EndingInterface::render() {
  * @brief Return true if the ending interface is active
  * @return
  */
-bool EndingInterface::isActive() {
-    if (game->ending())
-        return true;
-    return false;
-}
+bool EndingInterface::isActive() { return game->ending(); }

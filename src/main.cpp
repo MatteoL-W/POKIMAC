@@ -2,9 +2,6 @@
 #include "../include/main.hpp"
 #include "../include/Pokemon.hpp"
 #include "../include/Game.hpp"
-#include "../include/Map.hpp"
-#include "../include/ExplorationInterface.hpp"
-#include "../include/AttackInterface.hpp"
 
 Game *game = nullptr;
 

@@ -1,17 +1,8 @@
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <iostream>
-#include <string>
-#include "../include/AttacksFlag.hpp"
 #include "../include/AttackInterface.hpp"
-#include "../include/Colors.hpp"
-#include "../include/Game.hpp"
 #include "../include/Map.hpp"
-#include "../include/Text.hpp"
-#include "../include/Pokemon.hpp"
 
 Pokemon *pokemon = nullptr;
-Pokemon *enemy = nullptr;
 
 int SDL_KeysFrom1To6[6] = {
         SDLK_0, SDLK_1, SDLK_2, SDLK_3, SDLK_4, SDLK_5,

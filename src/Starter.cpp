@@ -1,9 +1,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <iostream>
 #include <string>
 #include "../include/Game.hpp"
-#include "../include/Pokemon.hpp"
 #include "../include/Text.hpp"
 #include "../include/Starter.hpp"
 

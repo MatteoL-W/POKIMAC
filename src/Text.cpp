@@ -3,7 +3,6 @@
 #include <SDL2/SDL.h>
 #include "../include/Game.hpp"
 #include "../include/Text.hpp"
-#include "../include/Colors.hpp"
 
 Text::Text() {
 }

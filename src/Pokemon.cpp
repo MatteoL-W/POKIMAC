@@ -3,8 +3,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "../include/Game.hpp"
-#include "../include/Map.hpp"
-#include "../include/Pokemon.hpp"
 #include "../include/AttacksFlag.hpp"
 
 /**

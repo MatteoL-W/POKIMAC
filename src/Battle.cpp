@@ -1,12 +1,8 @@
-#include <iostream>
 #include <string>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "../include/AttackInterface.hpp"
-#include "../include/Battle.hpp"
-#include "../include/Text.hpp"
 #include "../include/Colors.hpp"
-#include "../include/Game.hpp"
 #include "../include/Utils.hpp"
 #include "../include/PokemonsFromId.hpp"
 

@@ -1,12 +1,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <iostream>
 #include <string>
 #include "../include/AttacksFlag.hpp"
 #include "../include/Inventory.hpp"
-#include "../include/Game.hpp"
-#include "../include/Pokemon.hpp"
-#include "../include/Text.hpp"
 #include "../include/Colors.hpp"
 #include "../include/Utils.hpp"
 

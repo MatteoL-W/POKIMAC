@@ -120,8 +120,4 @@ void ExplorationInterface::render() {
  * @brief Return true if the exploration interface is active
  * @return
  */
-bool ExplorationInterface::isActive() {
-    if (game->exploring())
-        return true;
-    return false;
-}
+bool ExplorationInterface::isActive() { return game->exploring(); }

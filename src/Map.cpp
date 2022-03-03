@@ -5,7 +5,6 @@
 #include "../include/Game.hpp"
 #include "../include/Map.hpp"
 #include "../include/MapsArray.hpp"
-#include "../include/Pokemon.hpp"
 #include "../include/Utils.hpp"
 
 Pokemon *newPokemon = nullptr;

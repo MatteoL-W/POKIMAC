@@ -1,6 +1,5 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <iostream>
 #include <string>
 #include <vector>
 #include "../include/Pokemon.hpp"
@@ -8,14 +7,12 @@
 #include "../include/Map.hpp"
 #include "../include/MapsArray.hpp"
 #include "../include/Text.hpp"
-#include "../include/Colors.hpp"
 #include "../include/Interface.hpp"
 #include "../include/StarterInterface.hpp"
 #include "../include/AttackInterface.hpp"
 #include "../include/ExplorationInterface.hpp"
 #include "../include/InventoryInterface.hpp"
 #include "../include/EndingInterface.hpp"
-#include "../include/MapsArray.hpp"
 
 std::vector<Interface *> interfaces;
 

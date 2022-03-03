@@ -3,8 +3,6 @@
 #include <iostream>
 #include "../include/Game.hpp"
 #include "../include/StarterInterface.hpp"
-#include "../include/Pokemon.hpp"
-#include "../include/Text.hpp"
 
 int SDL_KeysFrom1To3[Starter::MAX_KEYS_FROM_1_TO_3] = {
         SDLK_0, SDLK_1, SDLK_2
@@ -93,8 +91,4 @@ void StarterInterface::render() {
  * @brief Return true if the starter interface is active
  * @return
  */
-bool StarterInterface::isActive() {
-    if (game->starting())
-        return true;
-    return false;
-}
+bool StarterInterface::isActive() { return game->starting(); }

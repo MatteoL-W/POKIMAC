@@ -1,7 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "../include/InventoryInterface.hpp"
-#include "../include/Game.hpp"
 
 /**
  * @brief Handle SDL Events in the exploration part
@@ -39,8 +38,4 @@ void InventoryInterface::render() {
  * @brief Return true if the inventory interface is active
  * @return
  */
-bool InventoryInterface::isActive() {
-    if (game->displayingInventory())
-        return true;
-    return false;
-}
+bool InventoryInterface::isActive() { return game->displayingInventory(); }
